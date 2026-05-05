@@ -1,0 +1,9 @@
+--- a/.github/workflows/unit-tests.yml
++++ b/.github/workflows/unit-tests.yml
+@@ -58,7 +58,7 @@
+       - name: Run Unit Tests
+         run: |
+           mvn -B -Dwith-param-names=true clean test jacoco:report -Djacoco.dataFile=target/jacoco-ut.exec
+- 
+\ No newline at end of file
++           mvn -B "-Dwith-param-names=true" clean test jacoco:report "-Djacoco.dataFile=target/jacoco-ut.exec"

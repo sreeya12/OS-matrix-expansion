@@ -1,0 +1,761 @@
+You are fixing OS compatibility issues in Java source code.
+The code currently works on Ubuntu but fails on Windows.
+
+File: curator-framework/src/test/java/org/apache/curator/framework/imps/TestWatchesBuilder.java
+Error on Windows: [ERROR] org.apache.curator.framework.imps.TestWatchesBuilder.testGuaranteedRemoveWatch  Time elapsed: 40.947 s  <<<
+
+Source code:
+   1 | /*
+   2 |  * Licensed to the Apache Software Foundation (ASF) under one
+   3 |  * or more contributor license agreements.  See the NOTICE file
+   4 |  * distributed with this work for additional information
+   5 |  * regarding copyright ownership.  The ASF licenses this file
+   6 |  * to you under the Apache License, Version 2.0 (the
+   7 |  * "License"); you may not use this file except in compliance
+   8 |  * with the License.  You may obtain a copy of the License at
+   9 |  *
+  10 |  *   http://www.apache.org/licenses/LICENSE-2.0
+  11 |  *
+  12 |  * Unless required by applicable law or agreed to in writing,
+  13 |  * software distributed under the License is distributed on an
+  14 |  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  15 |  * KIND, either express or implied.  See the License for the
+  16 |  * specific language governing permissions and limitations
+  17 |  * under the License.
+  18 |  */
+  19 | 
+  20 | package org.apache.curator.framework.imps;
+  21 | 
+  22 | import static org.junit.jupiter.api.Assertions.assertEquals;
+  23 | import static org.junit.jupiter.api.Assertions.assertTrue;
+  24 | import static org.junit.jupiter.api.Assertions.fail;
+  25 | import java.util.concurrent.CountDownLatch;
+  26 | import java.util.concurrent.atomic.AtomicBoolean;
+  27 | import java.util.concurrent.atomic.AtomicReference;
+  28 | import org.apache.curator.framework.CuratorFramework;
+  29 | import org.apache.curator.framework.CuratorFrameworkFactory;
+  30 | import org.apache.curator.framework.api.BackgroundCallback;
+  31 | import org.apache.curator.framework.api.CuratorEvent;
+  32 | import org.apache.curator.framework.api.CuratorEventType;
+  33 | import org.apache.curator.framework.api.CuratorListener;
+  34 | import org.apache.curator.framework.api.CuratorWatcher;
+  35 | import org.apache.curator.framework.imps.FailedRemoveWatchManager.FailedRemoveWatchDetails;
+  36 | import org.apache.curator.framework.state.ConnectionState;
+  37 | import org.apache.curator.framework.state.ConnectionStateListener;
+  38 | import org.apache.curator.retry.ExponentialBackoffRetry;
+  39 | import org.apache.curator.retry.RetryOneTime;
+  40 | import org.apache.curator.test.Timing;
+  41 | import org.apache.curator.test.compatibility.CuratorTestBase;
+  42 | import org.apache.curator.utils.CloseableUtils;
+  43 | import org.apache.curator.utils.ZookeeperFactory;
+  44 | import org.apache.zookeeper.AddWatchMode;
+  45 | import org.apache.zookeeper.KeeperException;
+  46 | import org.apache.zookeeper.WatchedEvent;
+  47 | import org.apache.zookeeper.Watcher;
+  48 | import org.apache.zookeeper.Watcher.Event.EventType;
+  49 | import org.apache.zookeeper.Watcher.WatcherType;
+  50 | import org.apache.zookeeper.ZooKeeper;
+  51 | import org.junit.jupiter.api.Tag;
+  52 | import org.junit.jupiter.api.Test;
+  53 | 
+  54 | public class TestWatchesBuilder extends CuratorTestBase {
+  55 |     private AtomicReference<ConnectionState> registerConnectionStateListener(CuratorFramework client) {
+  56 |         final AtomicReference<ConnectionState> state = new AtomicReference<ConnectionState>();
+  57 |         client.getConnectionStateListenable().addListener(new ConnectionStateListener() {
+  58 | 
+  59 |             @Override
+  60 |             public void stateChanged(CuratorFramework client, ConnectionState newState) {
+  61 |                 state.set(newState);
+  62 |                 synchronized (state) {
+  63 |                     state.notify();
+  64 |                 }
+  65 |             }
+  66 |         });
+  67 | 
+  68 |         return state;
+  69 |     }
+  70 | 
+  71 |     private boolean blockUntilDesiredConnectionState(
+  72 |             AtomicReference<ConnectionState> stateRef, Timing timing, final ConnectionState desiredState) {
+  73 |         if (stateRef.get() == desiredState) {
+  74 |             return true;
+  75 |         }
+  76 | 
+  77 |         //noinspection SynchronizationOnLocalVariableOrMethodParameter
+  78 |         synchronized (stateRef) {
+  79 |             if (stateRef.get() == desiredState) {
+  80 |                 return true;
+  81 |             }
+  82 | 
+  83 |             try {
+  84 |                 stateRef.wait(timing.milliseconds());
+  85 |                 return stateRef.get() == desiredState;
+  86 |             } catch (InterruptedException e) {
+  87 |                 Thread.currentThread().interrupt();
+  88 |                 return false;
+  89 |             }
+  90 |         }
+  91 |     }
+  92 | 
+  93 |     @Test
+  94 |     public void testRemoveCuratorDefaultWatcher() throws Exception {
+  95 |         Timing timing = new Timing();
+  96 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+  97 |                 .connectString(server.getConnectString())
+  98 |                 .retryPolicy(new RetryOneTime(1))
+  99 |                 .build();
+ 100 |         try {
+ 101 |             client.start();
+ 102 | 
+ 103 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 104 | 
+ 105 |             final String path = "/";
+ 106 |             client.getCuratorListenable().addListener(new CuratorListener() {
+ 107 |                 @Override
+ 108 |                 public void eventReceived(CuratorFramework client, CuratorEvent event) throws Exception {
+ 109 |                     if (event.getType() == CuratorEventType.WATCHED
+ 110 |                             && event.getWatchedEvent().getType() == EventType.DataWatchRemoved) {
+ 111 |                         removedLatch.countDown();
+ 112 |                     }
+ 113 |                 }
+ 114 |             });
+ 115 | 
+ 116 |             client.checkExists().watched().forPath(path);
+ 117 | 
+ 118 |             client.watches().removeAll().forPath(path);
+ 119 | 
+ 120 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 121 |         } finally {
+ 122 |             CloseableUtils.closeQuietly(client);
+ 123 |         }
+ 124 |     }
+ 125 | 
+ 126 |     @Test
+ 127 |     public void testRemoveCuratorWatch() throws Exception {
+ 128 |         Timing timing = new Timing();
+ 129 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 130 |                 .connectString(server.getConnectString())
+ 131 |                 .retryPolicy(new RetryOneTime(1))
+ 132 |                 .build();
+ 133 |         try {
+ 134 |             client.start();
+ 135 | 
+ 136 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 137 | 
+ 138 |             final String path = "/";
+ 139 |             CuratorWatcher watcher = new CuratorWatcher() {
+ 140 | 
+ 141 |                 @Override
+ 142 |                 public void process(WatchedEvent event) throws Exception {
+ 143 |                     if (event.getPath().equals(path) && event.getType() == EventType.DataWatchRemoved) {
+ 144 |                         removedLatch.countDown();
+ 145 |                     }
+ 146 |                 }
+ 147 |             };
+ 148 | 
+ 149 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 150 | 
+ 151 |             client.watches().remove(watcher).forPath(path);
+ 152 | 
+ 153 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 154 |         } finally {
+ 155 |             CloseableUtils.closeQuietly(client);
+ 156 |         }
+ 157 |     }
+ 158 | 
+ 159 |     @Test
+ 160 |     public void testRemoveWatch() throws Exception {
+ 161 |         Timing timing = new Timing();
+ 162 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 163 |                 .connectString(server.getConnectString())
+ 164 |                 .retryPolicy(new RetryOneTime(1))
+ 165 |                 .build();
+ 166 |         try {
+ 167 |             client.start();
+ 168 | 
+ 169 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 170 | 
+ 171 |             final String path = "/";
+ 172 |             Watcher watcher = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 173 | 
+ 174 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 175 | 
+ 176 |             client.watches().remove(watcher).forPath(path);
+ 177 | 
+ 178 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 179 |         } finally {
+ 180 |             CloseableUtils.closeQuietly(client);
+ 181 |         }
+ 182 |     }
+ 183 | 
+ 184 |     @Test
+ 185 |     public void testRemoveWatchInBackgroundWithCallback() throws Exception {
+ 186 |         Timing timing = new Timing();
+ 187 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 188 |                 .connectString(server.getConnectString())
+ 189 |                 .retryPolicy(new RetryOneTime(1))
+ 190 |                 .build();
+ 191 |         try {
+ 192 |             client.start();
+ 193 | 
+ 194 |             // Make sure that the event fires on both the watcher and the callback.
+ 195 |             final CountDownLatch removedLatch = new CountDownLatch(2);
+ 196 |             final String path = "/";
+ 197 |             Watcher watcher = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 198 | 
+ 199 |             BackgroundCallback callback = new BackgroundCallback() {
+ 200 | 
+ 201 |                 @Override
+ 202 |                 public void processResult(CuratorFramework client, CuratorEvent event) throws Exception {
+ 203 |                     if (event.getType() == CuratorEventType.REMOVE_WATCHES
+ 204 |                             && event.getPath().equals(path)) {
+ 205 |                         removedLatch.countDown();
+ 206 |                     }
+ 207 |                 }
+ 208 |             };
+ 209 | 
+ 210 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 211 | 
+ 212 |             client.watches()
+ 213 |                     .remove(watcher)
+ 214 |                     .ofType(WatcherType.Any)
+ 215 |                     .inBackground(callback)
+ 216 |                     .forPath(path);
+ 217 | 
+ 218 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 219 | 
+ 220 |         } finally {
+ 221 |             CloseableUtils.closeQuietly(client);
+ 222 |         }
+ 223 |     }
+ 224 | 
+ 225 |     @Test
+ 226 |     public void testRemoveWatchInBackgroundWithNoCallback() throws Exception {
+ 227 |         Timing timing = new Timing();
+ 228 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 229 |                 .connectString(server.getConnectString())
+ 230 |                 .retryPolicy(new RetryOneTime(1))
+ 231 |                 .build();
+ 232 |         try {
+ 233 |             client.start();
+ 234 | 
+ 235 |             final String path = "/";
+ 236 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 237 |             Watcher watcher = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 238 | 
+ 239 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 240 | 
+ 241 |             client.watches().remove(watcher).inBackground().forPath(path);
+ 242 | 
+ 243 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 244 | 
+ 245 |         } finally {
+ 246 |             CloseableUtils.closeQuietly(client);
+ 247 |         }
+ 248 |     }
+ 249 | 
+ 250 |     @Test
+ 251 |     public void testRemoveAllWatches() throws Exception {
+ 252 |         Timing timing = new Timing();
+ 253 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 254 |                 .connectString(server.getConnectString())
+ 255 |                 .retryPolicy(new RetryOneTime(1))
+ 256 |                 .build();
+ 257 |         try {
+ 258 |             client.start();
+ 259 | 
+ 260 |             final String path = "/";
+ 261 |             final CountDownLatch removedLatch = new CountDownLatch(2);
+ 262 | 
+ 263 |             Watcher watcher1 = new CountDownWatcher(path, removedLatch, EventType.ChildWatchRemoved);
+ 264 |             Watcher watcher2 = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 265 | 
+ 266 |             client.getChildren().usingWatcher(watcher1).forPath(path);
+ 267 |             client.checkExists().usingWatcher(watcher2).forPath(path);
+ 268 | 
+ 269 |             client.watches().removeAll().forPath(path);
+ 270 | 
+ 271 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 272 |         } finally {
+ 273 |             CloseableUtils.closeQuietly(client);
+ 274 |         }
+ 275 |     }
+ 276 | 
+ 277 |     @Test
+ 278 |     public void testRemoveAllDataWatches() throws Exception {
+ 279 |         Timing timing = new Timing();
+ 280 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 281 |                 .connectString(server.getConnectString())
+ 282 |                 .retryPolicy(new RetryOneTime(1))
+ 283 |                 .build();
+ 284 |         try {
+ 285 |             client.start();
+ 286 | 
+ 287 |             final String path = "/";
+ 288 |             final AtomicBoolean removedFlag = new AtomicBoolean(false);
+ 289 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 290 | 
+ 291 |             Watcher watcher1 = new BooleanWatcher(path, removedFlag, EventType.ChildWatchRemoved);
+ 292 |             Watcher watcher2 = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 293 | 
+ 294 |             client.getChildren().usingWatcher(watcher1).forPath(path);
+ 295 |             client.checkExists().usingWatcher(watcher2).forPath(path);
+ 296 | 
+ 297 |             client.watches().removeAll().ofType(WatcherType.Data).forPath(path);
+ 298 | 
+ 299 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 300 |             assertEquals(removedFlag.get(), false);
+ 301 |         } finally {
+ 302 |             CloseableUtils.closeQuietly(client);
+ 303 |         }
+ 304 |     }
+ 305 | 
+ 306 |     @Test
+ 307 |     public void testRemoveAllChildWatches() throws Exception {
+ 308 |         Timing timing = new Timing();
+ 309 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 310 |                 .connectString(server.getConnectString())
+ 311 |                 .retryPolicy(new RetryOneTime(1))
+ 312 |                 .build();
+ 313 |         try {
+ 314 |             client.start();
+ 315 | 
+ 316 |             final String path = "/";
+ 317 |             final AtomicBoolean removedFlag = new AtomicBoolean(false);
+ 318 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 319 | 
+ 320 |             Watcher watcher1 = new BooleanWatcher(path, removedFlag, EventType.DataWatchRemoved);
+ 321 |             Watcher watcher2 = new CountDownWatcher(path, removedLatch, EventType.ChildWatchRemoved);
+ 322 | 
+ 323 |             client.checkExists().usingWatcher(watcher1).forPath(path);
+ 324 |             client.getChildren().usingWatcher(watcher2).forPath(path);
+ 325 | 
+ 326 |             client.watches().removeAll().ofType(WatcherType.Children).forPath(path);
+ 327 | 
+ 328 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 329 |             assertEquals(removedFlag.get(), false);
+ 330 |         } finally {
+ 331 |             CloseableUtils.closeQuietly(client);
+ 332 |         }
+ 333 |     }
+ 334 | 
+ 335 |     @Test
+ 336 |     public void testRemoveLocalWatch() throws Exception {
+ 337 |         Timing timing = new Timing();
+ 338 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 339 |                 .connectString(server.getConnectString())
+ 340 |                 .retryPolicy(new RetryOneTime(1))
+ 341 |                 .build();
+ 342 |         try {
+ 343 |             client.start();
+ 344 | 
+ 345 |             AtomicReference<ConnectionState> stateRef = registerConnectionStateListener(client);
+ 346 | 
+ 347 |             final String path = "/";
+ 348 | 
+ 349 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 350 | 
+ 351 |             Watcher watcher = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 352 | 
+ 353 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 354 | 
+ 355 |             // Stop the server so we can check if we can remove watches locally when offline
+ 356 |             server.stop();
+ 357 | 
+ 358 |             assertTrue(blockUntilDesiredConnectionState(stateRef, timing, ConnectionState.SUSPENDED));
+ 359 | 
+ 360 |             client.watches().removeAll().locally().forPath(path);
+ 361 | 
+ 362 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 363 |         } finally {
+ 364 |             CloseableUtils.closeQuietly(client);
+ 365 |         }
+ 366 |     }
+ 367 | 
+ 368 |     @Test
+ 369 |     public void testRemoveLocalWatchInBackground() throws Exception {
+ 370 |         Timing timing = new Timing();
+ 371 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 372 |                 .connectString(server.getConnectString())
+ 373 |                 .retryPolicy(new RetryOneTime(1))
+ 374 |                 .build();
+ 375 |         try {
+ 376 |             client.start();
+ 377 | 
+ 378 |             AtomicReference<ConnectionState> stateRef = registerConnectionStateListener(client);
+ 379 | 
+ 380 |             final String path = "/";
+ 381 | 
+ 382 |             final CountDownLatch removedLatch = new CountDownLatch(1);
+ 383 | 
+ 384 |             Watcher watcher = new CountDownWatcher(path, removedLatch, EventType.DataWatchRemoved);
+ 385 | 
+ 386 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 387 | 
+ 388 |             // Stop the server so we can check if we can remove watches locally when offline
+ 389 |             server.stop();
+ 390 | 
+ 391 |             assertTrue(blockUntilDesiredConnectionState(stateRef, timing, ConnectionState.SUSPENDED));
+ 392 | 
+ 393 |             client.watches().removeAll().locally().inBackground().forPath(path);
+ 394 | 
+ 395 |             assertTrue(timing.awaitLatch(removedLatch), "Timed out waiting for watch removal");
+ 396 |         } finally {
+ 397 |             CloseableUtils.closeQuietly(client);
+ 398 |         }
+ 399 |     }
+ 400 | 
+ 401 |     /**
+ 402 |      * Test the case where we try and remove an unregistered watcher. In this case we expect a NoWatcherException to
+ 403 |      * be thrown.
+ 404 |      * @throws Exception
+ 405 |      */
+ 406 |     @Test
+ 407 |     public void testRemoveUnregisteredWatcher() throws Exception {
+ 408 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 409 |                 .connectString(server.getConnectString())
+ 410 |                 .retryPolicy(new RetryOneTime(1))
+ 411 |                 .build();
+ 412 |         try {
+ 413 |             client.start();
+ 414 | 
+ 415 |             final String path = "/";
+ 416 |             Watcher watcher = new Watcher() {
+ 417 |                 @Override
+ 418 |                 public void process(WatchedEvent event) {}
+ 419 |             };
+ 420 | 
+ 421 |             try {
+ 422 |                 client.watches().remove(watcher).forPath(path);
+ 423 |                 fail("Expected KeeperException.NoWatcherException");
+ 424 |             } catch (KeeperException.NoWatcherException expected) {
+ 425 |                 // expected
+ 426 |             }
+ 427 |         } finally {
+ 428 |             CloseableUtils.closeQuietly(client);
+ 429 |         }
+ 430 |     }
+ 431 | 
+ 432 |     /**
+ 433 |      * Test the case where we try and remove an unregistered watcher but have the quietly flag set. In this case we expect success.
+ 434 |      * @throws Exception
+ 435 |      */
+ 436 |     @Test
+ 437 |     public void testRemoveUnregisteredWatcherQuietly() throws Exception {
+ 438 |         Timing timing = new Timing();
+ 439 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 440 |                 .connectString(server.getConnectString())
+ 441 |                 .retryPolicy(new RetryOneTime(1))
+ 442 |                 .build();
+ 443 |         try {
+ 444 |             client.start();
+ 445 | 
+ 446 |             final AtomicBoolean watcherRemoved = new AtomicBoolean(false);
+ 447 | 
+ 448 |             final String path = "/";
+ 449 |             Watcher watcher = new BooleanWatcher(path, watcherRemoved, EventType.DataWatchRemoved);
+ 450 | 
+ 451 |             client.watches().remove(watcher).quietly().forPath(path);
+ 452 | 
+ 453 |             timing.sleepABit();
+ 454 | 
+ 455 |             // There should be no watcher removed as none were registered.
+ 456 |             assertEquals(watcherRemoved.get(), false);
+ 457 |         } finally {
+ 458 |             CloseableUtils.closeQuietly(client);
+ 459 |         }
+ 460 |     }
+ 461 | 
+ 462 |     @Test
+ 463 |     public void testGuaranteedRemoveWatch() throws Exception {
+ 464 |         Timing timing = new Timing();
+ 465 |         CuratorFramework client = CuratorFrameworkFactory.builder()
+ 466 |                 .connectString(server.getConnectString())
+ 467 |                 .retryPolicy(new RetryOneTime(1))
+ 468 |                 .build();
+ 469 |         try {
+ 470 |             client.start();
+ 471 | 
+ 472 |             AtomicReference<ConnectionState> stateRef = registerConnectionStateListener(client);
+ 473 | 
+ 474 |             String path = "/";
+ 475 | 
+ 476 |             CountDownLatch removeLatch = new CountDownLatch(1);
+ 477 | 
+ 478 |             Watcher watcher = new CountDownWatcher(path, removeLatch, EventType.DataWatchRemoved);
+ 479 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 480 | 
+ 481 |             server.stop();
+ 482 | 
+ 483 |             assertTrue(blockUntilDesiredConnectionState(stateRef, timing, ConnectionState.SUSPENDED));
+ 484 | 
+ 485 |             // Remove the watch while we're not connected
+ 486 |             try {
+ 487 |                 client.watches().remove(watcher).guaranteed().forPath(path);
+ 488 |                 fail();
+ 489 |             } catch (KeeperException.ConnectionLossException e) {
+ 490 |                 // Expected
+ 491 |             }
+ 492 | 
+ 493 |             server.restart();
+ 494 | 
+ 495 |             timing.awaitLatch(removeLatch);
+ 496 |         } finally {
+ 497 |             CloseableUtils.closeQuietly(client);
+ 498 |         }
+ 499 |     }
+ 500 | 
+ 501 |     @Test
+ 502 |     public void testGuaranteedRemoveWatchInBackground() throws Exception {
+ 503 |         Timing timing = new Timing();
+ 504 |         CuratorFramework client = CuratorFrameworkFactory.newClient(
+ 505 |                 server.getConnectString(), timing.session(), timing.connection(), new ExponentialBackoffRetry(100, 3));
+ 506 |         try {
+ 507 |             client.start();
+ 508 | 
+ 509 |             AtomicReference<ConnectionState> stateRef = registerConnectionStateListener(client);
+ 510 | 
+ 511 |             final CountDownLatch guaranteeAddedLatch = new CountDownLatch(1);
+ 512 | 
+ 513 |             ((CuratorFrameworkBase) client).getFailedRemoveWatcherManager().debugListener =
+ 514 |                     new FailedOperationManager.FailedOperationManagerListener<
+ 515 |                             FailedRemoveWatchManager.FailedRemoveWatchDetails>() {
+ 516 | 
+ 517 |                         @Override
+ 518 |                         public void pathAddedForGuaranteedOperation(FailedRemoveWatchDetails detail) {
+ 519 |                             guaranteeAddedLatch.countDown();
+ 520 |                         }
+ 521 |                     };
+ 522 | 
+ 523 |             String path = "/";
+ 524 | 
+ 525 |             CountDownLatch removeLatch = new CountDownLatch(1);
+ 526 | 
+ 527 |             Watcher watcher = new CountDownWatcher(path, removeLatch, EventType.DataWatchRemoved);
+ 528 |             client.checkExists().usingWatcher(watcher).forPath(path);
+ 529 | 
+ 530 |             server.stop();
+ 531 |             assertTrue(blockUntilDesiredConnectionState(stateRef, timing, ConnectionState.SUSPENDED));
+ 532 | 
+ 533 |             // Remove the watch while we're not connected
+ 534 |             client.watches().remove(watcher).guaranteed().inBackground().forPath(path);
+ 535 | 
+ 536 |             timing.awaitLatch(guaranteeAddedLatch);
+ 537 | 
+ 538 |             server.restart();
+ 539 | 
+ 540 |             timing.awaitLatch(removeLatch);
+ 541 |         } finally {
+ 542 |             CloseableUtils.closeQuietly(client);
+ 543 |         }
+ 544 |     }
+ 545 | 
+ 546 |     @Test
+ 547 |     @Tag(CuratorTestBase.zk36Group)
+ 548 |     public void testPersistentWatch() throws Exception {
+ 549 |         try (CuratorFramework client =
+ 550 |                 CuratorFrameworkFactory.newClient(server.getConnectString(), new RetryOneTime(1))) {
+ 551 |             client.start();
+ 552 |             client.blockUntilConnected();
+ 553 | 
+ 554 |             CountDownLatch latch = new CountDownLatch(3);
+ 555 |             Watcher watcher = event -> latch.countDown();
+ 556 |             client.watchers()
+ 557 |                     .add()
+ 558 |                     .withMode(AddWatchMode.PERSISTENT)
+ 559 |                     .usingWatcher(watcher)
+ 560 |                     .forPath("/test/foo");
+ 561 | 
+ 562 |             client.create().creatingParentsIfNeeded().forPath("/test/foo");
+ 563 |             client.setData().forPath("/test/foo", "hey".getBytes());
+ 564 |             client.delete().forPath("/test/foo");
+ 565 | 
+ 566 |             assertTrue(timing.awaitLatch(latch));
+ 567 |         }
+ 568 |     }
+ 569 | 
+ 570 |     @Test
+ 571 |     @Tag(CuratorTestBase.zk36Group)
+ 572 |     public void testPersistentWatchInBackground() throws Exception {
+ 573 |         try (CuratorFramework client =
+ 574 |                 CuratorFrameworkFactory.newClient(server.getConnectString(), new RetryOneTime(1))) {
+ 575 |             client.start();
+ 576 |             client.blockUntilConnected();
+ 577 | 
+ 578 |             CountDownLatch backgroundLatch = new CountDownLatch(1);
+ 579 |             BackgroundCallback backgroundCallback = (__, ___) -> backgroundLatch.countDown();
+ 580 |             CountDownLatch latch = new CountDownLatch(3);
+ 581 |             Watcher watcher = event -> latch.countDown();
+ 582 |             client.watchers()
+ 583 |                     .add()
+ 584 |                     .withMode(AddWatchMode.PERSISTENT)
+ 585 |                     .inBackground(backgroundCallback)
+ 586 |                     .usingWatcher(watcher)
+ 587 |                     .forPath("/test/foo");
+ 588 | 
+ 589 |             client.create().creatingParentsIfNeeded().forPath("/test/foo");
+ 590 |             client.setData().forPath("/test/foo", "hey".getBytes());
+ 591 |             client.delete().forPath("/test/foo");
+ 592 | 
+ 593 |             assertTrue(timing.awaitLatch(backgroundLatch));
+ 594 |             assertTrue(timing.awaitLatch(latch));
+ 595 |         }
+ 596 |     }
+ 597 | 
+ 598 |     @Test
+ 599 |     @Tag(CuratorTestBase.zk36Group)
+ 600 |     public void testPersistentRecursiveWatch() throws Exception {
+ 601 |         try (CuratorFramework client =
+ 602 |                 CuratorFrameworkFactory.newClient(server.getConnectString(), new RetryOneTime(1))) {
+ 603 |             client.start();
+ 604 |             client.blockUntilConnected();
+ 605 | 
+ 606 |             CountDownLatch latch = new CountDownLatch(5);
+ 607 |             Watcher watcher = event -> latch.countDown();
+ 608 |             client.watchers()
+ 609 |                     .add()
+ 610 |                     .withMode(AddWatchMode.PERSISTENT_RECURSIVE)
+ 611 |                     .usingWatcher(watcher)
+ 612 |                     .forPath("/test");
+ 613 | 
+ 614 |             client.create().forPath("/test");
+ 615 |             client.create().forPath("/test/a");
+ 616 |             client.create().forPath("/test/a/b");
+ 617 |             client.create().forPath("/test/a/b/c");
+ 618 |             client.create().forPath("/test/a/b/c/d");
+ 619 | 
+ 620 |             assertTrue(timing.awaitLatch(latch));
+ 621 |         }
+ 622 |     }
+ 623 | 
+ 624 |     @Test
+ 625 |     @Tag(CuratorTestBase.zk36Group)
+ 626 |     public void testPersistentRecursiveWatchInBackground() throws Exception {
+ 627 |         try (CuratorFramework client =
+ 628 |                 CuratorFrameworkFactory.newClient(server.getConnectString(), new RetryOneTime(1))) {
+ 629 |             client.start();
+ 630 |             client.blockUntilConnected();
+ 631 | 
+ 632 |             CountDownLatch backgroundLatch = new CountDownLatch(1);
+ 633 |             BackgroundCallback backgroundCallback = (__, ___) -> backgroundLatch.countDown();
+ 634 |             CountDownLatch latch = new CountDownLatch(5);
+ 635 |             Watcher watcher = event -> latch.countDown();
+ 636 |             client.watchers()
+ 637 |                     .add()
+ 638 |                     .withMode(AddWatchMode.PERSISTENT_RECURSIVE)
+ 639 |                     .inBackground(backgroundCallback)
+ 640 |                     .usingWatcher(watcher)
+ 641 |                     .forPath("/test");
+ 642 | 
+ 643 |             client.create().forPath("/test");
+ 644 |             client.create().forPath("/test/a");
+ 645 |             client.create().forPath("/test/a/b");
+ 646 |             client.create().forPath("/test/a/b/c");
+ 647 |             client.create().forPath("/test/a/b/c/d");
+ 648 | 
+ 649 |             assertTrue(timing.awaitLatch(backgroundLatch));
+ 650 |             assertTrue(timing.awaitLatch(latch));
+ 651 |         }
+ 652 |     }
+ 653 | 
+ 654 |     @Test
+ 655 |     @Tag(CuratorTestBase.zk36Group)
+ 656 |     public void testPersistentRecursiveDefaultWatch() throws Exception {
+ 657 |         CountDownLatch latch = new CountDownLatch(6); // 5 creates plus the initial sync
+ 658 |         ZookeeperFactory zookeeperFactory = (connectString, sessionTimeout, watcher, canBeReadOnly) -> {
+ 659 |             Watcher actualWatcher = event -> {
+ 660 |                 watcher.process(event);
+ 661 |                 latch.countDown();
+ 662 |             };
+ 663 |             return new ZooKeeper(connectString, sessionTimeout, actualWatcher);
+ 664 |         };
+ 665 |         try (CuratorFramework client = CuratorFrameworkFactory.builder()
+ 666 |                 .connectString(server.getConnectString())
+ 667 |                 .retryPolicy(new RetryOneTime(1))
+ 668 |                 .zookeeperFactory(zookeeperFactory)
+ 669 |                 .build()) {
+ 670 |             client.start();
+ 671 |             client.blockUntilConnected();
+ 672 | 
+ 673 |             client.watchers().add().withMode(AddWatchMode.PERSISTENT_RECURSIVE).forPath("/test");
+ 674 | 
+ 675 |             client.create().forPath("/test");
+ 676 |             client.create().forPath("/test/a");
+ 677 |             client.create().forPath("/test/a/b");
+ 678 |             client.create().forPath("/test/a/b/c");
+ 679 |             client.create().forPath("/test/a/b/c/d");
+ 680 | 
+ 681 |             assertTrue(timing.awaitLatch(latch));
+ 682 |         }
+ 683 |     }
+ 684 | 
+ 685 |     private static class CountDownWatcher implements Watcher {
+ 686 |         private String path;
+ 687 |         private EventType eventType;
+ 688 |         private CountDownLatch removeLatch;
+ 689 | 
+ 690 |         public CountDownWatcher(String path, CountDownLatch removeLatch, EventType eventType) {
+ 691 |             this.path = path;
+ 692 |             this.eventType = eventType;
+ 693 |             this.removeLatch = removeLatch;
+ 694 |         }
+ 695 | 
+ 696 |         @Override
+ 697 |         public void process(WatchedEvent event) {
+ 698 |             if (event.getPath() == null || event.getType() == null) {
+ 699 |                 return;
+ 700 |             }
+ 701 | 
+ 702 |             if (event.getPath().equals(path) && event.getType() == eventType) {
+ 703 |                 removeLatch.countDown();
+ 704 |             }
+ 705 |         }
+ 706 |     }
+ 707 | 
+ 708 |     private static class BooleanWatcher implements Watcher {
+ 709 |         private String path;
+ 710 |         private EventType eventType;
+ 711 |         private AtomicBoolean removedFlag;
+ 712 | 
+ 713 |         public BooleanWatcher(String path, AtomicBoolean removedFlag, EventType eventType) {
+ 714 |             this.path = path;
+ 715 |             this.eventType = eventType;
+ 716 |             this.removedFlag = removedFlag;
+ 717 |         }
+ 718 | 
+ 719 |         @Override
+ 720 |         public void process(WatchedEvent event) {
+ 721 |             if (event.getPath() == null || event.getType() == null) {
+ 722 |                 return;
+ 723 |             }
+ 724 | 
+ 725 |             if (event.getPath().equals(path) && event.getType() == eventType) {
+ 726 |                 removedFlag.set(true);
+ 727 |             }
+ 728 |         }
+ 729 |     }
+ 730 | }
+
+Generate a git diff that fixes this error using cross-platform Java APIs.
+
+Common fixes for Java cross-platform compatibility:
+1. Replace hardcoded `/tmp/` paths with `System.getProperty("java.io.tmpdir")`
+2. Use `File.separator` or `Paths.get()` instead of hardcoded `/` or `\`
+3. For font-related failures on macOS (e.g., "Table OS/2 does not exist"),
+   use bundled test fonts or add OS-conditional test skips:
+   `Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("mac"), "Font not available on macOS")`
+4. For file locking issues on Windows (cannot delete folder), ensure streams
+   and MappedByteBuffers are closed/unmapped before deletion. Use try-with-resources.
+5. For native library failures (UnsatisfiedLinkError), add conditional loading
+   or skip tests with `Assumptions.assumeTrue()` based on OS
+6. For path separator issues in assertions, normalize paths before comparing
+7. For Windows file deletion failures, add retry logic or use `Files.walkFileTree`
+   with explicit handle closing
+
+Important constraints:
+- Do NOT change test logic or assertions beyond what is needed for OS compatibility
+- Prefer `Assumptions.assumeFalse/assumeTrue` over `@Disabled` when the test is valid on some OSes
+- Keep the fix minimal and targeted to the specific error
+- Import any new classes you reference (e.g., org.junit.jupiter.api.Assumptions)
+
+Output ONLY the git diff. No explanations, no markdown fences.

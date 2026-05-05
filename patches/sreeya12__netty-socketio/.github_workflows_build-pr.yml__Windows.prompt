@@ -1,0 +1,57 @@
+You are fixing OS compatibility issues in a GitHub Actions workflow YAML file.
+The workflow currently runs on Ubuntu but fails on Windows.
+
+File: .github/workflows/build-pr.yml
+Error on Windows: The term 'export' is not recognized
+
+Full workflow file:
+   1 | name: Build PR
+   2 | 
+   3 | concurrency:
+   4 |   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+   5 |   cancel-in-progress: true
+   6 | 
+   7 | permissions:
+   8 |   contents: read
+   9 | 
+  10 | on:
+  11 |   pull_request:
+  12 |     branches:
+  13 |       - master
+  14 |   workflow_dispatch:
+  15 | 
+  16 | jobs:
+  17 | 
+  18 |   build:
+  19 |     strategy:
+  20 |       matrix:
+  21 |         java-version:
+  22 |           - 17
+  23 |           - 21
+  24 |     uses: ./.github/workflows/build.yml
+  25 |     with:
+  26 |       javaVersion: "${{ matrix.java-version }}"
+
+Generate a git diff that fixes this error so the workflow runs correctly on Ubuntu, Windows, and macOS.
+
+Common fixes for GitHub Actions cross-platform compatibility:
+1. Replace `export VAR=value` with an `env:` block on the step or job level
+2. Replace `$(pwd)` with `${{ github.workspace }}`
+3. Replace bash-only commands (`ls`, `chmod`, `sudo`, `apt-get`, `wget`) with:
+   - Cross-platform alternatives, OR
+   - OS-conditional steps using `if: runner.os == 'Linux'` / `if: runner.os != 'Windows'`
+4. For Maven `-D` arguments on Windows, wrap them in double quotes:
+   `mvn "-Dproperty=value"` instead of `mvn -Dproperty=value`
+5. For `docker` commands, add `if: runner.os == 'Linux'` since Docker is not available on all runners
+6. For Java setup failures on macOS ARM, change distribution from `adopt` to `temurin` or `zulu`,
+   or add `if: matrix.java != 8` conditions for macOS ARM runners
+7. For shell script steps (`.sh` files), add `shell: bash` explicitly or wrap in OS conditional
+8. Replace hardcoded forward-slash paths with platform-agnostic expressions
+
+Important constraints:
+- Do NOT remove any existing functionality for Ubuntu
+- Do NOT change the Maven build commands themselves
+- Preserve all existing matrix variables and their values
+- Keep the fix minimal and targeted to the specific error
+
+Output ONLY the git diff. No explanations, no markdown fences.

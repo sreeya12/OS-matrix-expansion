@@ -1,0 +1,74 @@
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -29,7 +29,7 @@
+       - name: Install softhsm2
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y softhsm2
++            sudo apt-get update && sudo apt-get install -y softhsm2
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install softhsm
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -31,7 +31,7 @@
+       - name: Install opensc
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y opensc
++            sudo apt-get update && sudo apt-get install -y opensc
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install opensc
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y softhsm2
++            sudo apt-get update && sudo apt-get install -y softhsm2
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install softhsm
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -150,7 +150,7 @@
+       - name: Install opensc
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y opensc
++            sudo apt-get update && sudo apt-get install -y opensc
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install opensc
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y softhsm2
++            sudo apt-get update && sudo apt-get install -y softhsm2
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install softhsm
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -94,7 +94,7 @@
+       - name: Install opensc
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y opensc
++            sudo apt-get update && sudo apt-get install -y opensc
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install opensc
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y softhsm2
++            sudo apt-get update && sudo apt-get install -y softhsm2
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install softhsm
+           elif [ "${RUNNER_OS}" == "Windows" ]; then
+@@ -62,7 +62,7 @@
+       - name: Install opensc
+         run: |
+           if [ "${RUNNER_OS}" == "Linux" ]; then
+-            sudo apt-get install -y opensc
++            sudo apt-get update && sudo apt-get install -y opensc
+           elif [ "${RUNNER_OS}" == "macOS" ]; then
+             brew install opensc
+           elif [ "${RUNNER_OS}" == "Windows" ]; then

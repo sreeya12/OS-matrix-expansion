@@ -1,0 +1,14 @@
+```diff
+--- a/.github/workflows/build-pr.yml
++++ b/.github/workflows/build-pr.yml
+@@ -24,6 +24,7 @@
+       java-version:
+         - 17
+         - 21
+     uses: ./.github/workflows/build.yml
++    env:
++      JAVA_VERSION: ${{ matrix.java-version }}
+     with:
+-      javaVersion: "${{ matrix.java-version }}"
++      javaVersion: $JAVA_VERSION
+```

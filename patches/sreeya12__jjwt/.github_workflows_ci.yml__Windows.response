@@ -1,0 +1,56 @@
+```diff
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -29,7 +29,7 @@
+       - name: Install softhsm2
+-         run: sudo apt-get install -y softhsm2
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y softhsm2
++           fi
+       - name: Install opensc
+-         run: sudo apt-get install -y opensc
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y opensc
++           fi
+@@ -59,7 +63,7 @@
+       - name: Install softhsm2
+-         run: sudo apt-get install -y softhsm2
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y softhsm2
++           fi
+       - name: Install opensc
+-         run: sudo apt-get install -y opensc
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y opensc
++           fi
+@@ -91,7 +95,7 @@
+       - name: Install softhsm2
+-         run: sudo apt-get install -y softhsm2
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y softhsm2
++           fi
+       - name: Install opensc
+-         run: sudo apt-get install -y opensc
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y opensc
++           fi
+@@ -147,7 +151,7 @@
+       - name: Install softhsm2
+-         run: sudo apt-get install -y softhsm2
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y softhsm2
++           fi
+       - name: Install opensc
+-         run: sudo apt-get install -y opensc
++         run: |
++           if [ "${RUNNER_OS}" == "Linux" ]; then
++             sudo apt-get install -y opensc
++           fi
+```

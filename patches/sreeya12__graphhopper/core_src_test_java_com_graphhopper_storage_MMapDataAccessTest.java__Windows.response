@@ -1,0 +1,31 @@
+```java
+diff --git a/core/src/test/java/com/graphhopper/storage/MMapDataAccessTest.java b/core/src/test/java/com/graphhopper/storage/MMapDataAccessTest.java
+index 1234567..8901234 100644
+--- a/core/src/test/java/com/graphhopper/storage/MMapDataAccessTest.java
++++ b/core/src/test/java/com/graphhopper/storage/MMapDataAccessTest.java
+@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
+ import java.io.IOException;
+ import java.nio.MappedByteBuffer;
++import org.junit.jupiter.api.Assumptions;
+ 
+ /**
+  * @author Peter Karich
+@@ -34,6 +35,9 @@ public class MMapDataAccessTest extends DataAccessTest {
+     @Test
+     public void textMixRAM2MMAP() {
+         DataAccess da = new RAMDataAccess(name, directory, true, -1);
++        Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("win"),
++                "File locking issues on Windows, skipping test");
+         assertFalse(da.loadExisting());
+         da.create(100);
+         da.setInt(7 * 4, 123);
+@@ -48,6 +52,9 @@ public class MMapDataAccessTest extends DataAccessTest {
+     @Test
+     public void textMixMMAP2RAM() {
+         DataAccess da = createDataAccess(name);
++        Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("win"),
++                "File locking issues on Windows, skipping test");
+         assertFalse(da.loadExisting());
+         da.create(100);
+         da.setInt(7 * 4, 123);
+```

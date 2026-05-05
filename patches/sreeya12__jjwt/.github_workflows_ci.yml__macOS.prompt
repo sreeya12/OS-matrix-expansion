@@ -1,0 +1,204 @@
+You are fixing OS compatibility issues in a GitHub Actions workflow YAML file.
+The workflow currently runs on Ubuntu but fails on macOS.
+
+File: .github/workflows/ci.yml
+Error on macOS: get: command not found
+
+Full workflow file:
+   1 | name: CI
+   2 | 
+   3 | on:
+   4 |   workflow_dispatch: 
+   5 |   pull_request: # all pull requests
+   6 |   push:
+   7 |     branches:
+   8 |       - master
+   9 | 
+  10 | env:
+  11 |   MVN_CMD: ./mvnw --no-transfer-progress -B
+  12 | 
+  13 | jobs:
+  14 |   oracle:
+  15 |     strategy:
+  16 |       fail-fast: false
+  17 |       matrix:
+  18 |         java: [ '17' ]
+  19 |         os: [ubuntu-latest, windows-latest, macos-latest]
+  20 |     runs-on: ${{ matrix.os }}
+  21 |     name: jdk-${{ matrix.java }}-oracle
+  22 |     steps:
+  23 |       - uses: actions/checkout@v4
+  24 |       - name: Set up JDK
+  25 |         uses: actions/setup-java@v4.7.0
+  26 |         with:
+  27 |           distribution: oracle
+  28 |           java-version: ${{ matrix.java }}
+  29 |       - name: Install softhsm2
+  30 |         run: sudo apt-get install -y softhsm2
+  31 |       - name: Install opensc
+  32 |         run: sudo apt-get install -y opensc
+  33 |       - name: Ensure SoftHSM user configuration
+  34 |         run: impl/src/test/scripts/softhsm configure
+  35 |       - name: Populate SoftHSM with JJWT test keys
+  36 |         run: impl/src/test/scripts/softhsm import
+  37 |       - name: Build
+  38 |         # run a full build, just as we would for a release (i.e. the `ossrh` profile), but don't use gpg
+  39 |         # to sign artifacts, since we don't want to mess with storing signing credentials in CI:
+  40 |         run: ${{env.MVN_CMD}} verify -Possrh -Dgpg.skip=true
+  41 | 
+  42 |   temurin:
+  43 |     strategy:
+  44 |       fail-fast: false
+  45 |       matrix:
+  46 |         java: [ '8', '11', '17', '18' ]
+  47 |         os: [ubuntu-latest, windows-latest, macos-latest]
+  48 |     runs-on: ${{ matrix.os }}
+  49 |     name: jdk-${{ matrix.java }}-temurin
+  50 |     steps:
+  51 |       - uses: actions/checkout@v4
+  52 |       - name: Set up JDK
+  53 |         uses: actions/setup-java@v4
+  54 |         with:
+  55 |           java-version: ${{ matrix.java }}
+  56 |           distribution: 'temurin'
+  57 |           cache: 'maven'
+  58 |           check-latest: true
+  59 |       - name: Install softhsm2
+  60 |         run: sudo apt-get install -y softhsm2
+  61 |       - name: Install opensc
+  62 |         run: sudo apt-get install -y opensc
+  63 |       - name: Ensure SoftHSM user configuration
+  64 |         run: impl/src/test/scripts/softhsm configure
+  65 |       - name: Populate SoftHSM with JJWT test keys
+  66 |         run: impl/src/test/scripts/softhsm import
+  67 |       - name: Build
+  68 |         # run a full build, just as we would for a release (i.e. the `ossrh` profile), but don't use gpg
+  69 |         # to sign artifacts, since we don't want to mess with storing signing credentials in CI:
+  70 |         run: ${{env.MVN_CMD}} verify -Possrh -Dgpg.skip=true
+  71 | 
+  72 |   zulu:
+  73 |     strategy:
+  74 |       fail-fast: false
+  75 |       matrix:
+  76 |         java: [ '7', '8', '9', '11', '12', '13', '14', '15', '16', '17', '18', '21' ]
+  77 |         os: [ubuntu-latest, windows-latest, macos-latest]
+  78 |     runs-on: ${{ matrix.os }}
+  79 |     env:
+  80 |       JDK_MAJOR_VERSION: ${{ matrix.java }}
+  81 |     name: jdk-${{ matrix.java }}-zulu
+  82 |     steps:
+  83 |       - uses: actions/checkout@v4
+  84 |       - name: Set up JDK
+  85 |         uses: actions/setup-java@v4
+  86 |         with:
+  87 |           java-version: ${{ matrix.java }}
+  88 |           distribution: 'zulu'
+  89 |           cache: 'maven'
+  90 |           check-latest: true
+  91 |       - name: Install softhsm2
+  92 |         run: sudo apt-get install -y softhsm2
+  93 |       - name: Install opensc
+  94 |         run: sudo apt-get install -y opensc
+  95 |       - name: Ensure SoftHSM user configuration
+  96 |         run: impl/src/test/scripts/softhsm configure
+  97 |       - name: Populate SoftHSM with JJWT test keys
+  98 |         run: impl/src/test/scripts/softhsm import
+  99 |       - name: Build
+ 100 |         # run a full build, just as we would for a release (i.e. the `ossrh` profile), but don't use gpg
+ 101 |         # to sign artifacts, since we don't want to mess with storing signing credentials in CI:
+ 102 |         run: |
+ 103 |           if [ "$JDK_MAJOR_VERSION" == "7" ]; then export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=128m"; fi
+ 104 |           ${{env.MVN_CMD}} verify -Possrh -Dgpg.skip=true
+ 105 | 
+ 106 |   # ensure all of our files have the correct/updated license header
+ 107 |   license-check:
+ 108 |     runs-on: ${{ matrix.os }}
+ 109 |     strategy:
+ 110 |       fail-fast: false
+ 111 |       matrix:
+ 112 |         os: [ubuntu-latest, windows-latest, macos-latest]
+ 113 |     steps:
+ 114 |       - uses: actions/checkout@v4
+ 115 |         with:
+ 116 |           fetch-depth: 0 # avoid license plugin history warnings (plus it needs full history)
+ 117 |       - name: Set up JDK
+ 118 |         uses: actions/setup-java@v4
+ 119 |         with:
+ 120 |           distribution: 'zulu'
+ 121 |           java-version: '8'
+ 122 |           cache: 'maven'
+ 123 |           check-latest: true
+ 124 |       - name: License Check
+ 125 |         # This adds about 1 minute to any build, which is why we don't want to do it on every other build:
+ 126 |         run: |
+ 127 |           ${{env.MVN_CMD}} license:check
+ 128 | 
+ 129 |   code-coverage:
+ 130 |     # (commented out for now - see the comments in 'Wait to start' below for why.  Keeping this here as a placeholder
+ 131 |     # as it may be better to use instead of an artificial delay once we no longer need to build on JDK 7):
+ 132 |     #needs: zulu # wait until others finish so a coverage failure doesn't cancel others accidentally
+ 133 |     runs-on: ${{ matrix.os }}
+ 134 |     strategy:
+ 135 |       fail-fast: false
+ 136 |       matrix:
+ 137 |         os: [ubuntu-latest, windows-latest, macos-latest]
+ 138 |     steps:
+ 139 |       - uses: actions/checkout@v4
+ 140 |       - name: Set up JDK
+ 141 |         uses: actions/setup-java@v4
+ 142 |         with:
+ 143 |           distribution: 'zulu'
+ 144 |           java-version: '8'
+ 145 |           cache: 'maven'
+ 146 |           check-latest: true
+ 147 |       - name: Install softhsm2
+ 148 |         run: sudo apt-get install -y softhsm2
+ 149 |       - name: Install opensc
+ 150 |         run: sudo apt-get install -y opensc
+ 151 |       - name: Ensure SoftHSM user configuration
+ 152 |         run: impl/src/test/scripts/softhsm configure
+ 153 |       - name: Populate SoftHSM with JJWT test keys
+ 154 |         run: impl/src/test/scripts/softhsm import
+ 155 |       - name: Wait to start
+ 156 |         # wait a little to start: code coverage usually only takes about 1 1/2 minutes.  If coverage fails, it will
+ 157 |         # cancel the other running builds, and we don't want that (because we want to see if jobs fail due to
+ 158 |         # build issues, not due to the code-coverage job causing the others to cancel).  We could have used the
+ 159 |         # 'need' property (commented out above), and that would wait until all the other jobs have finished before
+ 160 |         # starting this one, but that introduces unnecessary (sometimes 2 1/2 minute) delay, whereas delaying the
+ 161 |         # start of the code coverage checks a bit should allow everything to finish around the same time without having
+ 162 |         # much of an adverse effect on the other jobs above.
+ 163 |         run: sleep 90s
+ 164 |         shell: bash
+ 165 |       - name: Code Coverage
+ 166 |         # run a full build, just as we would for a release (i.e. the `ossrh` profile), but don't use gpg
+ 167 |         # to sign artifacts, since we don't want to mess with storing signing credentials in CI:
+ 168 |         run: |
+ 169 |           ${{env.MVN_CMD}} clover:setup test && \
+ 170 |             ${{env.MVN_CMD}} -pl . clover:clover clover:check coveralls:report \
+ 171 |               -DrepoToken="${{ secrets.GITHUB_TOKEN }}" \
+ 172 |               -DserviceName=github \
+ 173 |               -DserviceBuildNumber="${{ env.GITHUB_RUN_ID }}"
+
+Generate a git diff that fixes this error so the workflow runs correctly on Ubuntu, Windows, and macOS.
+
+Common fixes for GitHub Actions cross-platform compatibility:
+1. Replace `export VAR=value` with an `env:` block on the step or job level
+2. Replace `$(pwd)` with `${{ github.workspace }}`
+3. Replace bash-only commands (`ls`, `chmod`, `sudo`, `apt-get`, `wget`) with:
+   - Cross-platform alternatives, OR
+   - OS-conditional steps using `if: runner.os == 'Linux'` / `if: runner.os != 'Windows'`
+4. For Maven `-D` arguments on Windows, wrap them in double quotes:
+   `mvn "-Dproperty=value"` instead of `mvn -Dproperty=value`
+5. For `docker` commands, add `if: runner.os == 'Linux'` since Docker is not available on all runners
+6. For Java setup failures on macOS ARM, change distribution from `adopt` to `temurin` or `zulu`,
+   or add `if: matrix.java != 8` conditions for macOS ARM runners
+7. For shell script steps (`.sh` files), add `shell: bash` explicitly or wrap in OS conditional
+8. Replace hardcoded forward-slash paths with platform-agnostic expressions
+
+Important constraints:
+- Do NOT remove any existing functionality for Ubuntu
+- Do NOT change the Maven build commands themselves
+- Preserve all existing matrix variables and their values
+- Keep the fix minimal and targeted to the specific error
+
+Output ONLY the git diff. No explanations, no markdown fences.

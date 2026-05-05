@@ -1,0 +1,14 @@
+diff --git a/curator-framework/src/test/java/org/apache/curator/framework/imps/TestWatchesBuilder.java b/curator-framework/src/test/java/org/apache/curator/framework/imps/TestWatchesBuilder.java
+index 7e2e2a5..c3e2f4c 100644
+--- a/curator-framework/src/test/java/org/apache/curator/framework/imps/TestWatchesBuilder.java
++++ b/curator-framework/src/test/java/org/apache/curator/framework/imps/TestWatchesBuilder.java
+@@ -463,7 +463,7 @@
+     @Test
+     public void testGuaranteedRemoveWatch() throws Exception {
+         Timing timing = new Timing();
+-        CuratorFramework client = CuratorFrameworkFactory.builder()
++        CuratorFramework client = CuratorFrameworkFactory.newClient(
+                 .connectString(server.getConnectString())
+                 .retryPolicy(new RetryOneTime(1))
+                 .build();
+```
