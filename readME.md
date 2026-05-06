@@ -16,11 +16,13 @@ The pipeline consists of four stages:
 3. **Failure Collection** (Phase 3a): Download logs from failed runs and extract error patterns
 4. **LLM Patch Generation** (Phase 3b): Generate OS-compatibility patches using LLM-based code generation
 
+Stages 1, 2, 3a, and 3b are fully automated via Python scripts. The intermediate steps of creating `os-expansion-experiment` branches on forked repositories, triggering workflow runs, and creating fix branches with applied patches are performed manually through the GitHub UI and CLI. These steps involve interacting with GitHub Actions' workflow dispatch API and managing branches across forked repositories, which require manual oversight to handle project-specific variations (e.g., different trigger configurations, credential requirements, branch protection rules).
+
 ## Prerequisites
 
 - Python 3.8+
 - GitHub personal access token (for API access)
-- LLM API key (Groq used for free tier; Anthropic and Gemini also supported with --LLM flag)
+- LLM API key (Groq used for free tier; Anthropic and Gemini also supported with `--provider` flag)
 
 Install dependencies:
 ```bash
@@ -32,16 +34,19 @@ Create a `.env` file in the project root:
 GITHUB_TOKEN=ghp_your_github_token_here
 GROQ_API_KEY=gsk_your_groq_key_here
 ```
-(env file already provided for simplified project access)
+
+A `.env` file is already provided in the artifact for simplified access.
+
 ## File Descriptions
 
 ### Scripts
 
 | File | Description |
 |------|-------------|
-| `scripts/ci_workflows.py` | Phase 1 script. Reads a CSV of repository slugs, fetches workflow YAML files via the GitHub API, identifies Maven jobs, and extracts OS configurations (runs-on, matrix.os). Outputs a summary CSV with OS counts and conditional usage for each workflow. |
+| `scripts/gen_workflow_csv.py` | Helper script that generates an input CSV from a GitHub repository URL. Takes a repository URL and output directory as arguments, producing a CSV file with the repository slug for use with `ci_workflows.py`. |
+| `scripts/ci_workflows.py` | Phase 1 script. Reads a CSV of repository slugs(for multiple open source projects), fetches workflow YAML files via the GitHub API, identifies Maven jobs, and extracts OS configurations (runs-on, matrix.os). Outputs a summary CSV with OS counts and conditional usage for each workflow. |
 | `scripts/select_projects.py` | Filters the Phase 1 output to identify candidate projects for OS expansion experiments. Applies selection criteria: single-OS, Maven, recently active, sufficient test count. Outputs a ranked candidate list. |
-| `scripts/yaml_OS_expander.py` | Phase 2 script. Reads a workflow YAML file and adds missing operating systems (ubuntu-latest, windows-latest, macos-latest) to the build matrix. Handles edge cases: skips self-hosted runners, preserves OS conditionals, skips include/exclude directives. Outputs a modified YAML file and a diff. |
+| `scripts/yaml_os_expander.py` | Phase 2 script. Reads a workflow YAML file and adds missing operating systems (ubuntu-latest, windows-latest, macos-latest) to the build matrix. Handles edge cases: skips self-hosted runners, preserves OS conditionals, skips include/exclude directives. Outputs a modified YAML file and a diff. |
 | `scripts/run_workflows.py` | Dispatches GitHub Actions workflow runs via the workflow_dispatch API. Supports both baseline (unmodified) and modified (OS-expanded) execution modes. Records run IDs, statuses, and durations. |
 | `scripts/collect_failures.py` | Phase 3a script. Fetches failed workflow runs from GitHub Actions, downloads job logs, and parses them for 16 error patterns (shell errors, Maven failures, Java stack traces, Docker issues, setup-java failures, font errors). Outputs a draft failures CSV with failure type (Q1-Q7), target OS, and error message for each failure. |
 | `scripts/llm_os_patcher.py` | Phase 3b script. Reads the failures CSV, fetches the relevant source or YAML file via the GitHub API, builds a structured prompt, and calls an LLM (Groq/Gemini/Anthropic) to generate a git diff. Supports merged patches when multiple OS failures target the same file. Outputs .diff, .prompt, and .response files for each patch attempt. |
@@ -52,11 +57,11 @@ GROQ_API_KEY=gsk_your_groq_key_here
 |------|-------------|
 | `data/workflow_os_analysis.csv` | Phase 1 output. OS configuration data for all 737 Maven jobs across 136 projects from the 231-repository dataset. Columns: project_name, workflow_file, job_name, current_os_config, num_os, has_os_conditionals, has_include_exclude, is_self_hosted. |
 | `data/project_candidates.csv` | Filtered candidate list from select_projects.py. Contains the 79 projects that meet the selection criteria for OS expansion experiments. |
-| `data/selected_projects.csv` | The 10 workflows (across 9 projects) selected for the study. Columns: project_name, workflow_file, job_name, default_branch. |
+| `data/selected_projects.csv` | The 9 workflows (across 8 projects) selected for the study. Columns: project_name, workflow_file, job_name, default_branch. |
 | `data/outputs/baseline_results.csv` | Baseline execution results. 10 runs per project with unmodified workflows. Columns: project_name, run_id, status, duration, timestamp. |
 | `data/outputs/modified_results.csv` | Modified execution results. 10 runs per project with OS-expanded workflows. Columns: project_name, run_id, os, status, duration, timestamp. |
 | `data/failures_draft.csv` | Output of collect_failures.py. Contains all categorized failures from modified runs. Columns: project_name, workflow_file, failure_file, error_line, error_message, failure_type, target_os, branch, job_name, run_id, description. |
-| `patches/patch_results.csv` | Summary of all LLM patch generation attempts. Columns: project_name, failure_type, target_os, file_path, error_message, status, reason, prompt_path, diff_path. |
+| `data/patches/patch_results.csv` | Summary of all LLM patch generation attempts. Columns: project_name, failure_type, target_os, file_path, error_message, status, reason, prompt_path, diff_path. |
 
 ### Patches
 
@@ -69,74 +74,176 @@ GROQ_API_KEY=gsk_your_groq_key_here
 | `data/patches/sreeya12__jjwt/` | Generated patches for jjwt. Contains files for both Q3 Windows and Q3 macOS fixes (OS-conditional package installation), plus a merged patch combining both. |
 | `data/patches/sreeya12__curator/` | Generated patch for curator. Contains files for the Q4 Windows fix (TestWatchesBuilder test skip). |
 
-### Draft Pull Requests
+### Pull Requests
 
 | PR | Repository | Description |
 |----|-----------|-------------|
-| [PR #1](https://github.com/mrniko/netty-socketio/pull/1065) | mrniko/netty-socketio | Adds OS matrix + fixes export command for Windows |
-| [PR #2](https://github.com/LibrePDF/OpenPDF/pull/1547) | LibrePDF/OpenPDF | Adds OS matrix + fixes ls command and font test |
-| [PR #3](https://github.com/redis/jedis/pull/4510) | redis/jedis | Adds OS matrix + fixes Maven -D argument quoting |
+| [PR #1065](https://github.com/mrniko/netty-socketio/pull/1065) | mrniko/netty-socketio | ## What is the purpose of this PR
+
+This PR adds Windows and macOS to the CI build matrix. The existing workflow only runs on Ubuntu. When expanding to other operating systems, the build fails on Windows due to a bash-specific export command in the workflow file. macOS passes without any code changes.
+
+## Expected result
+
+The build should pass on Ubuntu, Windows, and macOS without any test failures.
+
+## Actual results
+
+The build fails on Windows with the following error:
+
+```
+The term 'export' is not recognized as a name of a cmdlet, 
+function, script file, or executable program. Check the spelling 
+of the name, or if a path was included, verify that the path is correct and try again.
+```
+
+The macOS build passes without issues. Ubuntu continues to pass as before.
+
+## Why the build fails when run on other OSs
+
+The workflow file contains the following step:
+
+```yaml
+- name: Build
+  run: export MAVEN_OPTS="-Xmx2048m" && mvn -B ...
+```
+
+The `export` command is a bash built-in for setting environment variables. Windows GitHub Actions runners use PowerShell as the default shell, which does not recognize `export`. macOS runners default to bash, so the same command works on macOS without issues.
+
+## Fix
+
+Replaced the inline `export MAVEN_OPTS="-Xmx2048m"` shell command with a job-level `env:` block:
+
+```yaml
+env:
+  MAVEN_OPTS: "-Xmx2048m"
+```
+
+This sets the environment variable using GitHub Actions' native mechanism, which works identically on all three operating systems regardless of the shell. |
+| [PR #1547](https://github.com/LibrePDF/OpenPDF/pull/1547) | LibrePDF/OpenPDF | ## What is the purpose of this PR
+
+Add Windows and macOS to the CI build matrix. Currently the workflow only runs on Ubuntu.
+
+## Expected results
+
+Build and tests pass on all three operating systems (Ubuntu, Windows, macOS).
+
+## Actual results
+
+Running the workflow on Windows and macOS without fixes produces the following errors:
+
+**Windows:** The debug step uses `pwd && ls -l`. On Windows, `ls` maps to PowerShell's `Get-ChildItem`, and `-l` is interpreted as `-LiteralPath`, which requires an argument.
+
+**macOS:** `FontTest.testFontStyleOfStyledFont` loads `Courier.ttc` and expects an OS/2 TrueType table. On macOS, the bundled Courier font does not include that table. This is a platform-specific font difference, not a code defect.
+
+## Description of fix
+
+1. Added OS build matrix (`ubuntu-latest`, `windows-latest`, `macos-latest`).
+2. Added `shell: bash` to the debug step so it runs correctly on Windows.
+3. Added `Assumptions.assumeFalse` to skip `testFontStyleOfStyledFont` on macOS where the required font table is unavailable. An alternative approach would be to comment out or remove the `FontFactory.registerDirectories()` call. |
+| [PR #4510](https://github.com/redis/jedis/pull/4510) | redis/jedis | ## What is the purpose of this PR
+
+Add Windows to the CI build matrix. Currently the workflow only runs on Ubuntu.
+
+## Expected results
+
+- Ubuntu: passes 
+- Windows: Maven build and all unit tests pass.
+
+## Actual results
+
+Running the workflow on Windows without fixes produces two errors:
+
+**Maven argument parsing:** PowerShell splits unquoted `-D` arguments at the `=` sign, causing Maven to receive `.dataFile=target/jacoco-ut.exec` as an unknown lifecycle phase instead of a property definition.
+
+**Docker action:** `EnricoMi/publish-unit-test-result-action@v2` is a Docker container action, which GitHub Actions only supports on Linux runners.
+
+**Note on macOS:** macOS was not included in this PR because the workflow uses Java 8 with the Temurin distribution, and GitHub's macOS-latest runners (Apple Silicon/ARM) do not have Temurin Java 8 builds available. The `setup-java` step fails with "Could not find satisfied version for SemVer '8'". This is a GitHub Actions infrastructure limitation, not a jedis issue.
+
+## Description of fix
+
+1. Added `windows-latest` to the OS build matrix.
+2. Wrapped Maven `-D` arguments in double quotes so PowerShell treats them as single strings.
+3. Added `runner.os == 'Linux'` condition to the Publish Test Results step to skip it on Windows. |
 
 ## Running the Example
 
-The following example demonstrates the complete pipeline on a single project (netty-socketio). It takes approximately 5 minutes to run, excluding GitHub Actions execution time.
+The following example demonstrates the complete automated pipeline on a single project (`iluwatar/java-design-patterns`). The automated steps (Phase 1 analysis, Phase 2 YAML expansion, Phase 3a failure collection, Phase 3b patch generation) take approximately 5 minutes to run. The manual steps (forking, creating branches, triggering GitHub Actions runs) are described but depend on GitHub Actions execution time. 
+Create an env file for GITHUB_TOKEN. If preferred any other way, use --token GITHUB_TOKEN at the end of the command.
 
-### Step 1: Analyze OS Configuration
+### Step 1: Generate Input CSV
 
 ```bash
-# Create a single-project input CSV
-echo "slug" > example_input.csv
-echo "mrniko/netty-socketio" >> example_input.csv
-(this can be done by cloning the repository, or can use existing repository from data->outputs->baseline_csv)
+python scripts/gen_workflow_csv.py https://github.com/iluwatar/java-design-patterns -o java_design_pattern.csv
+```
 
-# Run the analysis
-python scripts/ci_workflows.py example_input.csv
+**Expected output:** A CSV file in the `example_output/` directory containing the repository slug `iluwatar/java-design-patterns`.
+
+### Step 2: Analyze OS Configuration (if analysis required)
+
+```bash
+python scripts/ci_workflows.py java-design-pattern.csv
 ```
 
 **Expected output:**
 ```
- Using provided GitHub token
- Analyzing 1 repositories...
+Using provided GitHub token
+Analyzing 1 repositories...
 
-[1/1] mrniko/netty-socketio... 2 Maven job(s)
+[1/1] iluwatar/java-design-patterns... X Maven job(s)
 
- Results written to workflow_os_analysis.csv
+Results written to workflow_os_analysis.csv
 
- Statistics (n=2 Maven workflows):
+Statistics (n=X Maven workflows):
 ──────────────────────────────────────────────────
-  1 OS(es):   2 workflows (100.0%)
-  - Single OS:   2 / 2 (100.0%)
-  - Multi-OS:    0 / 2 (0.0%)
+  1 OS(es):   X workflows (XX.X%)
+  - Single OS:   X / X (XX.X%)
+  - Multi-OS:    X / X (XX.X%)
 ```
 
-**Expected file:** `workflow_os_analysis.csv` containing 2 rows showing both workflows test on ubuntu-latest only.
+**Expected file:** `workflow_os_analysis.csv` containing rows showing the OS configuration for each Maven workflow in the repository.
 
-### Step 2: Expand OS Matrix
 
+### Step 3: Expand OS Matrix
+The YAML expander runs on the java_design_patterns.csv created from step 1.
 ```bash
-# Download the workflow file
-mkdir -p example_workflows
-curl -s https://raw.githubusercontent.com/mrniko/netty-socketio/master/.github/workflows/build.yml \
-  -o example_workflows/build.yml
-(replace username if using forked repo)
-
 # Run the YAML expander
-python scripts/yaml_os_expander.py example_workflows/build.yml
+#for csv input
+python scripts/yaml_os_expander.py --batch java_design_pattern.csv 
+
+#for yaml file input
+python yaml_os_expander.py input.yml -o output.yml //for yaml file input
 ```
 
-**Expected output:** A modified YAML file with `os: [ubuntu-latest, windows-latest, macos-latest]` added to the matrix, and a `.diff` file showing the changes.
+**Expected output:** A modified YAML file (`maven-ci_modified.yml`) with `os: [ubuntu-latest, windows-latest, macos-latest]` added to the matrix strategy, added to expanded_workflows folder
 
-### Step 3: Collect Failures (after running modified workflows on GitHub)
+### Step 4: Manual Steps (Forking, Branch Creation, Workflow Execution)
+
+The following steps are performed manually because they involve interacting with GitHub's repository and Actions infrastructure, which varies per project:
+
+1. **Fork the repository** to your GitHub account.
+2. **Add `workflow_dispatch:` trigger** to the workflow file on the fork. This is required for programmatic dispatch and should be removed before submitting any PRs to upstream repositories.
+3. **Run baseline:** Trigger the unmodified workflow 10(number can be changed) times using the GitHub Actions UI or the `run_workflows.py` script. Record run IDs and statuses in `baseline_results.csv`.
+4. **Create `os-expansion-experiment` branch:** Apply the expanded YAML from Step 3 and push to this branch on the fork.
+5. **Run modified workflows:** Trigger the modified workflow 10(number can be changed) times on the `os-expansion-experiment` branch. Record per-OS results in `modified_results.csv`.
+
+These steps produce the baseline and modified results CSV files found in `data/outputs/` for the study's subject projects. The CSV files for baseline and modified runs were created manually for each project because the workflow dispatch process requires project-specific handling (e.g., adding workflow_dispatch triggers, managing fork-specific credential issues, adjusting inter-run timing to avoid GitHub rate limits).
+### Step 5: Run baseline & modified workflows
+The baseline and modified workflows can be run with the command:
+```bash
+#for baseline
+python scripts/run_workflows.py java_design_patterns.csv --runs 1 --output java_design_pattern_baseline 
+#for modified
+python scripts/run_workflows.py java_design_patterns_modified.csv --runs 1 --output java_design_pattern_modified 
+```
+### Step 5: Collect Failures
+
+Once modified workflows have been executed and some runs have failed. Collect the failure logs
 
 ```bash
-# Create the projects CSV
-echo "project_name,workflow_file,job_name,default_branch" > example_projects.csv
-echo "sreeya12/netty-socketio,build-pr.yml,build,master" >> example_projects.csv
-
 # Collect failures from the os-expansion-experiment branch
-python scripts/collect_failures.py example_projects.csv \
+python scripts/collect_failures.py java_design_patterns_modified \
   --branch os-expansion-experiment \
-  --output example_failures.csv
+  --output java_design_pattern_failures.csv
 ```
 
 **Expected output:**
@@ -144,28 +251,36 @@ python scripts/collect_failures.py example_projects.csv \
 Collecting failures for 1 project(s)...
 Branch: os-expansion-experiment
 
-[1/1] sreeya12/netty-socketio (build-pr.yml)
-  Found 1 failed run(s).
+[1/1] your-username/java-design-patterns (maven-ci.yml)
+  Found N failed run(s).
   Processing run ...
-    Job: build (windows-latest) (OS: Windows)
 
-Total failures found: 1
+Total failures found: N
 
 Breakdown by category:
-  Q3: 1
-
-Breakdown by OS:
-  Windows: 1
+  Q3: X
+  Q4: Y
+  Q5: Z
 ```
 
-**Expected file:** `example_failures.csv` containing 1 row with `failure_type=Q3`, `target_os=Windows`, and error message about `export` not being recognized.
+**Expected file:** `java_design_pattern_failures.csv` containing one row per distinct failure, with columns for failure type (Q3/Q4/Q5/Q6/Q7), target OS, and error message.
 
-### Step 4: Generate LLM Patch
-
+### Step 6: Generate LLM Patch
+Groq has been used in this project. Anthropic API can also be used by --api-key flag
+The llm_patch_generation is not efficient in the current output due to groq. 
 ```bash
-# Generate patch using Groq (free tier)
+# Generate patches using Groq (free tier, default provider)
 python scripts/llm_os_patcher.py example_failures.csv \
   --output example_patches
+
+#if you have anthropic key
+python scripts/llm_os_patcher.py example_failures.csv \
+  --output example_patches --api-key ANTHROPIC_API_KEY
+
+# Or use --dry-run to preview prompts without calling the API
+python scripts/llm_os_patcher.py example_failures.csv \
+  --output example_patches \
+  --dry-run
 ```
 
 **Expected output:**
@@ -173,46 +288,49 @@ python scripts/llm_os_patcher.py example_failures.csv \
 Provider: groq
 Model:    llama-3.3-70b-versatile
 
-Input:     1 total rows
-Patchable: 1 (Q3: 1, Q4: 0)
+Input:     N total rows
+Patchable: M (Q3: X, Q4: Y)
+Skipped:   K
 
-[1/1] sreeya12/netty-socketio | Q3 | Windows
-  File: .github/workflows/build-pr.yml
+[1/M] your-username/java-design-patterns | Q3 | Windows
+  File: .github/workflows/maven-ci.yml
   ...
-  Diff saved: example_patches/sreeya12__netty-socketio/...diff
+  Diff saved: example_patches/...diff
 
-Success: 1  |  Dry run: 0  |  Errors: 0
+Success: M  |  Dry run: 0  |  Errors: 0
 ```
 
 **Expected files:**
-- `example_patches/sreeya12__netty-socketio/*.diff` (the generated git diff)
-- `example_patches/sreeya12__netty-socketio/*.prompt` (the prompt sent to the LLM)
-- `example_patches/sreeya12__netty-socketio/*.response` (the raw LLM response)
-- `example_patches/patch_results.csv` (summary CSV)
+- `example_patches/<project>/*.diff` -- the generated git diff
+- `example_patches/<project>/*.prompt` -- the prompt sent to the LLM
+- `example_patches/<project>/*.response` -- the raw LLM response
+- `example_patches/patch_results.csv` -- summary of all patch attempts
 
-### Step 5: Apply and Verify
+The patcher automatically skips Q5 (missing dependencies), Q6 (generic errors), and Q7 (pre-existing flaky tests) since these are not patchable via code changes.
 
+### Step 7: Apply and Verify (Manual)
+
+After generating patches, the following steps are performed manually:
+
+1. **Create a fix branch** on the forked repository from `os-expansion-experiment`.
+2. **Apply the patch:** `git apply patches/<project>/<file>.diff`
+3. **Push and trigger** 10 verification runs on the fix branch via the GitHub Actions UI.
+4. **Record results:** Verify that the target OS passes and Ubuntu shows no regressions.
+
+For the study's subject projects, verification results are recorded in the patch results table in the paper. The fix branch CSV files were created manually because verification involves inspecting individual workflow run outcomes across multiple OS-job combinations, which requires manual review to distinguish between patched failures, unpatched failures, and infrastructure issues.
+
+### Step 8: Rerun workflows
+The csv file is manually created following the initial java_design_pattern csv and replacing the branch.
 ```bash
-# Clone the fork
-git clone https://github.com/sreeya12/netty-socketio.git
-cd netty-socketio
-git checkout os-expansion-experiment
-
-# Apply the patch
-git apply ../example_patches/sreeya12__netty-socketio/*.diff
-git commit -am "Fix OS compatibility for Windows"
-git push origin os-expansion-experiment
-
-# Trigger verification runs via GitHub Actions UI or API
-# Expected result: 10/10 pass on all three OSes
+python scripts/run_workflows.py java_design_patterns_fixed.csv --runs 1 --output java_design_pattern_fixed //for fixed
 ```
 
 ## Complete Results
 
-The full experimental results for all 10 workflows are available in the `data/` directory. Key findings:
+The full experimental results for all 9 workflows are available in the `data/` directory. Key findings:
 
 - **RQ1:** 92.1% of Maven CI jobs test on a single OS (ubuntu-latest dominates at 83.7%)
-- **RQ2:** Windows fails on every project (0% pass rate); macOS is mixed depending on Java version (8)
+- **RQ2:** Windows fails on every project (0% pass rate); macOS is mixed depending on Java version requirements
 - **RQ3:** Shell incompatibility (Q3) is the most common failure at 43.8%, followed by missing dependencies (Q5) at 31.3%
 - **RQ4:** LLM-assisted patches resolve 4/7 attempted fixes (57.1%), with Q3 YAML patches at 75% success and Q4 source patches at 33.3%
 
@@ -229,7 +347,3 @@ The full experimental results for all 10 workflows are available in the `data/` 
 | jwtk/jjwt | sreeya12/jjwt | os-expansion-experiment |
 | JodaOrg/joda-time | sreeya12/joda-time | os-expansion-experiment |
 | apache/fesod | sreeya12/fesod | os-expansion-experiment |
-
-## License
-
-This artifact is provided for academic purposes as part of CS 691 at George Mason University.

@@ -1,0 +1,10 @@
+--- .github/workflows/unit-tests.yml
++++ .github/workflows/unit-tests.yml
+@@ -57,7 +57,7 @@
+       - name: Run Unit Tests
+         run: |
+           mvn -B -Dwith-param-names=true clean test jacoco:report "-Djacoco.dataFile=target/jacoco-ut.exec"
+ 
+@@ -58 +58 @@
+-           mvn -B -Dwith-param-names=true clean test jacoco:report -Djacoco.dataFile=target/jacoco-ut.exec
++           mvn -B -Dwith-param-names=true clean test jacoco:report "-Djacoco.dataFile=target/jacoco-ut.exec"

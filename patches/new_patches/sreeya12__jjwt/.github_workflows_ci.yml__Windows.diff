@@ -1,0 +1,757 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -29,7 +29,7 @@
+       - name: Install softhsm2
+         run: sudo apt-get install -y softhsm2
+-      - name: Install opensc
++      - name: Install opensc
+       run: sudo apt-get install -y opensc
+@@ -59,7 +59,7 @@
+       - name: Install softhsm2
+         run: sudo apt-get install -y softhsm2
+-      - name: Install opensc
++      - name: Install opensc
+       run: sudo apt-get install -y opensc
+@@ -91,7 +91,7 @@
+       - name: Install softhsm2
+         run: sudo apt-get install -y softhsm2
+-      - name: Install opensc
++      - name: Install opensc
+       run: sudo apt-get install -y opensc
+@@ -147,7 +147,7 @@
+       - name: Install softhsm2
+         run: sudo apt-get install -y softhsm2
+-      - name: Install opensc
++      - name: Install opensc
+       run: sudo apt-get install -y opensc
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+-        run: sudo apt-get install -y softhsm2
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y softhsm2
++          fi
+       - name: Install opensc
+-        run: sudo apt-get install -y opensc
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y opensc
++          fi
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+-        run: sudo apt-get install -y softhsm2
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y softhsm2
++          fi
+       - name: Install opensc
+-        run: sudo apt-get install -y opensc
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y opensc
++          fi
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+-        run: sudo apt-get install -y softhsm2
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y softhsm2
++          fi
+       - name: Install opensc
+-        run: sudo apt-get install -y opensc
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y opensc
++          fi
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+-        run: sudo apt-get install -y softhsm2
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y softhsm2
++          fi
+       - name: Install opensc
+-        run: sudo apt-get install -y opensc
++        run: |
++          if [ "$RUNNER_OS" == "Linux" ]; then
++            sudo apt-get install -y opensc
++          fi
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+- 
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+- 
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+- 
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -60,7 +60,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -92,7 +92,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+@@ -148,7 +148,7 @@
+       - name: Install softhsm2
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y softhsm2
+       - name: Install opensc
+         if: runner.os == 'Linux'
+         run: sudo apt-get install -y opensc
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 7c1e5c5..f6e5c5c 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -30,7 +30,7 @@
+       - name: Install softhsm2

@@ -1,0 +1,92 @@
+You are fixing an OS compatibility issue in a Java source file.
+The code currently works on Ubuntu but fails on Windows.
+
+File: core/src/test/java/com/graphhopper/storage/MMapDataAccessTest.java
+Error on Windows: [ERROR] com.graphhopper.storage.MMapDataAccessTest.testTrimToRoundsUpToSegmentBoundary -- Time elapsed: 0.009 s <<<
+
+Source code:
+   1 | /*
+   2 |  *  Licensed to GraphHopper GmbH under one or more contributor
+   3 |  *  license agreements. See the NOTICE file distributed with this work for
+   4 |  *  additional information regarding copyright ownership.
+   5 |  *
+   6 |  *  GraphHopper GmbH licenses this file to you under the Apache License,
+   7 |  *  Version 2.0 (the "License"); you may not use this file except in
+   8 |  *  compliance with the License. You may obtain a copy of the License at
+   9 |  *
+  10 |  *       http://www.apache.org/licenses/LICENSE-2.0
+  11 |  *
+  12 |  *  Unless required by applicable law or agreed to in writing, software
+  13 |  *  distributed under the License is distributed on an "AS IS" BASIS,
+  14 |  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  15 |  *  See the License for the specific language governing permissions and
+  16 |  *  limitations under the License.
+  17 |  */
+  18 | package com.graphhopper.storage;
+  19 | 
+  20 | import org.junit.jupiter.api.Test;
+  21 | 
+  22 | import static org.junit.jupiter.api.Assertions.*;
+  23 | 
+  24 | /**
+  25 |  * @author Peter Karich
+  26 |  */
+  27 | public class MMapDataAccessTest extends DataAccessTest {
+  28 |     @Override
+  29 |     public DataAccess createDataAccess(String name, int segmentSize) {
+  30 |         return new MMapDataAccess(name, directory, true, segmentSize);
+  31 |     }
+  32 | 
+  33 |     @Test
+  34 |     public void textMixRAM2MMAP() {
+  35 |         DataAccess da = new RAMDataAccess(name, directory, true, -1);
+  36 |         assertFalse(da.loadExisting());
+  37 |         da.create(100);
+  38 |         da.setInt(7 * 4, 123);
+  39 |         da.flush();
+  40 |         da.close();
+  41 |         da = createDataAccess(name);
+  42 |         assertTrue(da.loadExisting());
+  43 |         assertEquals(123, da.getInt(7 * 4));
+  44 |         da.close();
+  45 |     }
+  46 | 
+  47 |     @Test
+  48 |     public void textMixMMAP2RAM() {
+  49 |         DataAccess da = createDataAccess(name);
+  50 |         assertFalse(da.loadExisting());
+  51 |         da.create(100);
+  52 |         da.setInt(7 * 4, 123);
+  53 | 
+  54 |         // TODO "memory mapped flush" is expensive and not required. only writing the header is required.
+  55 |         da.flush();
+  56 |         da.close();
+  57 |         da = new RAMDataAccess(name, directory, true, -1);
+  58 |         assertTrue(da.loadExisting());
+  59 |         assertEquals(123, da.getInt(7 * 4));
+  60 |         da.close();
+  61 |     }
+  62 | }
+
+CRITICAL RULES — read before generating the diff:
+1. Make the ABSOLUTE MINIMUM change needed to fix the error. Nothing else.
+2. Do NOT reformat, re-indent, or restructure any part of the file.
+3. Do NOT change lines that are unrelated to the error.
+4. Do NOT modify imports unless you are adding a new one your fix requires.
+5. Do NOT add duplicate imports — check what already exists.
+6. Do NOT change test logic or assertions beyond what is needed for OS compatibility.
+7. Do NOT rename variables, methods, or classes.
+8. Do NOT change whitespace, blank lines, or code style anywhere.
+9. Add any new import at the correct alphabetical position among existing imports.
+10. The diff should be small enough that a developer can review it in under 30 seconds.
+
+Common targeted fixes (apply ONLY the one relevant to the error):
+- Font not found on macOS → add `Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("mac"), "Font not available on macOS");` as the first line of the failing test method
+- File locking on Windows (cannot delete) → add `Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("win"), "File locking prevents cleanup on Windows");` at the start of the failing test
+- Hardcoded `/tmp/` path → replace with `System.getProperty("java.io.tmpdir")`
+- Path separator assertion failure → normalize paths with `Paths.get(...).toString()` before comparing
+
+If using `Assumptions`, add this import ONLY if not already present:
+  import org.junit.jupiter.api.Assumptions;
+
+Output ONLY the git diff. No explanations, no markdown fences, no commentary.

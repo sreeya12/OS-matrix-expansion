@@ -1,0 +1,11 @@
+--- a/openpdf-core/src/test/java/org/openpdf/text/pdf/fonts/FontTest.java
++++ b/openpdf-core/src/test/java/org/openpdf/text/pdf/fonts/FontTest.java
+@@ -85,6 +85,7 @@
+     @ParameterizedTest(name = "Style {0}")
+     @MethodSource("getStyles")
+     void testFontStyleOfStyledFont(int style) {
++        Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("mac"), "Font not available on macOS");
+         final Font font = FontFactory.getFont(FONT_NAME_WITH_STYLES, DEFAULT_FONT_SIZE, style);
+ 
+         // For the font Courier, there is no Courier-Underline or Courier-Strikethrough font available.
+```

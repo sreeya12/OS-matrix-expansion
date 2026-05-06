@@ -1,0 +1,9 @@
+import org.junit.jupiter.api.Assumptions;
+ 
+@@ -47,6 +47,7 @@
+     @Test
+     public void textMixMMAP2RAM() {
++        Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("win"), "File locking prevents cleanup on Windows");
+         DataAccess da = createDataAccess(name);
+         assertFalse(da.loadExisting());
+         da.create(100);

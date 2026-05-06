@@ -1,0 +1,9 @@
+--- a/.github/workflows/build.yml
++++ b/.github/workflows/build.yml
+@@ -1,5 +1,7 @@
+ name: Build
++  env:
++    VAR: ${{ matrix.java-version }}
+-  export VAR=${{ matrix.java-version }}
++  run: |
+     # rest of the script remains the same

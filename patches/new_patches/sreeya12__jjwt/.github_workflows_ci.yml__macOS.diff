@@ -1,0 +1,27 @@
+29 |       - name: Install softhsm2
+30 |         run: |
+31 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y softhsm2; fi
+32 |       - name: Install opensc
+33 |         run: |
+34 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y opensc; fi
+...
+59 |       - name: Install softhsm2
+60 |         run: |
+61 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y softhsm2; fi
+62 |       - name: Install opensc
+63 |         run: |
+64 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y opensc; fi
+...
+92 |       - name: Install softhsm2
+93 |         run: |
+94 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y softhsm2; fi
+95 |       - name: Install opensc
+96 |         run: |
+97 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y opensc; fi
+...
+148 |       - name: Install softhsm2
+149 |         run: |
+150 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y softhsm2; fi
+151 |       - name: Install opensc
+152 |         run: |
+153 |           if [ "${{ runner.os }}" == "Linux" ]; then sudo apt-get install -y opensc; fi

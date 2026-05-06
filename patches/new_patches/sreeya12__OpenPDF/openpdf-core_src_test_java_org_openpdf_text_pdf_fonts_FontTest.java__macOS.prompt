@@ -1,0 +1,143 @@
+You are fixing an OS compatibility issue in a Java source file.
+The code currently works on Ubuntu but fails on macOS.
+
+File: openpdf-core/src/test/java/org/openpdf/text/pdf/fonts/FontTest.java
+Error on macOS: [ERROR] org.openpdf.text.pdf.fonts.FontTest.testFontStyleOfStyledFont(int)[2] -- Time elapsed: 0.014 s <<<
+
+Source code:
+   1 | package org.openpdf.text.pdf.fonts;
+   2 | 
+   3 | import static org.assertj.core.api.Assertions.assertThat;
+   4 | import static org.junit.jupiter.api.Assertions.assertEquals;
+   5 | import static org.junit.jupiter.api.Assertions.assertTrue;
+   6 | 
+   7 | import org.openpdf.text.Font;
+   8 | import org.openpdf.text.FontFactory;
+   9 | import java.util.HashMap;
+  10 | import java.util.Map;
+  11 | import java.util.Set;
+  12 | import java.util.function.Predicate;
+  13 | import org.junit.jupiter.api.BeforeAll;
+  14 | import org.junit.jupiter.api.Test;
+  15 | import org.junit.jupiter.params.ParameterizedTest;
+  16 | import org.junit.jupiter.params.provider.MethodSource;
+  17 | 
+  18 | /**
+  19 |  * {@link Font Font}-related test cases.
+  20 |  *
+  21 |  * @author noavarice
+  22 |  * @since 1.2.7
+  23 |  */
+  24 | class FontTest {
+  25 | 
+  26 |     private static final Map<Integer, Predicate<Font>> STYLES_TO_TEST_METHOD = new HashMap<>() {
+  27 |         {
+  28 |             put(Font.NORMAL, f -> !f.isBold() && !f.isItalic() && !f.isStrikethru() && !f.isUnderlined());
+  29 |             put(Font.BOLD, Font::isBold);
+  30 |             put(Font.ITALIC, Font::isItalic);
+  31 |             put(Font.UNDERLINE, Font::isUnderlined);
+  32 |             put(Font.STRIKETHRU, Font::isStrikethru);
+  33 |             put(Font.BOLDITALIC, f -> f.isBold() && f.isItalic());
+  34 |             put(Font.UNDERLINE | Font.BOLD, f -> f.isUnderlined() && f.isBold());
+  35 |         }
+  36 |     };
+  37 | 
+  38 |     private static final String FONT_NAME_WITHOUT_STYLES = "non-existing-font";
+  39 | 
+  40 |     private static final String FONT_NAME_WITH_STYLES = "Courier";
+  41 | 
+  42 |     private static final float DEFAULT_FONT_SIZE = 16.0f;
+  43 | 
+  44 |     private static Set<Integer> getStyles() {
+  45 |         return STYLES_TO_TEST_METHOD.keySet();
+  46 |     }
+  47 | 
+  48 |     @BeforeAll
+  49 |     static void beforeAll() {
+  50 |         FontFactory.registerDirectories();
+  51 |     }
+  52 | 
+  53 |     /**
+  54 |      * Checks if style property value is preserved during font construction through
+  55 |      * {@link FontFactory#getFont(String, float, int)} method by getting raw property value.
+  56 |      *
+  57 |      * @see Font#getStyle()
+  58 |      */
+  59 |     @ParameterizedTest(name = "Style {0}")
+  60 |     @MethodSource("getStyles")
+  61 |     void testStyleSettingByValue(int style) {
+  62 |         // TODO: complement tests after adding enum with font styles
+  63 |         final Font font = FontFactory.getFont(FONT_NAME_WITHOUT_STYLES, DEFAULT_FONT_SIZE, style);
+  64 |         assertEquals(font.getStyle(), style);
+  65 |     }
+  66 | 
+  67 |     /**
+  68 |      * Checks if style property value is preserved during font construction through
+  69 |      * {@link FontFactory#getFont(String, float, int)} method by testing appropriate predicate.
+  70 |      *
+  71 |      * @see Font#isBold()
+  72 |      * @see Font#isItalic()
+  73 |      * @see Font#isStrikethru()
+  74 |      * @see Font#isUnderlined()
+  75 |      */
+  76 |     @ParameterizedTest(name = "Style {0}")
+  77 |     @MethodSource("getStyles")
+  78 |     void testStyleSettingByPredicate(int style) {
+  79 |         final Font font = FontFactory.getFont(FONT_NAME_WITHOUT_STYLES, DEFAULT_FONT_SIZE, style);
+  80 |         final Predicate<Font> p = STYLES_TO_TEST_METHOD.get(style);
+  81 |         assertTrue(p.test(font), "Style " + style);
+  82 |     }
+  83 | 
+  84 |     @ParameterizedTest(name = "Style {0}")
+  85 |     @MethodSource("getStyles")
+  86 |     void testFontStyleOfStyledFont(int style) {
+  87 |         final Font font = FontFactory.getFont(FONT_NAME_WITH_STYLES, DEFAULT_FONT_SIZE, style);
+  88 | 
+  89 |         // For the font Courier, there is no Courier-Underline or Courier-Strikethrough font available.
+  90 |         if (style == Font.UNDERLINE || style == Font.STRIKETHRU) {
+  91 |             assertEquals(style, font.getStyle(), "Style: " + style);
+  92 |         } else {
+  93 |             assertEquals(style, font.getCombinedStyle(), "Total style should be the given style: " + style);
+  94 |             assertEquals(font.getBaseFontStyle(), style ^ font.getCalculatedStyle(), "Styles should not repeat in"
+  95 |                     + " Font and BaseFont.");
+  96 |         }
+  97 |     }
+  98 | 
+  99 |     @Test
+ 100 |     void testAllStylesInOneStyledFont() {
+ 101 |         // given
+ 102 |         final int allStyles = Font.NORMAL | Font.BOLD | Font.ITALIC | Font.UNDERLINE | Font.STRIKETHRU;
+ 103 |         final int expectedInFont = Font.NORMAL | Font.UNDERLINE | Font.STRIKETHRU;
+ 104 |         final int expectedInBaseFont = Font.BOLD | Font.ITALIC;
+ 105 |         // then
+ 106 |         final Font font = FontFactory.getFont(FontFactory.COURIER, 12f, allStyles);
+ 107 |         assertThat(font.getStyle()).as("style").isEqualTo(expectedInFont);
+ 108 |         assertThat(font.getCalculatedStyle()).as("calculatedStyle").isEqualTo(expectedInFont);
+ 109 |         assertThat(font.getBaseFontStyle()).as("baseFontStyle").isEqualTo(expectedInBaseFont);
+ 110 |         assertThat(font.getCombinedStyle()).as("combinedStyle").isEqualTo(allStyles);
+ 111 | 
+ 112 |     }
+ 113 | }
+
+CRITICAL RULES — read before generating the diff:
+1. Make the ABSOLUTE MINIMUM change needed to fix the error. Nothing else.
+2. Do NOT reformat, re-indent, or restructure any part of the file.
+3. Do NOT change lines that are unrelated to the error.
+4. Do NOT modify imports unless you are adding a new one your fix requires.
+5. Do NOT add duplicate imports — check what already exists.
+6. Do NOT change test logic or assertions beyond what is needed for OS compatibility.
+7. Do NOT rename variables, methods, or classes.
+8. Do NOT change whitespace, blank lines, or code style anywhere.
+9. Add any new import at the correct alphabetical position among existing imports.
+10. The diff should be small enough that a developer can review it in under 30 seconds.
+
+Common targeted fixes (apply ONLY the one relevant to the error):
+- Font not found on macOS → add `Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("mac"), "Font not available on macOS");` as the first line of the failing test method
+- File locking on Windows (cannot delete) → add `Assumptions.assumeFalse(System.getProperty("os.name").toLowerCase().contains("win"), "File locking prevents cleanup on Windows");` at the start of the failing test
+- Hardcoded `/tmp/` path → replace with `System.getProperty("java.io.tmpdir")`
+- Path separator assertion failure → normalize paths with `Paths.get(...).toString()` before comparing
+
+If using `Assumptions`, add this import ONLY if not already present:
+  import org.junit.jupiter.api.Assumptions;
+
+Output ONLY the git diff. No explanations, no markdown fences, no commentary.

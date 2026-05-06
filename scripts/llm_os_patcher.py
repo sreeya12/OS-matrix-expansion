@@ -76,27 +76,28 @@ Error on {target_os}: {error_message}
 Full workflow file:
 {file_content}
 
-Generate a git diff that fixes this error so the workflow runs correctly on Ubuntu, Windows, and macOS.
+IMPORTANT: The error above is only the FIRST failure encountered. There may be OTHER Linux-only commands
+in the workflow that would fail on {target_os} after the first error is fixed. Scan the ENTIRE workflow
+file and fix ALL platform-specific commands in a single diff, not just the one mentioned in the error.
 
-Common fixes for GitHub Actions cross-platform compatibility:
-1. Replace `export VAR=value` with an `env:` block on the step or job level
-2. Replace `$(pwd)` with `${{{{ github.workspace }}}}`
-3. Replace bash-only commands (`ls`, `chmod`, `sudo`, `apt-get`, `wget`) with:
-   - Cross-platform alternatives, OR
-   - OS-conditional steps using `if: runner.os == 'Linux'` / `if: runner.os != 'Windows'`
-4. For Maven `-D` arguments on Windows, wrap them in double quotes:
-   `mvn "-Dproperty=value"` instead of `mvn -Dproperty=value`
-5. For `docker` commands, add `if: runner.os == 'Linux'` since Docker is not available on all runners
-6. For Java setup failures on macOS ARM, change distribution from `adopt` to `temurin` or `zulu`,
-   or add `if: matrix.java != 8` conditions for macOS ARM runners
-7. For shell script steps (`.sh` files), add `shell: bash` explicitly or wrap in OS conditional
-8. Replace hardcoded forward-slash paths with platform-agnostic expressions
+Look for ALL of the following patterns and fix every occurrence:
+1. `export VAR=value` -> replace with step-level or job-level `env:` block
+2. `sudo apt-get install ...` or `sudo ...` -> wrap step with `if: runner.os == 'Linux'`
+3. `xvfb-run <command>` -> split into two steps: one with `if: runner.os == 'Linux'` that uses xvfb-run,
+   and one with `if: runner.os != 'Linux'` that runs the command without xvfb-run
+4. `$(pwd)` -> replace with `${{{{ github.workspace }}}}`
+5. `ls`, `pwd && ls -l`, `chmod` -> add `shell: bash` to that step, or wrap with OS conditional
+6. Maven `-Dproperty=value` without quotes -> wrap in double quotes: `"-Dproperty=value"`
+7. `docker` commands -> add `if: runner.os == 'Linux'` to that step
+8. `apt-get` without sudo -> wrap step with `if: runner.os == 'Linux'`
+9. Shell scripts (`.sh` files) called directly -> add `shell: bash` or wrap with OS conditional
 
 Important constraints:
 - Do NOT remove any existing functionality for Ubuntu
-- Do NOT change the Maven build commands themselves
+- Do NOT change the Maven build commands themselves (only wrap them or add conditionals)
 - Preserve all existing matrix variables and their values
-- Keep the fix minimal and targeted to the specific error
+- Do NOT modify triggers (on: section) in any way
+- Do NOT add `fail-fast: false` or any other strategy options unless directly fixing the error
 
 Output ONLY the git diff. No explanations, no markdown fences."""
 
@@ -131,6 +132,78 @@ Important constraints:
 - Prefer `Assumptions.assumeFalse/assumeTrue` over `@Disabled` when the test is valid on some OSes
 - Keep the fix minimal and targeted to the specific error
 - Import any new classes you reference (e.g., org.junit.jupiter.api.Assumptions)
+
+Output ONLY the git diff. No explanations, no markdown fences."""
+
+
+Q3_MERGED_PROMPT = """You are fixing OS compatibility issues in a GitHub Actions workflow YAML file.
+The workflow currently runs on Ubuntu but fails on BOTH Windows and macOS with different errors.
+
+File: {file_path}
+
+Errors found:
+{all_errors}
+
+Full workflow file:
+{file_content}
+
+Generate a SINGLE git diff that fixes ALL of the above errors so the workflow runs correctly on Ubuntu, Windows, and macOS simultaneously.
+
+Common fixes for GitHub Actions cross-platform compatibility:
+1. Replace `export VAR=value` with an `env:` block on the step or job level
+2. Replace `$(pwd)` with `${{{{ github.workspace }}}}`
+3. Replace bash-only commands (`ls`, `chmod`, `sudo`, `apt-get`, `wget`) with:
+   - Cross-platform alternatives, OR
+   - OS-conditional steps using `if: runner.os == 'Linux'` / `if: runner.os != 'Windows'`
+4. For Maven `-D` arguments on Windows, wrap them in double quotes:
+   `mvn "-Dproperty=value"` instead of `mvn -Dproperty=value`
+5. For `docker` commands, add `if: runner.os == 'Linux'` since Docker is not available on all runners
+6. For Java setup failures on macOS ARM, change distribution from `adopt` to `temurin` or `zulu`,
+   or add `if: matrix.java != 8` conditions for macOS ARM runners
+7. For shell script steps (`.sh` files), add `shell: bash` explicitly or wrap in OS conditional
+8. Replace hardcoded forward-slash paths with platform-agnostic expressions
+
+Important constraints:
+- Do NOT remove any existing functionality for Ubuntu
+- Do NOT change the Maven build commands themselves
+- Preserve all existing matrix variables and their values
+- Address ALL listed errors in a single unified diff
+- The diff must be valid and apply cleanly in one pass
+
+Output ONLY the git diff. No explanations, no markdown fences."""
+
+
+Q4_MERGED_PROMPT = """You are fixing OS compatibility issues in Java source code.
+The code currently works on Ubuntu but fails on multiple operating systems with different errors.
+
+File: {file_path}
+
+Errors found:
+{all_errors}
+
+Source code:
+{file_content}
+
+Generate a SINGLE git diff that fixes ALL of the above errors using cross-platform Java APIs.
+
+Common fixes for Java cross-platform compatibility:
+1. Replace hardcoded `/tmp/` paths with `System.getProperty("java.io.tmpdir")`
+2. Use `File.separator` or `Paths.get()` instead of hardcoded `/` or `\\`
+3. For font-related failures on macOS (e.g., "Table OS/2 does not exist"),
+   use bundled test fonts or add OS-conditional test skips
+4. For file locking issues on Windows (cannot delete folder), ensure streams
+   and MappedByteBuffers are closed/unmapped before deletion
+5. For native library failures (UnsatisfiedLinkError), add conditional loading
+   or skip tests with `Assumptions.assumeTrue()` based on OS
+6. For path separator issues in assertions, normalize paths before comparing
+7. For Windows file deletion failures, add retry logic
+
+Important constraints:
+- Do NOT change test logic or assertions beyond what is needed for OS compatibility
+- Prefer `Assumptions.assumeFalse/assumeTrue` over `@Disabled` when the test is valid on some OSes
+- Keep the fix minimal and targeted to the specific errors
+- Import any new classes you reference
+- Address ALL listed errors in a single unified diff
 
 Output ONLY the git diff. No explanations, no markdown fences."""
 
@@ -251,6 +324,29 @@ def build_prompt(failure_type, file_path, error_message, target_os, file_content
         file_path=file_path,
         error_message=error_message,
         target_os=target_os,
+        file_content=file_content,
+    )
+
+
+def build_merged_prompt(failure_type, file_path, errors_list, file_content):
+    """Build a merged LLM prompt for multiple errors targeting the same file.
+
+    errors_list: list of (target_os, error_message) tuples
+    """
+    all_errors = "\n".join(
+        f"  - {os_name}: {msg}" for os_name, msg in errors_list
+    )
+
+    if failure_type == "Q3":
+        template = Q3_MERGED_PROMPT
+    elif failure_type == "Q4":
+        template = Q4_MERGED_PROMPT
+    else:
+        return None
+
+    return template.format(
+        file_path=file_path,
+        all_errors=all_errors,
         file_content=file_content,
     )
 
@@ -737,6 +833,142 @@ def main():
             else:
                 time.sleep(2)
 
+    # -----------------------------------------------------------------------
+    # Generate merged patches for files with multiple OS-specific failures
+    # -----------------------------------------------------------------------
+    merged_results = []
+
+    # Group successful patches by (project, resolved_file_path)
+    file_groups = {}
+    for r in results:
+        if r["status"] != "success":
+            continue
+        key = (r["project_name"], r.get("file_path", ""))
+        if key not in file_groups:
+            file_groups[key] = []
+        file_groups[key].append(r)
+
+    # For groups with 2+ patches on the same file, generate a merged patch
+    for (project, file_path), group in file_groups.items():
+        if len(group) < 2:
+            continue
+
+        print(f"\n--- Generating merged patch for {project} / {file_path} ---")
+        print(f"  Combining {len(group)} individual patches:")
+        for g in group:
+            print(f"    - {g['target_os']}: {g.get('error_message', '')[:60]}...")
+
+        # Determine failure type (should be the same for all in group)
+        failure_type = group[0]["failure_type"]
+
+        # Collect all errors
+        errors_list = []
+        for g in group:
+            errors_list.append((g["target_os"], g.get("error_message", "")))
+
+        # Parse owner/repo
+        parts = project.split("/")
+        if len(parts) != 2:
+            continue
+        owner, repo = parts
+
+        # Fetch file content (use branch from first group entry)
+        branch = "os-expansion-experiment"
+        content = fetch_file_content(owner, repo, file_path, branch=branch,
+                                     token=github_token)
+        if content is None:
+            content = fetch_file_content(owner, repo, file_path, branch="main",
+                                         token=github_token)
+        if content is None:
+            print(f"  Could not fetch {file_path} for merged patch.")
+            continue
+
+        # Format content
+        formatted_content, ctx_start, ctx_end = format_file_with_line_numbers(content)
+
+        # Build merged prompt
+        merged_prompt = build_merged_prompt(failure_type, file_path, errors_list,
+                                            formatted_content)
+        if merged_prompt is None:
+            continue
+
+        # Save merged prompt
+        project_dir = os.path.join(args.output, project.replace("/", "__"))
+        os.makedirs(project_dir, exist_ok=True)
+        safe_name = re.sub(r'[^\w\-.]', '_', file_path) + "__MERGED"
+        merged_prompt_path = os.path.join(project_dir, f"{safe_name}.prompt")
+        with open(merged_prompt_path, "w") as f:
+            f.write(merged_prompt)
+        print(f"  Merged prompt saved: {merged_prompt_path}")
+
+        if args.dry_run:
+            print(f"  [DRY RUN] Skipping API call for merged patch.")
+            merged_results.append({
+                "project_name": project,
+                "failure_type": failure_type,
+                "target_os": "Windows+macOS",
+                "file_path": file_path,
+                "status": "dry_run",
+                "prompt_path": merged_prompt_path,
+            })
+            continue
+
+        # Call LLM
+        print(f"  Calling {provider} API for merged patch...")
+        if provider == "groq":
+            print(f"  Waiting 45s for rate limit...")
+            time.sleep(45)
+
+        response = call_llm(merged_prompt, provider, api_key, model=args.model)
+        if response is None:
+            print(f"  Merged patch API call failed.")
+            merged_results.append({
+                "project_name": project,
+                "failure_type": failure_type,
+                "target_os": "Windows+macOS",
+                "file_path": file_path,
+                "status": "error",
+                "reason": "api_call_failed",
+            })
+            continue
+
+        # Save response
+        merged_raw_path = os.path.join(project_dir, f"{safe_name}.response")
+        with open(merged_raw_path, "w") as f:
+            f.write(response)
+
+        # Extract diff
+        diff = extract_diff_from_response(response)
+        if diff is None:
+            merged_results.append({
+                "project_name": project,
+                "failure_type": failure_type,
+                "target_os": "Windows+macOS",
+                "file_path": file_path,
+                "status": "error",
+                "reason": "no_diff_in_response",
+            })
+            continue
+
+        merged_diff_path = os.path.join(project_dir, f"{safe_name}.diff")
+        with open(merged_diff_path, "w") as f:
+            f.write(diff)
+        print(f"  Merged diff saved: {merged_diff_path}")
+
+        merged_results.append({
+            "project_name": project,
+            "failure_type": failure_type,
+            "target_os": "Windows+macOS",
+            "file_path": file_path,
+            "status": "success",
+            "prompt_path": merged_prompt_path,
+            "diff_path": merged_diff_path,
+            "raw_response_path": merged_raw_path,
+        })
+
+    # Combine all results
+    all_results = results + merged_results
+
     # Write summary CSV
     summary_path = os.path.join(args.output, "patch_results.csv")
     fieldnames = [
@@ -747,38 +979,31 @@ def main():
     with open(summary_path, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()
-        writer.writerows(results)
+        writer.writerows(all_results)
 
     # Print summary
     print(f"\n{'=' * 60}")
     print(f"Results written to {summary_path}")
-    success = sum(1 for r in results if r["status"] == "success")
-    dry = sum(1 for r in results if r["status"] == "dry_run")
-    errors = sum(1 for r in results if r["status"] == "error")
-    print(f"Success: {success}  |  Dry run: {dry}  |  Errors: {errors}")
+    success = sum(1 for r in all_results if r["status"] == "success")
+    dry = sum(1 for r in all_results if r["status"] == "dry_run")
+    errors = sum(1 for r in all_results if r["status"] == "error")
+    merged_count = sum(1 for r in merged_results if r["status"] == "success")
+    print(f"Success: {success} (incl. {merged_count} merged)  |  Dry run: {dry}  |  Errors: {errors}")
 
     if success > 0:
         print(f"\nGenerated diffs:")
-        for r in results:
+        for r in all_results:
             if r["status"] == "success":
-                print(f"  {r.get('diff_path', '?')}")
+                label = " [MERGED]" if "MERGED" in r.get("diff_path", "") else ""
+                print(f"  {r.get('diff_path', '?')}{label}")
 
     if errors > 0:
         print(f"\nFailed entries:")
-        for r in results:
+        for r in all_results:
             if r["status"] == "error":
                 print(f"  {r['project_name']} ({r['failure_type']}, {r['target_os']}): "
                       f"{r.get('reason', '?')}")
 
-    print(f"\nNext steps:")
-    print(f"  1. Review diffs in {args.output}/")
-    print(f"  2. For each diff, create a fix branch on the fork:")
-    print(f"     git checkout -b fix-<project>-<os> os-expansion-experiment")
-    print(f"     git apply patches/<project>/<file>.diff")
-    print(f"     git commit -am 'Fix OS compatibility for <os>'")
-    print(f"     git push origin fix-<project>-<os>")
-    print(f"  3. Run 10 verification runs on the fix branch")
-    print(f"  4. Record pass/fail for RQ4 results table")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,55 @@
+You are fixing an OS compatibility issue in a GitHub Actions workflow YAML file.
+The workflow currently runs on Ubuntu but fails on Windows.
+
+File: .github/workflows/build-pr.yml
+Error on Windows: The term 'export' is not recognized
+
+Full workflow file:
+   1 | name: Build PR
+   2 | 
+   3 | concurrency:
+   4 |   group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+   5 |   cancel-in-progress: true
+   6 | 
+   7 | permissions:
+   8 |   contents: read
+   9 | 
+  10 | on:
+  11 |   pull_request:
+  12 |     branches:
+  13 |       - master
+  14 |   workflow_dispatch:
+  15 | 
+  16 | jobs:
+  17 | 
+  18 |   build:
+  19 |     strategy:
+  20 |       matrix:
+  21 |         java-version:
+  22 |           - 17
+  23 |           - 21
+  24 |     uses: ./.github/workflows/build.yml
+  25 |     with:
+  26 |       javaVersion: "${{ matrix.java-version }}"
+
+CRITICAL RULES — read before generating the diff:
+1. Make the ABSOLUTE MINIMUM change needed to fix the error. Nothing else.
+2. Do NOT reformat, re-indent, reorder, or restructure any part of the file.
+3. Do NOT change lines that are unrelated to the error.
+4. Do NOT add blank lines, remove blank lines, or change existing whitespace.
+5. Do NOT rename steps, jobs, or variables.
+6. Do NOT modify triggers (on: section) in any way.
+7. Do NOT add `fail-fast: false` or any other strategy options unless they directly fix the error.
+8. Do NOT remove existing functionality for Ubuntu.
+9. Preserve all existing matrix variables and their values exactly.
+10. The diff should be small enough that a developer can review it in under 30 seconds.
+
+Common targeted fixes (apply ONLY the one relevant to the error):
+- `export VAR=value` fails on Windows → replace with step-level `env:` block
+- `ls`, `pwd && ls -l` fails on Windows → add `shell: bash` to that step, or remove if it's a debug step
+- `sudo apt-get install` fails on macOS/Windows → wrap step with `if: runner.os == 'Linux'`
+- Maven `-Dproperty=value` fails on Windows → wrap in double quotes: `"-Dproperty=value"`
+- Docker action fails on Windows/macOS → add `if: runner.os == 'Linux'` to that step
+- `chmod` fails on Windows → add `shell: bash` or `if: runner.os != 'Windows'`
+
+Output ONLY the git diff. No explanations, no markdown fences, no commentary.

@@ -51,6 +51,27 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
+# Log cleaning: strip ANSI codes and timestamps
+# ---------------------------------------------------------------------------
+
+ANSI_ESCAPE_RE = re.compile(r'\x1b\[[0-9;]*[A-Za-z]|\[\d[\d;]*m')
+TIMESTAMP_RE = re.compile(r'^\d{4}-\d{2}-\d{2}T[\d:.]+Z\s?', re.MULTILINE)
+
+
+def clean_log(raw_log):
+    """Strip ANSI escape codes and GitHub Actions timestamps from log text.
+
+    GitHub Actions logs contain ANSI color codes like [31;1m and [0m
+    which break regex matching (e.g., 'Get-ChildItem.*?Missing' fails
+    because [0m sits between the two words). Timestamps at line starts
+    also interfere with multi-line matching.
+    """
+    cleaned = ANSI_ESCAPE_RE.sub('', raw_log)
+    cleaned = TIMESTAMP_RE.sub('', cleaned)
+    return cleaned
+
+
+# ---------------------------------------------------------------------------
 # Error pattern definitions
 # ---------------------------------------------------------------------------
 
@@ -98,7 +119,7 @@ ERROR_PATTERNS = [
     ),
     # PowerShell specific errors
     (
-        r"(?:Get-ChildItem|Set-Location|Remove-Item).*?(?:Missing an argument|"
+        r"(?:Get-ChildItem|Set-Location|Remove-Item)[:\s].*?(?:Missing an argument|"
         r"Cannot find path|not recognized)",
         "Q3",
         "PowerShell error",
@@ -436,19 +457,30 @@ def get_failed_runs(owner, repo, workflow_file, branch, token, max_runs=10):
 
 
 def get_failed_jobs(owner, repo, run_id, token):
-    """Get failed jobs for a specific run."""
-    url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/jobs"
-    resp = github_api(url, token)
-    if resp is None:
-        return []
+    """Get failed jobs for a specific run, handling pagination."""
+    all_failed = []
+    page = 1
+    while True:
+        url = f"https://api.github.com/repos/{owner}/{repo}/actions/runs/{run_id}/jobs"
+        resp = github_api(url, token, params={"per_page": 100, "page": page})
+        if resp is None:
+            break
 
-    data = resp.json()
-    failed_jobs = []
-    for job in data.get("jobs", []):
-        if job.get("conclusion") == "failure":
-            failed_jobs.append(job)
+        data = resp.json()
+        jobs = data.get("jobs", [])
+        if not jobs:
+            break
 
-    return failed_jobs
+        for job in jobs:
+            if job.get("conclusion") == "failure":
+                all_failed.append(job)
+
+        # Check if there are more pages
+        if len(jobs) < 100:
+            break
+        page += 1
+
+    return all_failed
 
 
 def download_job_log(owner, repo, job_id, token):
@@ -491,7 +523,7 @@ def download_run_logs_zip(owner, repo, run_id, token, output_dir):
         except zipfile.BadZipFile:
             # Sometimes GitHub returns the log as plain text instead
             log_path = os.path.join(extract_dir, "log.txt")
-            with open(log_path, "w") as f:
+            with open(log_path, "w", encoding="utf-8") as f:
                 f.write(resp.text)
 
         return extract_dir
@@ -558,18 +590,19 @@ def process_project(project_name, workflow_file, branch, token, log_dir, max_run
             if os_name == "unknown":
                 os_name = detect_os_from_log(log_text)
 
-            # Save log
+            # Save raw log (uncleaned, for manual inspection)
             project_log_dir = os.path.join(log_dir, project_name.replace("/", "__"))
             os.makedirs(project_log_dir, exist_ok=True)
             safe_job_name = re.sub(r'[^\w\-.]', '_', job_name)
             log_path = os.path.join(
                 project_log_dir, f"run_{run_id}_{safe_job_name}.log"
             )
-            with open(log_path, "w", errors="replace") as f:
+            with open(log_path, "w", encoding="utf-8", errors="replace") as f:
                 f.write(log_text)
 
-            # Parse errors
-            failures = parse_log_for_errors(log_text, project_name)
+            # Clean log (strip ANSI codes + timestamps) then parse
+            cleaned_log = clean_log(log_text)
+            failures = parse_log_for_errors(cleaned_log, project_name)
 
             for failure in failures:
                 # Deduplicate across runs (same error type + description)
@@ -698,7 +731,7 @@ def main():
         "error_message", "failure_type", "target_os", "branch",
         "job_name", "run_id", "description", "log_file",
     ]
-    with open(args.output, "w", newline="") as f:
+    with open(args.output, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(all_failures)
