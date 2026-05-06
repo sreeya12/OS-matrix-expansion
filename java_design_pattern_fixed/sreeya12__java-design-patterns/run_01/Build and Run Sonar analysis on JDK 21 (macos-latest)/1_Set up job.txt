@@ -1,0 +1,33 @@
+﻿2026-05-06T23:23:53.9736080Z Current runner version: '2.334.0'
+2026-05-06T23:23:53.9750740Z ##[group]Runner Image Provisioner
+2026-05-06T23:23:53.9751240Z Hosted Compute Agent
+2026-05-06T23:23:53.9751570Z Version: 20260422.526
+2026-05-06T23:23:53.9751940Z Commit: e1a9e573f4d0838b3a7c1b07401aeb29ed3635a9
+2026-05-06T23:23:53.9752360Z Build Date: 2026-04-22T09:31:31Z
+2026-05-06T23:23:53.9752760Z Worker ID: {71cf04a3-7c78-474a-96bc-9d129e890363}
+2026-05-06T23:23:53.9753180Z Azure Region: westus
+2026-05-06T23:23:53.9753500Z ##[endgroup]
+2026-05-06T23:23:53.9754300Z ##[group]Operating System
+2026-05-06T23:23:53.9754640Z macOS
+2026-05-06T23:23:53.9754930Z 15.7.4
+2026-05-06T23:23:53.9755190Z 24G517
+2026-05-06T23:23:53.9755460Z ##[endgroup]
+2026-05-06T23:23:53.9755750Z ##[group]Runner Image
+2026-05-06T23:23:53.9756070Z Image: macos-15-arm64
+2026-05-06T23:23:53.9756370Z Version: 20260427.0018.1
+2026-05-06T23:23:53.9757040Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260427.0018/images/macos/macos-15-arm64-Readme.md
+2026-05-06T23:23:53.9758040Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260427.0018
+2026-05-06T23:23:53.9758620Z ##[endgroup]
+2026-05-06T23:23:53.9759270Z ##[group]GITHUB_TOKEN Permissions
+2026-05-06T23:23:53.9760190Z Contents: read
+2026-05-06T23:23:53.9760490Z Metadata: read
+2026-05-06T23:23:53.9760780Z Packages: read
+2026-05-06T23:23:53.9761070Z ##[endgroup]
+2026-05-06T23:23:53.9762430Z Secret source: Actions
+2026-05-06T23:23:53.9762790Z Prepare workflow directory
+2026-05-06T23:23:53.9970970Z Prepare all required actions
+2026-05-06T23:23:53.9997190Z Getting action download info
+2026-05-06T23:23:54.5392880Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-06T23:23:54.9443290Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-05-06T23:23:55.4563450Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-05-06T23:23:55.6033200Z Complete job name: Build and Run Sonar analysis on JDK 21 (macos-latest)

@@ -1,0 +1,14 @@
+﻿2026-05-06T23:24:04.5884334Z ##[group]Run actions/cache@v4
+2026-05-06T23:24:04.5884595Z with:
+2026-05-06T23:24:04.5885054Z   path: ~/.sonar/cache
+2026-05-06T23:24:04.5885274Z   key: Linux-sonar
+2026-05-06T23:24:04.5885489Z   restore-keys: Linux-sonar
+2026-05-06T23:24:04.5885730Z   enableCrossOsArchive: false
+2026-05-06T23:24:04.5885967Z   fail-on-cache-miss: false
+2026-05-06T23:24:04.5886190Z   lookup-only: false
+2026-05-06T23:24:04.5886384Z   save-always: false
+2026-05-06T23:24:04.5886571Z env:
+2026-05-06T23:24:04.5886855Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-05-06T23:24:04.5887335Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-05-06T23:24:04.5887700Z ##[endgroup]
+2026-05-06T23:24:04.7907736Z Cache not found for input keys: Linux-sonar, Linux-sonar

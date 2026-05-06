@@ -1,0 +1,15 @@
+﻿2026-05-06T23:24:07.0927143Z ##[group]Run actions/cache@v4
+2026-05-06T23:24:07.0927401Z with:
+2026-05-06T23:24:07.0927576Z   path: ~/.m2/repository
+2026-05-06T23:24:07.0927952Z   key: Linux-maven-44e994e66e01671e54c1b7907669df702084c413c18ad78e905c1768d6a0e1b6
+2026-05-06T23:24:07.0928356Z   restore-keys: Linux-maven-
+
+2026-05-06T23:24:07.0928581Z   enableCrossOsArchive: false
+2026-05-06T23:24:07.0928796Z   fail-on-cache-miss: false
+2026-05-06T23:24:07.0928991Z   lookup-only: false
+2026-05-06T23:24:07.0929169Z   save-always: false
+2026-05-06T23:24:07.0929332Z env:
+2026-05-06T23:24:07.0929591Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-05-06T23:24:07.0930039Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-05-06T23:24:07.0930375Z ##[endgroup]
+2026-05-06T23:24:07.4740586Z Cache not found for input keys: Linux-maven-44e994e66e01671e54c1b7907669df702084c413c18ad78e905c1768d6a0e1b6, Linux-maven-

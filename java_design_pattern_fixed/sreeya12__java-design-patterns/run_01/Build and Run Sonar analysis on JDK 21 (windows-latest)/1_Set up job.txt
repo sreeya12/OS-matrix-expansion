@@ -1,0 +1,33 @@
+﻿2026-05-06T23:23:52.3550653Z Current runner version: '2.334.0'
+2026-05-06T23:23:52.4064769Z ##[group]Runner Image Provisioner
+2026-05-06T23:23:52.4065525Z Hosted Compute Agent
+2026-05-06T23:23:52.4066058Z Version: 20260422.526
+2026-05-06T23:23:52.4066689Z Commit: e1a9e573f4d0838b3a7c1b07401aeb29ed3635a9
+2026-05-06T23:23:52.4067317Z Build Date: 2026-04-22T09:31:31Z
+2026-05-06T23:23:52.4067937Z Worker ID: {244468db-c734-409d-8716-502b9008fa69}
+2026-05-06T23:23:52.4068553Z Azure Region: northcentralus
+2026-05-06T23:23:52.4069699Z ##[endgroup]
+2026-05-06T23:23:52.4071290Z ##[group]Operating System
+2026-05-06T23:23:52.4071984Z Microsoft Windows Server 2025
+2026-05-06T23:23:52.4072579Z 10.0.26100
+2026-05-06T23:23:52.4073017Z Datacenter
+2026-05-06T23:23:52.4073473Z ##[endgroup]
+2026-05-06T23:23:52.4073949Z ##[group]Runner Image
+2026-05-06T23:23:52.4074494Z Image: windows-2025
+2026-05-06T23:23:52.4074919Z Version: 20260428.110.2
+2026-05-06T23:23:52.4075899Z Included Software: https://github.com/actions/runner-images/blob/win25/20260428.110/images/windows/Windows2025-Readme.md
+2026-05-06T23:23:52.4077813Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260428.110
+2026-05-06T23:23:52.4078677Z ##[endgroup]
+2026-05-06T23:23:52.4079677Z ##[group]GITHUB_TOKEN Permissions
+2026-05-06T23:23:52.4081525Z Contents: read
+2026-05-06T23:23:52.4082070Z Metadata: read
+2026-05-06T23:23:52.4082508Z Packages: read
+2026-05-06T23:23:52.4082997Z ##[endgroup]
+2026-05-06T23:23:52.4085133Z Secret source: Actions
+2026-05-06T23:23:52.4085834Z Prepare workflow directory
+2026-05-06T23:23:52.4428573Z Prepare all required actions
+2026-05-06T23:23:52.4466693Z Getting action download info
+2026-05-06T23:23:52.7224153Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-06T23:23:52.9743290Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-05-06T23:23:53.4164714Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-05-06T23:23:54.1972820Z Complete job name: Build and Run Sonar analysis on JDK 21 (windows-latest)

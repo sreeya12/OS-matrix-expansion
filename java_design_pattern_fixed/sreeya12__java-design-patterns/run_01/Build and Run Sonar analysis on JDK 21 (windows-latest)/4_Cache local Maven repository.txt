@@ -1,0 +1,15 @@
+﻿2026-05-06T23:24:08.1749655Z ##[group]Run actions/cache@v4
+2026-05-06T23:24:08.1749958Z with:
+2026-05-06T23:24:08.1750117Z   path: ~/.m2/repository
+2026-05-06T23:24:08.1750501Z   key: Windows-maven-578947fbb25f6c1350d69afa66bd6c360ce6e2deab59f23877b2652dd0bc1626
+2026-05-06T23:24:08.1750934Z   restore-keys: Windows-maven-
+
+2026-05-06T23:24:08.1751159Z   enableCrossOsArchive: false
+2026-05-06T23:24:08.1751366Z   fail-on-cache-miss: false
+2026-05-06T23:24:08.1751553Z   lookup-only: false
+2026-05-06T23:24:08.1751713Z   save-always: false
+2026-05-06T23:24:08.1751863Z env:
+2026-05-06T23:24:08.1752131Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-06T23:24:08.1752618Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-06T23:24:08.1752975Z ##[endgroup]
+2026-05-06T23:24:08.6076246Z Cache not found for input keys: Windows-maven-578947fbb25f6c1350d69afa66bd6c360ce6e2deab59f23877b2652dd0bc1626, Windows-maven-

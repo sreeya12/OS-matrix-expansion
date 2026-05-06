@@ -74,96 +74,69 @@ A `.env` file is already provided in the artifact for simplified access.
 | `data/patches/sreeya12__jjwt/` | Generated patches for jjwt. Contains files for both Q3 Windows and Q3 macOS fixes (OS-conditional package installation), plus a merged patch combining both. |
 | `data/patches/sreeya12__curator/` | Generated patch for curator. Contains files for the Q4 Windows fix (TestWatchesBuilder test skip). |
 
-### Pull Requests
+### Draft Pull Requests
 
 | PR | Repository | Description |
 |----|-----------|-------------|
-| [PR #1065](https://github.com/mrniko/netty-socketio/pull/1065) | mrniko/netty-socketio | ## What is the purpose of this PR
+| [PR #1065](https://github.com/mrniko/netty-socketio/pull/1065) | mrniko/netty-socketio | Adds OS matrix + fixes `export` command for Windows compatibility |
+| [PR #1547](https://github.com/LibrePDF/OpenPDF/pull/1547) | LibrePDF/OpenPDF | Adds OS matrix + fixes `ls -l` debug step and macOS font test |
+| [PR #4510](https://github.com/redis/jedis/pull/4510) | redis/jedis | Adds Windows to OS matrix + fixes Maven `-D` argument quoting |
 
-This PR adds Windows and macOS to the CI build matrix. The existing workflow only runs on Ubuntu. When expanding to other operating systems, the build fails on Windows due to a bash-specific export command in the workflow file. macOS passes without any code changes.
+### PR Descriptions
 
-## Expected result
+#### netty-socketio ([PR #1065](https://github.com/mrniko/netty-socketio/pull/1065))
 
-The build should pass on Ubuntu, Windows, and macOS without any test failures.
+**What is the purpose of this PR:**
+Adds Windows and macOS to the CI build matrix. The existing workflow only runs on Ubuntu.
 
-## Actual results
-
-The build fails on Windows with the following error:
-
-```
-The term 'export' is not recognized as a name of a cmdlet, 
-function, script file, or executable program. Check the spelling 
-of the name, or if a path was included, verify that the path is correct and try again.
-```
-
-The macOS build passes without issues. Ubuntu continues to pass as before.
-
-## Why the build fails when run on other OSs
-
-The workflow file contains the following step:
-
-```yaml
-- name: Build
-  run: export MAVEN_OPTS="-Xmx2048m" && mvn -B ...
-```
-
-The `export` command is a bash built-in for setting environment variables. Windows GitHub Actions runners use PowerShell as the default shell, which does not recognize `export`. macOS runners default to bash, so the same command works on macOS without issues.
-
-## Fix
-
-Replaced the inline `export MAVEN_OPTS="-Xmx2048m"` shell command with a job-level `env:` block:
-
-```yaml
-env:
-  MAVEN_OPTS: "-Xmx2048m"
-```
-
-This sets the environment variable using GitHub Actions' native mechanism, which works identically on all three operating systems regardless of the shell. |
-| [PR #1547](https://github.com/LibrePDF/OpenPDF/pull/1547) | LibrePDF/OpenPDF | ## What is the purpose of this PR
-
-Add Windows and macOS to the CI build matrix. Currently the workflow only runs on Ubuntu.
-
-## Expected results
-
+**Expected results:**
 Build and tests pass on all three operating systems (Ubuntu, Windows, macOS).
 
-## Actual results
+**Actual results:**
+The build fails on Windows because the `export` command is a bash built-in not recognized by PowerShell. macOS and Ubuntu pass without issues.
 
-Running the workflow on Windows and macOS without fixes produces the following errors:
+**Description of fix:**
+Replaced the inline `export MAVEN_OPTS=...` shell command with a step-level `env:` block, which works across all runner OSes.
 
-**Windows:** The debug step uses `pwd && ls -l`. On Windows, `ls` maps to PowerShell's `Get-ChildItem`, and `-l` is interpreted as `-LiteralPath`, which requires an argument.
+---
 
-**macOS:** `FontTest.testFontStyleOfStyledFont` loads `Courier.ttc` and expects an OS/2 TrueType table. On macOS, the bundled Courier font does not include that table. This is a platform-specific font difference, not a code defect.
+#### OpenPDF ([PR #1547](https://github.com/LibrePDF/OpenPDF/pull/1547))
 
-## Description of fix
+**What is the purpose of this PR:**
+Adds Windows and macOS to the CI build matrix. The existing workflow only runs on Ubuntu.
 
-1. Added OS build matrix (`ubuntu-latest`, `windows-latest`, `macos-latest`).
-2. Added `shell: bash` to the debug step so it runs correctly on Windows.
-3. Added `Assumptions.assumeFalse` to skip `testFontStyleOfStyledFont` on macOS where the required font table is unavailable. An alternative approach would be to comment out or remove the `FontFactory.registerDirectories()` call. |
-| [PR #4510](https://github.com/redis/jedis/pull/4510) | redis/jedis | ## What is the purpose of this PR
+**Expected results:**
+Build and tests pass on all three operating systems (Ubuntu, Windows, macOS).
 
-Add Windows to the CI build matrix. Currently the workflow only runs on Ubuntu.
+**Actual results:**
+- **Windows:** The debug step `pwd && ls -l` fails because PowerShell interprets `-l` as the `-LiteralPath` parameter.
+- **macOS:** `FontTest.testFontStyleOfStyledFont` fails because macOS's bundled Courier font lacks the OS/2 TrueType table.
 
-## Expected results
+**Description of fix:**
+1. Added `shell: bash` to the debug step so it runs correctly on Windows.
+2. Added `Assumptions.assumeFalse` to skip `testFontStyleOfStyledFont` on macOS where the required font table is unavailable. An alternative approach would be to comment out or remove the `FontFactory.registerDirectories()` call.
 
-- Ubuntu: passes 
-- Windows: Maven build and all unit tests pass.
+---
 
-## Actual results
+#### jedis ([PR #4510](https://github.com/redis/jedis/pull/4510))
 
-Running the workflow on Windows without fixes produces two errors:
+**What is the purpose of this PR:**
+Adds Windows to the CI build matrix. The existing workflow only runs on Ubuntu.
 
-**Maven argument parsing:** PowerShell splits unquoted `-D` arguments at the `=` sign, causing Maven to receive `.dataFile=target/jacoco-ut.exec` as an unknown lifecycle phase instead of a property definition.
+**Expected results:**
+- Ubuntu: passes (no change)
+- Windows: Maven build and all unit tests pass. The Docker-based Publish Test Results step is skipped via `runner.os == 'Linux'` conditional.
 
-**Docker action:** `EnricoMi/publish-unit-test-result-action@v2` is a Docker container action, which GitHub Actions only supports on Linux runners.
+**Actual results:**
+- **Maven argument parsing:** PowerShell splits unquoted `-D` arguments at `=`, causing Maven to receive `.dataFile=target/jacoco-ut.exec` as an unknown lifecycle phase.
+- **Docker action:** `EnricoMi/publish-unit-test-result-action@v2` only supports Linux runners.
 
-**Note on macOS:** macOS was not included in this PR because the workflow uses Java 8 with the Temurin distribution, and GitHub's macOS-latest runners (Apple Silicon/ARM) do not have Temurin Java 8 builds available. The `setup-java` step fails with "Could not find satisfied version for SemVer '8'". This is a GitHub Actions infrastructure limitation, not a jedis issue.
+**Note on macOS:** macOS was not included because the workflow uses Java 8 with Temurin, and GitHub's macOS-latest ARM runners do not have Temurin Java 8 builds available.
 
-## Description of fix
-
+**Description of fix:**
 1. Added `windows-latest` to the OS build matrix.
 2. Wrapped Maven `-D` arguments in double quotes so PowerShell treats them as single strings.
-3. Added `runner.os == 'Linux'` condition to the Publish Test Results step to skip it on Windows. |
+3. Added `runner.os == 'Linux'` condition to the Publish Test Results step to skip it on Windows.
 
 ## Running the Example
 

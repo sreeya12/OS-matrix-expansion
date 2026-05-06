@@ -1,0 +1,33 @@
+﻿2026-05-06T23:23:58.2601766Z Current runner version: '2.334.0'
+2026-05-06T23:23:58.2636149Z ##[group]Runner Image Provisioner
+2026-05-06T23:23:58.2637429Z Hosted Compute Agent
+2026-05-06T23:23:58.2638491Z Version: 20260213.493
+2026-05-06T23:23:58.2639489Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-05-06T23:23:58.2640648Z Build Date: 2026-02-13T00:28:41Z
+2026-05-06T23:23:58.2641692Z Worker ID: {13dad1fb-cab5-42ab-b69b-e366a28bed22}
+2026-05-06T23:23:58.2642972Z Azure Region: eastus
+2026-05-06T23:23:58.2643816Z ##[endgroup]
+2026-05-06T23:23:58.2646235Z ##[group]Operating System
+2026-05-06T23:23:58.2647355Z Ubuntu
+2026-05-06T23:23:58.2648171Z 24.04.4
+2026-05-06T23:23:58.2648920Z LTS
+2026-05-06T23:23:58.2649758Z ##[endgroup]
+2026-05-06T23:23:58.2650632Z ##[group]Runner Image
+2026-05-06T23:23:58.2651565Z Image: ubuntu-24.04
+2026-05-06T23:23:58.2652569Z Version: 20260413.86.1
+2026-05-06T23:23:58.2654275Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+2026-05-06T23:23:58.2657479Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+2026-05-06T23:23:58.2659125Z ##[endgroup]
+2026-05-06T23:23:58.2661110Z ##[group]GITHUB_TOKEN Permissions
+2026-05-06T23:23:58.2663995Z Contents: read
+2026-05-06T23:23:58.2665101Z Metadata: read
+2026-05-06T23:23:58.2666174Z Packages: read
+2026-05-06T23:23:58.2667046Z ##[endgroup]
+2026-05-06T23:23:58.2669793Z Secret source: Actions
+2026-05-06T23:23:58.2671335Z Prepare workflow directory
+2026-05-06T23:23:58.3134688Z Prepare all required actions
+2026-05-06T23:23:58.3189933Z Getting action download info
+2026-05-06T23:23:58.7058569Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-06T23:23:58.8389245Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-05-06T23:23:59.0708543Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-05-06T23:23:59.2776309Z Complete job name: Build and Run Sonar analysis on JDK 21 (ubuntu-latest)

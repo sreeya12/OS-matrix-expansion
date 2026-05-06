@@ -1,0 +1,103 @@
+﻿2026-05-06T23:23:55.6418620Z ##[group]Run actions/checkout@v4
+2026-05-06T23:23:55.6419170Z with:
+2026-05-06T23:23:55.6419460Z   fetch-depth: 0
+2026-05-06T23:23:55.6419800Z   repository: sreeya12/java-design-patterns
+2026-05-06T23:23:55.6420310Z   token: ***
+2026-05-06T23:23:55.6420600Z   ssh-strict: true
+2026-05-06T23:23:55.6420900Z   ssh-user: git
+2026-05-06T23:23:55.6421210Z   persist-credentials: true
+2026-05-06T23:23:55.6421550Z   clean: true
+2026-05-06T23:23:55.6421860Z   sparse-checkout-cone-mode: true
+2026-05-06T23:23:55.6422230Z   fetch-tags: false
+2026-05-06T23:23:55.6422540Z   show-progress: true
+2026-05-06T23:23:55.6422870Z   lfs: false
+2026-05-06T23:23:55.6423150Z   submodules: false
+2026-05-06T23:23:55.6423470Z   set-safe-directory: true
+2026-05-06T23:23:55.6423910Z ##[endgroup]
+2026-05-06T23:23:55.9191890Z Syncing repository: sreeya12/java-design-patterns
+2026-05-06T23:23:55.9194130Z ##[group]Getting Git version info
+2026-05-06T23:23:55.9195060Z Working directory is '/Users/runner/work/java-design-patterns/java-design-patterns'
+2026-05-06T23:23:55.9196120Z [command]/opt/homebrew/bin/git version
+2026-05-06T23:23:55.9742040Z git version 2.54.0
+2026-05-06T23:23:55.9783230Z ##[endgroup]
+2026-05-06T23:23:55.9788040Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/3c837a66-9361-4f46-a067-c0393600dd58/.gitconfig'
+2026-05-06T23:23:55.9789140Z Temporarily overriding HOME='/Users/runner/work/_temp/3c837a66-9361-4f46-a067-c0393600dd58' before making global git config changes
+2026-05-06T23:23:55.9790230Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-06T23:23:55.9791270Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/java-design-patterns/java-design-patterns
+2026-05-06T23:23:55.9882020Z Deleting the contents of '/Users/runner/work/java-design-patterns/java-design-patterns'
+2026-05-06T23:23:55.9884700Z ##[group]Initializing the repository
+2026-05-06T23:23:55.9889310Z [command]/opt/homebrew/bin/git init /Users/runner/work/java-design-patterns/java-design-patterns
+2026-05-06T23:23:56.0082220Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-06T23:23:56.0083820Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-06T23:23:56.0084600Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-06T23:23:56.0085150Z hint: call:
+2026-05-06T23:23:56.0085450Z hint:
+2026-05-06T23:23:56.0085840Z hint: 	git config --global init.defaultBranch <name>
+2026-05-06T23:23:56.0086270Z hint:
+2026-05-06T23:23:56.0086690Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-06T23:23:56.0087380Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-06T23:23:56.0087920Z hint:
+2026-05-06T23:23:56.0088230Z hint: 	git branch -m <name>
+2026-05-06T23:23:56.0088580Z hint:
+2026-05-06T23:23:56.0089040Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-06T23:23:56.0089930Z Initialized empty Git repository in /Users/runner/work/java-design-patterns/java-design-patterns/.git/
+2026-05-06T23:23:56.0091720Z [command]/opt/homebrew/bin/git remote add origin https://github.com/sreeya12/java-design-patterns
+2026-05-06T23:23:56.0172110Z ##[endgroup]
+2026-05-06T23:23:56.0173090Z ##[group]Disabling automatic garbage collection
+2026-05-06T23:23:56.0175230Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-05-06T23:23:56.0244060Z ##[endgroup]
+2026-05-06T23:23:56.0244830Z ##[group]Setting up auth
+2026-05-06T23:23:56.0249500Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-06T23:23:56.0311670Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-06T23:23:56.1248110Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-06T23:23:56.1307250Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-06T23:23:56.1983790Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-06T23:23:56.2085520Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-06T23:23:56.2833720Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-06T23:23:56.2903340Z ##[endgroup]
+2026-05-06T23:23:56.2904010Z ##[group]Fetching the repository
+2026-05-06T23:23:56.2909330Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-05-06T23:23:58.9067590Z From https://github.com/sreeya12/java-design-patterns
+2026-05-06T23:23:58.9069310Z  * [new branch]          fix-workflows           -> origin/fix-workflows
+2026-05-06T23:23:58.9070250Z  * [new branch]          master                  -> origin/master
+2026-05-06T23:23:58.9071180Z  * [new branch]          os-expansion-experiment -> origin/os-expansion-experiment
+2026-05-06T23:23:58.9156200Z [command]/opt/homebrew/bin/git branch --list --remote origin/fix-workflows
+2026-05-06T23:23:58.9255510Z   origin/fix-workflows
+2026-05-06T23:23:58.9311900Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/fix-workflows
+2026-05-06T23:23:58.9363750Z 095745529d7d0826b5d9287c74062d2188a25834
+2026-05-06T23:23:58.9413100Z ##[endgroup]
+2026-05-06T23:23:58.9419480Z ##[group]Determining the checkout info
+2026-05-06T23:23:58.9469030Z ##[endgroup]
+2026-05-06T23:23:58.9478270Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-05-06T23:23:58.9542000Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-06T23:23:58.9586540Z ##[group]Checking out the ref
+2026-05-06T23:23:58.9597210Z [command]/opt/homebrew/bin/git checkout --progress --force -B fix-workflows refs/remotes/origin/fix-workflows
+2026-05-06T23:24:00.1415340Z Updating files:  78% (2810/3566)
+2026-05-06T23:24:00.1496940Z Updating files:  79% (2818/3566)
+2026-05-06T23:24:00.1610530Z Updating files:  80% (2853/3566)
+2026-05-06T23:24:00.1667480Z Updating files:  81% (2889/3566)
+2026-05-06T23:24:00.1784150Z Updating files:  82% (2925/3566)
+2026-05-06T23:24:00.2278620Z Updating files:  83% (2960/3566)
+2026-05-06T23:24:00.2386660Z Updating files:  84% (2996/3566)
+2026-05-06T23:24:00.2452190Z Updating files:  85% (3032/3566)
+2026-05-06T23:24:00.2510880Z Updating files:  86% (3067/3566)
+2026-05-06T23:24:00.2931740Z Updating files:  87% (3103/3566)
+2026-05-06T23:24:00.2972210Z Updating files:  88% (3139/3566)
+2026-05-06T23:24:00.3035190Z Updating files:  89% (3174/3566)
+2026-05-06T23:24:00.3070380Z Updating files:  90% (3210/3566)
+2026-05-06T23:24:00.3136410Z Updating files:  91% (3246/3566)
+2026-05-06T23:24:00.3598680Z Updating files:  92% (3281/3566)
+2026-05-06T23:24:00.3641210Z Updating files:  93% (3317/3566)
+2026-05-06T23:24:00.3705350Z Updating files:  94% (3353/3566)
+2026-05-06T23:24:00.3808930Z Updating files:  95% (3388/3566)
+2026-05-06T23:24:00.4187310Z Updating files:  96% (3424/3566)
+2026-05-06T23:24:00.4244140Z Updating files:  97% (3460/3566)
+2026-05-06T23:24:00.4294070Z Updating files:  98% (3495/3566)
+2026-05-06T23:24:00.4332420Z Updating files:  99% (3531/3566)
+2026-05-06T23:24:00.4332720Z Updating files: 100% (3566/3566)
+2026-05-06T23:24:00.4332970Z Updating files: 100% (3566/3566), done.
+2026-05-06T23:24:00.4436160Z Switched to a new branch 'fix-workflows'
+2026-05-06T23:24:00.4442110Z branch 'fix-workflows' set up to track 'origin/fix-workflows'.
+2026-05-06T23:24:00.4450380Z ##[endgroup]
+2026-05-06T23:24:00.4548860Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-05-06T23:24:00.4665240Z 095745529d7d0826b5d9287c74062d2188a25834
