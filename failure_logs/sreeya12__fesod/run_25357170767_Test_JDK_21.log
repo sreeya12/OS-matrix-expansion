@@ -1,0 +1,267 @@
+ï»¿2026-05-05T04:06:29.0744031Z Current runner version: '2.334.0'
+2026-05-05T04:06:29.0776727Z ##[group]Runner Image Provisioner
+2026-05-05T04:06:29.0777451Z Hosted Compute Agent
+2026-05-05T04:06:29.0777995Z Version: 20260415.520
+2026-05-05T04:06:29.0778518Z Commit: af089020f5f67b61ccc91db6c07980876c02bf7b
+2026-05-05T04:06:29.0779165Z Build Date: 2026-04-15T18:07:08Z
+2026-05-05T04:06:29.0779781Z Worker ID: {ef4f124b-1af1-4e31-89de-99baa58d2669}
+2026-05-05T04:06:29.0780392Z Azure Region: northcentralus
+2026-05-05T04:06:29.0780926Z ##[endgroup]
+2026-05-05T04:06:29.0782195Z ##[group]Operating System
+2026-05-05T04:06:29.0782785Z Microsoft Windows Server 2025
+2026-05-05T04:06:29.0783264Z 10.0.26100
+2026-05-05T04:06:29.0783732Z Datacenter
+2026-05-05T04:06:29.0784131Z ##[endgroup]
+2026-05-05T04:06:29.0784571Z ##[group]Runner Image
+2026-05-05T04:06:29.0785644Z Image: windows-2025
+2026-05-05T04:06:29.0786087Z Version: 20260419.89.1
+2026-05-05T04:06:29.0787468Z Included Software: https://github.com/actions/runner-images/blob/win25/20260419.89/images/windows/Windows2025-Readme.md
+2026-05-05T04:06:29.0788976Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260419.89
+2026-05-05T04:06:29.0789842Z ##[endgroup]
+2026-05-05T04:06:29.0790926Z ##[group]GITHUB_TOKEN Permissions
+2026-05-05T04:06:29.0792775Z Checks: write
+2026-05-05T04:06:29.0793359Z Metadata: read
+2026-05-05T04:06:29.0793796Z PullRequests: write
+2026-05-05T04:06:29.0794272Z ##[endgroup]
+2026-05-05T04:06:29.0796226Z Secret source: Actions
+2026-05-05T04:06:29.0796966Z Prepare workflow directory
+2026-05-05T04:06:29.1262996Z Prepare all required actions
+2026-05-05T04:06:29.1318300Z Getting action download info
+2026-05-05T04:06:29.4462613Z Download action repository 'actions/checkout@v5' (SHA:93cb6efe18208431cddfb8368fd83d5badbf9bfd)
+2026-05-05T04:06:29.8105427Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-05-05T04:06:30.2220559Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-05-05T04:06:30.4748540Z Download action repository 'EnricoMi/publish-unit-test-result-action@v2' (SHA:c950f6fb443cb5af20a377fd0dfaa78838901040)
+2026-05-05T04:06:33.5604263Z Container action is only supported on Linux, skip pull and build docker images.
+2026-05-05T04:06:33.5676104Z Complete job name: Test JDK 21
+2026-05-05T04:06:35.2624823Z ##[group]Run actions/checkout@v5
+2026-05-05T04:06:35.2625495Z with:
+2026-05-05T04:06:35.2625669Z   repository: sreeya12/fesod
+2026-05-05T04:06:35.2626048Z   token: ***
+2026-05-05T04:06:35.2626211Z   ssh-strict: true
+2026-05-05T04:06:35.2626373Z   ssh-user: git
+2026-05-05T04:06:35.2626544Z   persist-credentials: true
+2026-05-05T04:06:35.2626744Z   clean: true
+2026-05-05T04:06:35.2626910Z   sparse-checkout-cone-mode: true
+2026-05-05T04:06:35.2627125Z   fetch-depth: 1
+2026-05-05T04:06:35.2627283Z   fetch-tags: false
+2026-05-05T04:06:35.2627468Z   show-progress: true
+2026-05-05T04:06:35.2627634Z   lfs: false
+2026-05-05T04:06:35.2627818Z   submodules: false
+2026-05-05T04:06:35.2627981Z   set-safe-directory: true
+2026-05-05T04:06:35.2628451Z ##[endgroup]
+2026-05-05T04:06:35.7335599Z Syncing repository: sreeya12/fesod
+2026-05-05T04:06:35.7336959Z ##[group]Getting Git version info
+2026-05-05T04:06:35.7337254Z Working directory is 'D:\a\fesod\fesod'
+2026-05-05T04:06:35.8574722Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-05-05T04:06:36.7648200Z git version 2.53.0.windows.3
+2026-05-05T04:06:36.7710483Z ##[endgroup]
+2026-05-05T04:06:36.7734217Z Temporarily overriding HOME='D:\a\_temp\9d84bdd3-4eaf-42f4-a09c-a4373309c4b6' before making global git config changes
+2026-05-05T04:06:36.7735548Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-05T04:06:36.7746345Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\fesod\fesod
+2026-05-05T04:06:36.8122479Z Deleting the contents of 'D:\a\fesod\fesod'
+2026-05-05T04:06:36.8129699Z ##[group]Initializing the repository
+2026-05-05T04:06:36.8139543Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\fesod\fesod
+2026-05-05T04:06:36.8617649Z Initialized empty Git repository in D:/a/fesod/fesod/.git/
+2026-05-05T04:06:36.8676366Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/sreeya12/fesod
+2026-05-05T04:06:36.9055542Z ##[endgroup]
+2026-05-05T04:06:36.9056144Z ##[group]Disabling automatic garbage collection
+2026-05-05T04:06:36.9065336Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-05-05T04:06:36.9378430Z ##[endgroup]
+2026-05-05T04:06:36.9378790Z ##[group]Setting up auth
+2026-05-05T04:06:36.9391032Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-05T04:06:36.9698105Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-05T04:06:44.8508560Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-05T04:06:44.8840116Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-05T04:06:45.4166564Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-05T04:06:45.4486456Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-05T04:06:45.9926778Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-05-05T04:06:46.0198426Z ##[endgroup]
+2026-05-05T04:06:46.0199199Z ##[group]Fetching the repository
+2026-05-05T04:06:46.0211960Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +74f153182ff8b91f0b9f095b639c27d27339cfa7:refs/remotes/origin/os-expansion-experiment
+2026-05-05T04:06:47.5331551Z From https://github.com/sreeya12/fesod
+2026-05-05T04:06:47.5336677Z  * [new ref]         74f153182ff8b91f0b9f095b639c27d27339cfa7 -> origin/os-expansion-experiment
+2026-05-05T04:06:47.5585627Z ##[endgroup]
+2026-05-05T04:06:47.5586207Z ##[group]Determining the checkout info
+2026-05-05T04:06:47.5588944Z ##[endgroup]
+2026-05-05T04:06:47.5600666Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-05-05T04:06:47.5976274Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-05-05T04:06:47.6334763Z ##[group]Checking out the ref
+2026-05-05T04:06:47.6335935Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B os-expansion-experiment refs/remotes/origin/os-expansion-experiment
+2026-05-05T04:06:48.3147246Z Switched to a new branch 'os-expansion-experiment'
+2026-05-05T04:06:48.3162951Z branch 'os-expansion-experiment' set up to track 'origin/os-expansion-experiment'.
+2026-05-05T04:06:48.3240401Z ##[endgroup]
+2026-05-05T04:06:48.3572593Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-05-05T04:06:48.3849669Z 74f153182ff8b91f0b9f095b639c27d27339cfa7
+2026-05-05T04:06:48.4329904Z ##[group]Run actions/setup-java@v5
+2026-05-05T04:06:48.4330296Z with:
+2026-05-05T04:06:48.4330496Z   java-version: 21
+2026-05-05T04:06:48.4330720Z   distribution: temurin
+2026-05-05T04:06:48.4330962Z   java-package: jdk
+2026-05-05T04:06:48.4331181Z   check-latest: false
+2026-05-05T04:06:48.4331412Z   server-id: github
+2026-05-05T04:06:48.4331655Z   server-username: GITHUB_ACTOR
+2026-05-05T04:06:48.4331961Z   server-password: GITHUB_TOKEN
+2026-05-05T04:06:48.4332226Z   overwrite-settings: true
+2026-05-05T04:06:48.4332471Z   job-status: success
+2026-05-05T04:06:48.4333568Z   token: ***
+2026-05-05T04:06:48.4333780Z ##[endgroup]
+2026-05-05T04:06:48.6269439Z ##[group]Installed distributions
+2026-05-05T04:06:48.6832721Z Resolved Java 21.0.10+7.0 from tool-cache
+2026-05-05T04:06:48.6833232Z Setting Java 21.0.10+7.0 as the default
+2026-05-05T04:06:48.6857244Z Creating toolchains.xml for JDK version 21 from temurin
+2026-05-05T04:06:48.6975523Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-05-05T04:06:48.6996792Z 
+2026-05-05T04:06:48.6997194Z Java configuration:
+2026-05-05T04:06:48.6997546Z   Distribution: temurin
+2026-05-05T04:06:48.6997881Z   Version: 21.0.10+7.0
+2026-05-05T04:06:48.6998434Z   Path: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:06:48.6999334Z 
+2026-05-05T04:06:48.6999820Z ##[endgroup]
+2026-05-05T04:06:48.7015196Z Creating settings.xml with server-id: github
+2026-05-05T04:06:48.7020228Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-05-05T04:06:49.1335703Z ##[group]Run actions/cache@v4
+2026-05-05T04:06:49.1336031Z with:
+2026-05-05T04:06:49.1336194Z   path: ~/.m2/repository
+2026-05-05T04:06:49.1336565Z   key: Windows-m2-bec30e37927cda6791674e88aab1ef08fe529e0bf6fd7c38c7c7b9a1ff849ece
+2026-05-05T04:06:49.1336996Z   restore-keys: Windows-m2
+
+2026-05-05T04:06:49.1337206Z   enableCrossOsArchive: false
+2026-05-05T04:06:49.1337416Z   fail-on-cache-miss: false
+2026-05-05T04:06:49.1337597Z   lookup-only: false
+2026-05-05T04:06:49.1337766Z   save-always: false
+2026-05-05T04:06:49.1337915Z env:
+2026-05-05T04:06:49.1338187Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:06:49.1338671Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:06:49.1339026Z ##[endgroup]
+2026-05-05T04:06:49.6290924Z Cache not found for input keys: Windows-m2-bec30e37927cda6791674e88aab1ef08fe529e0bf6fd7c38c7c7b9a1ff849ece, Windows-m2
+2026-05-05T04:06:49.6542203Z ##[group]Run ./mvnw clean package -B -Dmaven.test.skip=false -pl fesod-common,fesod-shaded,fesod-sheet,fesod-examples/fesod-sheet-examples
+2026-05-05T04:06:49.6543315Z [36;1m./mvnw clean package -B -Dmaven.test.skip=false -pl fesod-common,fesod-shaded,fesod-sheet,fesod-examples/fesod-sheet-examples[0m
+2026-05-05T04:06:49.7315950Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-05-05T04:06:49.7316383Z env:
+2026-05-05T04:06:49.7316763Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:06:49.7317558Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:06:49.7318099Z ##[endgroup]
+2026-05-05T04:06:58.7924324Z [INFO] Scanning for projects...
+2026-05-05T04:06:58.9564603Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/31/apache-31.pom
+2026-05-05T04:06:59.1598682Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/31/apache-31.pom (24 kB at 112 kB/s)
+2026-05-05T04:06:59.3693794Z [INFO] ------------------------------------------------------------------------
+2026-05-05T04:06:59.3700154Z [INFO] Reactor Build Order:
+2026-05-05T04:06:59.3703082Z [INFO] 
+2026-05-05T04:06:59.3734957Z [INFO] Fesod Common                                                       [jar]
+2026-05-05T04:06:59.3752811Z [INFO] Fesod Shaded                                                       [jar]
+2026-05-05T04:06:59.3768105Z [INFO] Fesod Spreadsheet                                                  [jar]
+2026-05-05T04:06:59.3778853Z [INFO] Fesod Sheet Examples                                               [jar]
+2026-05-05T04:06:59.3858141Z [INFO] 
+2026-05-05T04:06:59.3869729Z [INFO] -------------------< org.apache.fesod:fesod-common >--------------------
+2026-05-05T04:06:59.3878191Z [INFO] Building Fesod Common 2.1.0-SNAPSHOT                               [1/4]
+2026-05-05T04:06:59.3885056Z [INFO] --------------------------------[ jar ]---------------------------------
+2026-05-05T04:06:59.3923049Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-remote-resources-plugin/3.1.0/maven-remote-resources-plugin-3.1.0.pom
+2026-05-05T04:06:59.4565019Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-remote-resources-plugin/3.1.0/maven-remote-resources-plugin-3.1.0.pom (15 kB at 228 kB/s)
+2026-05-05T04:06:59.4695778Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/39/maven-plugins-39.pom
+2026-05-05T04:06:59.5293000Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/39/maven-plugins-39.pom (8.1 kB at 135 kB/s)
+2026-05-05T04:06:59.5344598Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/39/maven-parent-39.pom
+2026-05-05T04:06:59.5949497Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/39/maven-parent-39.pom (48 kB at 800 kB/s)
+2026-05-05T04:06:59.6055310Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/29/apache-29.pom
+2026-05-05T04:06:59.6624692Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/29/apache-29.pom (21 kB at 364 kB/s)
+2026-05-05T04:06:59.6742084Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-remote-resources-plugin/3.1.0/maven-remote-resources-plugin-3.1.0.jar
+2026-05-05T04:06:59.7333220Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-remote-resources-plugin/3.1.0/maven-remote-resources-plugin-3.1.0.jar (82 kB at 1.4 MB/s)
+2026-05-05T04:06:59.7489000Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-enforcer-plugin/3.4.1/maven-enforcer-plugin-3.4.1.pom
+2026-05-05T04:06:59.8123604Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-enforcer-plugin/3.4.1/maven-enforcer-plugin-3.4.1.pom (7.7 kB at 123 kB/s)
+2026-05-05T04:06:59.8184215Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/enforcer/enforcer/3.4.1/enforcer-3.4.1.pom
+2026-05-05T04:06:59.8719732Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/enforcer/enforcer/3.4.1/enforcer-3.4.1.pom (9.1 kB at 165 kB/s)
+2026-05-05T04:06:59.8779967Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/40/maven-parent-40.pom
+2026-05-05T04:06:59.9304452Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/40/maven-parent-40.pom (49 kB at 941 kB/s)
+2026-05-05T04:06:59.9380307Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom
+2026-05-05T04:06:59.9828854Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/30/apache-30.pom (23 kB at 528 kB/s)
+2026-05-05T04:06:59.9912866Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.10.0/junit-bom-5.10.0.pom
+2026-05-05T04:07:00.0410659Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.10.0/junit-bom-5.10.0.pom (5.6 kB at 113 kB/s)
+2026-05-05T04:07:00.0490594Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-enforcer-plugin/3.4.1/maven-enforcer-plugin-3.4.1.jar
+2026-05-05T04:07:00.0972657Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-enforcer-plugin/3.4.1/maven-enforcer-plugin-3.4.1.jar (39 kB at 814 kB/s)
+2026-05-05T04:07:00.1038183Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.12.1/maven-site-plugin-3.12.1.pom
+2026-05-05T04:07:00.1545612Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.12.1/maven-site-plugin-3.12.1.pom (20 kB at 390 kB/s)
+2026-05-05T04:07:00.1602291Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/36/maven-plugins-36.pom
+2026-05-05T04:07:00.2079858Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-plugins/36/maven-plugins-36.pom (9.9 kB at 206 kB/s)
+2026-05-05T04:07:00.2128147Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/36/maven-parent-36.pom
+2026-05-05T04:07:00.2665326Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/36/maven-parent-36.pom (45 kB at 892 kB/s)
+2026-05-05T04:07:00.2775740Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/26/apache-26.pom
+2026-05-05T04:07:00.3503886Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/26/apache-26.pom (21 kB at 281 kB/s)
+2026-05-05T04:07:00.3595491Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.12.1/maven-site-plugin-3.12.1.jar
+2026-05-05T04:07:00.4067000Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-site-plugin/3.12.1/maven-site-plugin-3.12.1.jar (119 kB at 2.5 MB/s)
+2026-05-05T04:07:00.4215032Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.14/jacoco-maven-plugin-0.8.14.pom
+2026-05-05T04:07:00.5160581Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.14/jacoco-maven-plugin-0.8.14.pom (4.2 kB at 45 kB/s)
+2026-05-05T04:07:00.5216881Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.build/0.8.14/org.jacoco.build-0.8.14.pom
+2026-05-05T04:07:00.5880501Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/org.jacoco.build/0.8.14/org.jacoco.build-0.8.14.pom (46 kB at 699 kB/s)
+2026-05-05T04:07:00.5978684Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-bom/9.9/asm-bom-9.9.pom
+2026-05-05T04:07:00.6774159Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/asm/asm-bom/9.9/asm-bom-9.9.pom (3.3 kB at 41 kB/s)
+2026-05-05T04:07:00.6838266Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/ow2/ow2/1.5.1/ow2-1.5.1.pom
+2026-05-05T04:07:00.7324060Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/ow2/ow2/1.5.1/ow2-1.5.1.pom (11 kB at 230 kB/s)
+2026-05-05T04:07:00.7392314Z [INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.14/jacoco-maven-plugin-0.8.14.jar
+2026-05-05T04:07:00.7858637Z [INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/jacoco-maven-plugin/0.8.14/jacoco-maven-plugin-0.8.14.jar (57 kB at 1.2 MB/s)
+2026-05-05T04:07:00.7954601Z [INFO] ------------------------------------------------------------------------
+2026-05-05T04:07:00.7955378Z [INFO] Reactor Summary for Fesod Common 2.1.0-SNAPSHOT:
+2026-05-05T04:07:00.7955818Z [INFO] 
+2026-05-05T04:07:00.7960247Z [INFO] Fesod Common ....................................... FAILURE [  1.410 s]
+2026-05-05T04:07:00.7962252Z [INFO] Fesod Shaded ....................................... SKIPPED
+2026-05-05T04:07:00.7964583Z [INFO] Fesod Spreadsheet .................................. SKIPPED
+2026-05-05T04:07:00.7966262Z [INFO] Fesod Sheet Examples ............................... SKIPPED
+2026-05-05T04:07:00.7968092Z [INFO] ------------------------------------------------------------------------
+2026-05-05T04:07:00.7968652Z [INFO] BUILD FAILURE
+2026-05-05T04:07:00.7969937Z [INFO] ------------------------------------------------------------------------
+2026-05-05T04:07:00.7971796Z [INFO] Total time:  2.031 s
+2026-05-05T04:07:00.7975270Z [INFO] Finished at: 2026-05-05T04:07:00Z
+2026-05-05T04:07:00.7978015Z [INFO] ------------------------------------------------------------------------
+2026-05-05T04:07:00.8002743Z [ERROR] Unknown lifecycle phase ".test.skip=false". You must specify a valid lifecycle phase or a goal in the format <plugin-prefix>:<goal> or <plugin-group-id>:<plugin-artifact-id>[:<plugin-version>]:<goal>. Available lifecycle phases are: validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy, pre-clean, clean, post-clean, pre-site, site, post-site, site-deploy. -> [Help 1]
+2026-05-05T04:07:00.8007551Z [ERROR] 
+2026-05-05T04:07:00.8008011Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2026-05-05T04:07:00.8008504Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2026-05-05T04:07:00.8008835Z [ERROR] 
+2026-05-05T04:07:00.8009196Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2026-05-05T04:07:00.8009864Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/LifecyclePhaseNotFoundException
+2026-05-05T04:07:01.3456021Z ##[error]Process completed with exit code 1.
+2026-05-05T04:07:01.3694340Z ##[group]Run EnricoMi/publish-unit-test-result-action@v2
+2026-05-05T04:07:01.3694711Z with:
+2026-05-05T04:07:01.3694886Z   files: **/target/surefire-reports/*.xml
+2026-05-05T04:07:01.3695303Z   github_token: ***
+2026-05-05T04:07:01.3695474Z   github_retries: 10
+2026-05-05T04:07:01.3695635Z   ssl_verify: true
+2026-05-05T04:07:01.3695802Z   check_name: Test Results
+2026-05-05T04:07:01.3695975Z   comment_mode: always
+2026-05-05T04:07:01.3696145Z   fail_on: test failures
+2026-05-05T04:07:01.3696313Z   action_fail: false
+2026-05-05T04:07:01.3696515Z   action_fail_on_inconclusive: false
+2026-05-05T04:07:01.3696724Z   time_unit: seconds
+2026-05-05T04:07:01.3696899Z   report_suite_logs: none
+2026-05-05T04:07:01.3697088Z   ignore_runs: false
+2026-05-05T04:07:01.3697244Z   check_run: true
+2026-05-05T04:07:01.3697392Z   job_summary: true
+2026-05-05T04:07:01.3714360Z   compare_to_earlier_commit: true
+2026-05-05T04:07:01.3714642Z   pull_request_build: merge
+2026-05-05T04:07:01.3714925Z   check_run_annotations: all tests, skipped tests
+2026-05-05T04:07:01.3715219Z   seconds_between_github_reads: 0.25
+2026-05-05T04:07:01.3715458Z   seconds_between_github_writes: 2.0
+2026-05-05T04:07:01.3715676Z   json_thousands_separator: â
+2026-05-05T04:07:01.3715888Z   json_suite_details: false
+2026-05-05T04:07:01.3716077Z   json_test_case_results: false
+2026-05-05T04:07:01.3716281Z   search_pull_requests: false
+2026-05-05T04:07:01.3716464Z env:
+2026-05-05T04:07:01.3716738Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:07:01.3717234Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-05T04:07:01.3717600Z ##[endgroup]
+2026-05-05T04:07:01.3795723Z ##[error]Container action is only supported on Linux
+2026-05-05T04:07:01.3993520Z Post job cleanup.
+2026-05-05T04:07:01.5833716Z Post job cleanup.
+2026-05-05T04:07:01.7797933Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-05-05T04:07:01.8133875Z git version 2.53.0.windows.3
+2026-05-05T04:07:01.8222466Z Temporarily overriding HOME='D:\a\_temp\e05ee438-f6bc-4723-8f65-69a25491270c' before making global git config changes
+2026-05-05T04:07:01.8223744Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-05T04:07:01.8234575Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\fesod\fesod
+2026-05-05T04:07:01.8593566Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-05-05T04:07:01.8962935Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-05-05T04:07:02.4968499Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-05T04:07:02.5250221Z http.https://github.com/.extraheader
+2026-05-05T04:07:02.5300313Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-05-05T04:07:02.5625345Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-05-05T04:07:03.1205737Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-05T04:07:03.1513224Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-05-05T04:07:03.7013689Z Cleaning up orphan processes
+2026-05-05T04:07:03.7046857Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/cache@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

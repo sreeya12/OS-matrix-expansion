@@ -1,4 +1,4 @@
-﻿2026-04-19T23:17:55.9446600Z Current runner version: '2.333.1'
+ï»¿2026-04-19T23:17:55.9446600Z Current runner version: '2.333.1'
 2026-04-19T23:17:55.9459100Z ##[group]Runner Image Provisioner
 2026-04-19T23:17:55.9459540Z Hosted Compute Agent
 2026-04-19T23:17:55.9459890Z Version: 20260415.520
@@ -2083,9 +2083,9 @@
 2026-04-19T23:18:59.8907020Z [INFO] Results:
 2026-04-19T23:18:59.9010040Z [INFO] 
 2026-04-19T23:18:59.9122080Z [ERROR] Errors: 
-2026-04-19T23:18:59.9228780Z [ERROR]   FontTest.testFontStyleOfStyledFont(int)[2] » ExceptionConverter Table 'OS/2' does not exist in /System/Library/Fonts/Courier.ttc
-2026-04-19T23:18:59.9330240Z [ERROR]   FontTest.testFontStyleOfStyledFont(int)[3] » ExceptionConverter Table 'OS/2' does not exist in /System/Library/Fonts/Courier.ttc
-2026-04-19T23:18:59.9430660Z [ERROR]   FontTest.testFontStyleOfStyledFont(int)[6] » ExceptionConverter Table 'OS/2' does not exist in /System/Library/Fonts/Courier.ttc
+2026-04-19T23:18:59.9228780Z [ERROR]   FontTest.testFontStyleOfStyledFont(int)[2] Â» ExceptionConverter Table 'OS/2' does not exist in /System/Library/Fonts/Courier.ttc
+2026-04-19T23:18:59.9330240Z [ERROR]   FontTest.testFontStyleOfStyledFont(int)[3] Â» ExceptionConverter Table 'OS/2' does not exist in /System/Library/Fonts/Courier.ttc
+2026-04-19T23:18:59.9430660Z [ERROR]   FontTest.testFontStyleOfStyledFont(int)[6] Â» ExceptionConverter Table 'OS/2' does not exist in /System/Library/Fonts/Courier.ttc
 2026-04-19T23:18:59.9532070Z [INFO] 
 2026-04-19T23:18:59.9542490Z [ERROR] Tests run: 2073, Failures: 0, Errors: 3, Skipped: 3
 2026-04-19T23:18:59.9544230Z [INFO] 

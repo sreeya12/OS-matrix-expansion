@@ -1,0 +1,171 @@
+ï»¿2026-05-05T03:48:15.7226420Z Current runner version: '2.334.0'
+2026-05-05T03:48:15.7240600Z ##[group]Runner Image Provisioner
+2026-05-05T03:48:15.7241080Z Hosted Compute Agent
+2026-05-05T03:48:15.7241420Z Version: 20260422.526
+2026-05-05T03:48:15.7241790Z Commit: e1a9e573f4d0838b3a7c1b07401aeb29ed3635a9
+2026-05-05T03:48:15.7242210Z Build Date: 2026-04-22T09:31:31Z
+2026-05-05T03:48:15.7242620Z Worker ID: {3dcdb891-75ae-4408-949a-122bd5c00125}
+2026-05-05T03:48:15.7243040Z Azure Region: westus
+2026-05-05T03:48:15.7243360Z ##[endgroup]
+2026-05-05T03:48:15.7244150Z ##[group]Operating System
+2026-05-05T03:48:15.7244500Z macOS
+2026-05-05T03:48:15.7244770Z 15.7.4
+2026-05-05T03:48:15.7245030Z 24G517
+2026-05-05T03:48:15.7245310Z ##[endgroup]
+2026-05-05T03:48:15.7245640Z ##[group]Runner Image
+2026-05-05T03:48:15.7245960Z Image: macos-15-arm64
+2026-05-05T03:48:15.7246270Z Version: 20260427.0018.1
+2026-05-05T03:48:15.7247030Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260427.0018/images/macos/macos-15-arm64-Readme.md
+2026-05-05T03:48:15.7247970Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260427.0018
+2026-05-05T03:48:15.7248550Z ##[endgroup]
+2026-05-05T03:48:15.7249270Z ##[group]GITHUB_TOKEN Permissions
+2026-05-05T03:48:15.7250400Z Checks: write
+2026-05-05T03:48:15.7250700Z Metadata: read
+2026-05-05T03:48:15.7250990Z PullRequests: write
+2026-05-05T03:48:15.7251300Z ##[endgroup]
+2026-05-05T03:48:15.7252730Z Secret source: Actions
+2026-05-05T03:48:15.7253110Z Prepare workflow directory
+2026-05-05T03:48:15.7478260Z Prepare all required actions
+2026-05-05T03:48:15.7505370Z Getting action download info
+2026-05-05T03:48:16.2378930Z Download action repository 'actions/checkout@v5' (SHA:93cb6efe18208431cddfb8368fd83d5badbf9bfd)
+2026-05-05T03:48:16.4660270Z Download action repository 'actions/setup-java@v5' (SHA:be666c2fcd27ec809703dec50e508c2fdc7f6654)
+2026-05-05T03:48:16.9996580Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-05-05T03:48:17.0797770Z Download action repository 'EnricoMi/publish-unit-test-result-action@v2' (SHA:c950f6fb443cb5af20a377fd0dfaa78838901040)
+2026-05-05T03:48:17.7838270Z Container action is only supported on Linux, skip pull and build docker images.
+2026-05-05T03:48:17.7893930Z Complete job name: Test JDK 8
+2026-05-05T03:48:17.8474090Z ##[group]Run actions/checkout@v5
+2026-05-05T03:48:17.8474950Z with:
+2026-05-05T03:48:17.8475510Z   repository: sreeya12/fesod
+2026-05-05T03:48:17.8476440Z   token: ***
+2026-05-05T03:48:17.8478780Z   ssh-strict: true
+2026-05-05T03:48:17.8480240Z   ssh-user: git
+2026-05-05T03:48:17.8481400Z   persist-credentials: true
+2026-05-05T03:48:17.8482760Z   clean: true
+2026-05-05T03:48:17.8483940Z   sparse-checkout-cone-mode: true
+2026-05-05T03:48:17.8485770Z   fetch-depth: 1
+2026-05-05T03:48:17.8486980Z   fetch-tags: false
+2026-05-05T03:48:17.8488170Z   show-progress: true
+2026-05-05T03:48:17.8489400Z   lfs: false
+2026-05-05T03:48:17.8490920Z   submodules: false
+2026-05-05T03:48:17.8492280Z   set-safe-directory: true
+2026-05-05T03:48:17.8495580Z ##[endgroup]
+2026-05-05T03:48:18.1925480Z Syncing repository: sreeya12/fesod
+2026-05-05T03:48:18.1927290Z ##[group]Getting Git version info
+2026-05-05T03:48:18.1928110Z Working directory is '/Users/runner/work/fesod/fesod'
+2026-05-05T03:48:18.1929330Z [command]/opt/homebrew/bin/git version
+2026-05-05T03:48:18.2404450Z git version 2.54.0
+2026-05-05T03:48:18.2424350Z ##[endgroup]
+2026-05-05T03:48:18.2432100Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/8424003a-b2a6-44d8-a735-51b90ddb2a98/.gitconfig'
+2026-05-05T03:48:18.2434050Z Temporarily overriding HOME='/Users/runner/work/_temp/8424003a-b2a6-44d8-a735-51b90ddb2a98' before making global git config changes
+2026-05-05T03:48:18.2435750Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-05T03:48:18.2437110Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/fesod/fesod
+2026-05-05T03:48:18.2552050Z Deleting the contents of '/Users/runner/work/fesod/fesod'
+2026-05-05T03:48:18.2554740Z ##[group]Initializing the repository
+2026-05-05T03:48:18.2557840Z [command]/opt/homebrew/bin/git init /Users/runner/work/fesod/fesod
+2026-05-05T03:48:18.2931770Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-05T03:48:18.2933480Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-05T03:48:18.2934710Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-05T03:48:18.2935650Z hint: call:
+2026-05-05T03:48:18.2936090Z hint:
+2026-05-05T03:48:18.2936670Z hint: 	git config --global init.defaultBranch <name>
+2026-05-05T03:48:18.2937370Z hint:
+2026-05-05T03:48:18.2938010Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-05T03:48:18.2939080Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-05T03:48:18.2939930Z hint:
+2026-05-05T03:48:18.2940410Z hint: 	git branch -m <name>
+2026-05-05T03:48:18.2940950Z hint:
+2026-05-05T03:48:18.2941670Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-05T03:48:18.2942930Z Initialized empty Git repository in /Users/runner/work/fesod/fesod/.git/
+2026-05-05T03:48:18.2945080Z [command]/opt/homebrew/bin/git remote add origin https://github.com/sreeya12/fesod
+2026-05-05T03:48:18.3014410Z ##[endgroup]
+2026-05-05T03:48:18.3015360Z ##[group]Disabling automatic garbage collection
+2026-05-05T03:48:18.3016190Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-05-05T03:48:18.3074560Z ##[endgroup]
+2026-05-05T03:48:18.3075410Z ##[group]Setting up auth
+2026-05-05T03:48:18.3078770Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-05T03:48:18.3139050Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-05T03:48:18.4183230Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-05T03:48:18.4267130Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-05T03:48:18.5370800Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-05T03:48:18.5460840Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-05T03:48:18.6508860Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-05T03:48:18.6575690Z ##[endgroup]
+2026-05-05T03:48:18.6576670Z ##[group]Fetching the repository
+2026-05-05T03:48:18.6581370Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +74f153182ff8b91f0b9f095b639c27d27339cfa7:refs/remotes/origin/os-expansion-experiment
+2026-05-05T03:48:19.7983670Z From https://github.com/sreeya12/fesod
+2026-05-05T03:48:19.7986560Z  * [new ref]         74f153182ff8b91f0b9f095b639c27d27339cfa7 -> origin/os-expansion-experiment
+2026-05-05T03:48:19.8146540Z ##[endgroup]
+2026-05-05T03:48:19.8148190Z ##[group]Determining the checkout info
+2026-05-05T03:48:19.8149800Z ##[endgroup]
+2026-05-05T03:48:19.8151890Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-05-05T03:48:19.8292690Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-05T03:48:19.8440640Z ##[group]Checking out the ref
+2026-05-05T03:48:19.8450900Z [command]/opt/homebrew/bin/git checkout --progress --force -B os-expansion-experiment refs/remotes/origin/os-expansion-experiment
+2026-05-05T03:48:20.2168070Z Switched to a new branch 'os-expansion-experiment'
+2026-05-05T03:48:20.2206300Z branch 'os-expansion-experiment' set up to track 'origin/os-expansion-experiment'.
+2026-05-05T03:48:20.2312340Z ##[endgroup]
+2026-05-05T03:48:20.2455240Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-05-05T03:48:20.2496390Z 74f153182ff8b91f0b9f095b639c27d27339cfa7
+2026-05-05T03:48:20.2841050Z ##[group]Run actions/setup-java@v5
+2026-05-05T03:48:20.2841390Z with:
+2026-05-05T03:48:20.2841550Z   java-version: 8
+2026-05-05T03:48:20.2841700Z   distribution: temurin
+2026-05-05T03:48:20.2841930Z   java-package: jdk
+2026-05-05T03:48:20.2842180Z   check-latest: false
+2026-05-05T03:48:20.2842420Z   server-id: github
+2026-05-05T03:48:20.2842700Z   server-username: GITHUB_ACTOR
+2026-05-05T03:48:20.2842980Z   server-password: GITHUB_TOKEN
+2026-05-05T03:48:20.2843230Z   overwrite-settings: true
+2026-05-05T03:48:20.2843440Z   job-status: success
+2026-05-05T03:48:20.2843820Z   token: ***
+2026-05-05T03:48:20.2843970Z ##[endgroup]
+2026-05-05T03:48:20.4583590Z ##[group]Installed distributions
+2026-05-05T03:48:20.4659930Z Trying to resolve the latest version from remote
+2026-05-05T03:48:20.8546630Z ##[error]Java setup process failed due to: Could not find satisfied version for SemVer '8'. 
+Available versions: 26.0.0+35, 25.0.3+9.0.LTS, 25.0.2+10.0.LTS, 25.0.1+8.0.LTS, 25.0.0+36.0.LTS, 24.0.2+12, 24.0.1+9, 24.0.0+36, 23.0.2+7, 23.0.1+11, 23.0.0+37, 22.0.2+9, 22.0.1+8, 22.0.0+36, 21.0.11+10.0.LTS, 21.0.10+7.0.LTS, 21.0.9+10.0.LTS, 21.0.8+9.0.LTS, 21.0.7+6.0.LTS, 21.0.6+7.0.LTS, 21.0.5+11.0.LTS, 21.0.4+7.0.LTS, 21.0.3+9.0.LTS, 21.0.2+13.0.LTS, 21.0.1+12.0.LTS, 21.0.0+35.0.LTS, 20.0.2+9, 20.0.1+9, 20.0.0+36, 19.0.2+7, 19.0.1+10, 19.0.0+36, 18.0.2+101, 18.0.2+9, 18.0.1+10, 18.0.0+36, 17.0.19+10, 17.0.18+8, 17.0.17+10, 17.0.16+8, 17.0.15+6, 17.0.14+7, 17.0.13+11, 17.0.12+7, 17.0.11+9, 17.0.10+7, 17.0.9+9, 17.0.8+101, 17.0.8+7, 17.0.7+7, 17.0.6+10, 17.0.5+8, 17.0.4+101, 17.0.4+8, 17.0.3+7, 17.0.2+8, 17.0.1+12, 17.0.0+35, 11.0.31+11, 11.0.30+7, 11.0.29+7, 11.0.28+6, 11.0.27+6, 11.0.26+4, 11.0.25+9, 11.0.24+8, 11.0.23+9, 11.0.22+7.1, 11.0.22+7, 11.0.21+9, 11.0.20+101, 11.0.20+8, 11.0.19+7, 11.0.18+10, 11.0.17+8, 11.0.16+101, 11.0.16+8, 11.0.15+10
+2026-05-05T03:48:20.8558540Z ##[error]Could not find satisfied version for SemVer '8'. 
+Available versions: 26.0.0+35, 25.0.3+9.0.LTS, 25.0.2+10.0.LTS, 25.0.1+8.0.LTS, 25.0.0+36.0.LTS, 24.0.2+12, 24.0.1+9, 24.0.0+36, 23.0.2+7, 23.0.1+11, 23.0.0+37, 22.0.2+9, 22.0.1+8, 22.0.0+36, 21.0.11+10.0.LTS, 21.0.10+7.0.LTS, 21.0.9+10.0.LTS, 21.0.8+9.0.LTS, 21.0.7+6.0.LTS, 21.0.6+7.0.LTS, 21.0.5+11.0.LTS, 21.0.4+7.0.LTS, 21.0.3+9.0.LTS, 21.0.2+13.0.LTS, 21.0.1+12.0.LTS, 21.0.0+35.0.LTS, 20.0.2+9, 20.0.1+9, 20.0.0+36, 19.0.2+7, 19.0.1+10, 19.0.0+36, 18.0.2+101, 18.0.2+9, 18.0.1+10, 18.0.0+36, 17.0.19+10, 17.0.18+8, 17.0.17+10, 17.0.16+8, 17.0.15+6, 17.0.14+7, 17.0.13+11, 17.0.12+7, 17.0.11+9, 17.0.10+7, 17.0.9+9, 17.0.8+101, 17.0.8+7, 17.0.7+7, 17.0.6+10, 17.0.5+8, 17.0.4+101, 17.0.4+8, 17.0.3+7, 17.0.2+8, 17.0.1+12, 17.0.0+35, 11.0.31+11, 11.0.30+7, 11.0.29+7, 11.0.28+6, 11.0.27+6, 11.0.26+4, 11.0.25+9, 11.0.24+8, 11.0.23+9, 11.0.22+7.1, 11.0.22+7, 11.0.21+9, 11.0.20+101, 11.0.20+8, 11.0.19+7, 11.0.18+10, 11.0.17+8, 11.0.16+101, 11.0.16+8, 11.0.15+10
+2026-05-05T03:48:20.8706930Z ##[group]Run EnricoMi/publish-unit-test-result-action@v2
+2026-05-05T03:48:20.8707220Z with:
+2026-05-05T03:48:20.8707380Z   files: **/target/surefire-reports/*.xml
+2026-05-05T03:48:20.8707740Z   github_token: ***
+2026-05-05T03:48:20.8707910Z   github_retries: 10
+2026-05-05T03:48:20.8708060Z   ssl_verify: true
+2026-05-05T03:48:20.8708220Z   check_name: Test Results
+2026-05-05T03:48:20.8708410Z   comment_mode: always
+2026-05-05T03:48:20.8708640Z   fail_on: test failures
+2026-05-05T03:48:20.8708820Z   action_fail: false
+2026-05-05T03:48:20.8709000Z   action_fail_on_inconclusive: false
+2026-05-05T03:48:20.8709270Z   time_unit: seconds
+2026-05-05T03:48:20.8709450Z   report_suite_logs: none
+2026-05-05T03:48:20.8709620Z   ignore_runs: false
+2026-05-05T03:48:20.8709780Z   check_run: true
+2026-05-05T03:48:20.8709950Z   job_summary: true
+2026-05-05T03:48:20.8710200Z   compare_to_earlier_commit: true
+2026-05-05T03:48:20.8710780Z   pull_request_build: merge
+2026-05-05T03:48:20.8711050Z   check_run_annotations: all tests, skipped tests
+2026-05-05T03:48:20.8711300Z   seconds_between_github_reads: 0.25
+2026-05-05T03:48:20.8711510Z   seconds_between_github_writes: 2.0
+2026-05-05T03:48:20.8711720Z   json_thousands_separator: â
+2026-05-05T03:48:20.8711920Z   json_suite_details: false
+2026-05-05T03:48:20.8712110Z   json_test_case_results: false
+2026-05-05T03:48:20.8712310Z   search_pull_requests: false
+2026-05-05T03:48:20.8712510Z ##[endgroup]
+2026-05-05T03:48:20.8886670Z ##[error]Container action is only supported on Linux
+2026-05-05T03:48:20.8950870Z Post job cleanup.
+2026-05-05T03:48:21.0281900Z Post job cleanup.
+2026-05-05T03:48:21.1138740Z [command]/opt/homebrew/bin/git version
+2026-05-05T03:48:21.1201750Z git version 2.54.0
+2026-05-05T03:48:21.1220610Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/f779ea38-73f5-4787-9e2a-fbe905b40b20/.gitconfig'
+2026-05-05T03:48:21.1226960Z Temporarily overriding HOME='/Users/runner/work/_temp/f779ea38-73f5-4787-9e2a-fbe905b40b20' before making global git config changes
+2026-05-05T03:48:21.1227790Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-05T03:48:21.1230780Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/fesod/fesod
+2026-05-05T03:48:21.1293920Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-05T03:48:21.1357940Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-05T03:48:21.2068230Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-05T03:48:21.2119100Z http.https://github.com/.extraheader
+2026-05-05T03:48:21.2126720Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-05-05T03:48:21.2184800Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-05T03:48:21.2953930Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-05T03:48:21.2970350Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-05T03:48:21.3777060Z Cleaning up orphan processes

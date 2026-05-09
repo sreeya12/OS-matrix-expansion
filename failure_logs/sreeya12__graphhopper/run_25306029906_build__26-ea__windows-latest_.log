@@ -1,4 +1,4 @@
-﻿2026-05-04T07:13:47.0638292Z Current runner version: '2.334.0'
+ï»¿2026-05-04T07:13:47.0638292Z Current runner version: '2.334.0'
 2026-05-04T07:13:47.0667137Z ##[group]Runner Image Provisioner
 2026-05-04T07:13:47.0667993Z Hosted Compute Agent
 2026-05-04T07:13:47.0668552Z Version: 20260422.526
@@ -1741,47 +1741,47 @@
 2026-05-04T07:15:44.5030179Z [INFO] Results:
 2026-05-04T07:15:44.5032450Z [INFO] 
 2026-05-04T07:15:44.5032969Z [ERROR] Errors: 
-2026-05-04T07:15:44.5034854Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5036751Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5038069Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5041276Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5042935Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5044076Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5045294Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5047357Z [ERROR]   MMapDataAccessTest>DataAccessTest.testTrimToRoundsUpToSegmentBoundary:312 � Runtime Failed to truncate file D:\a\graphhopper\graphhopper\core\.\target\tmp\da/dataacess
-2026-05-04T07:15:44.5049087Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5050287Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5051454Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5052904Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5054145Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5055346Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5056581Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5057810Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5059021Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5060222Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5061433Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5062837Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5064046Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5065234Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5066301Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5067343Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5068440Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5069505Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5070544Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5071684Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5073071Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5074426Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5075177Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5075877Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5076579Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5077502Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5078710Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5080001Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5081234Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5082876Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5084059Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5085224Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
-2026-05-04T07:15:44.5086319Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 � IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5034854Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5036751Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5038069Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5041276Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5042935Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5044076Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5045294Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5047357Z [ERROR]   MMapDataAccessTest>DataAccessTest.testTrimToRoundsUpToSegmentBoundary:312 ï¿½ Runtime Failed to truncate file D:\a\graphhopper\graphhopper\core\.\target\tmp\da/dataacess
+2026-05-04T07:15:44.5049087Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5050287Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5051454Z [ERROR]   MMapDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5052904Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5054145Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5055346Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5056581Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5057810Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5059021Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5060222Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5061433Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5062837Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5064046Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5065234Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5066301Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5067343Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5068440Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5069505Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5070544Z [ERROR]   RAMDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5071684Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5073071Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5074426Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5075177Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5075877Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5076579Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5077502Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5078710Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5080001Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5081234Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5082876Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5084059Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5085224Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
+2026-05-04T07:15:44.5086319Z [ERROR]   RAMIntDataAccessTest>DataAccessTest.setUp:48 ï¿½ IllegalState cannot delete folder .\target\tmp\da
 2026-05-04T07:15:44.5086943Z [INFO] 
 2026-05-04T07:15:44.5087240Z [ERROR] Tests run: 3134, Failures: 0, Errors: 41, Skipped: 20
 2026-05-04T07:15:44.5087642Z [INFO] 

@@ -1,4 +1,4 @@
-﻿2026-04-20T02:12:51.5948299Z Current runner version: '2.333.1'
+ï»¿2026-04-20T02:12:51.5948299Z Current runner version: '2.333.1'
 2026-04-20T02:12:51.5973665Z ##[group]Runner Image Provisioner
 2026-04-20T02:12:51.5974399Z Hosted Compute Agent
 2026-04-20T02:12:51.5974809Z Version: 20260213.493
@@ -1780,7 +1780,7 @@
 2026-04-20T02:15:01.6970325Z   check_run_annotations: all tests, skipped tests
 2026-04-20T02:15:01.6970579Z   seconds_between_github_reads: 0.25
 2026-04-20T02:15:01.6970800Z   seconds_between_github_writes: 2.0
-2026-04-20T02:15:01.6971014Z   json_thousands_separator: �??
+2026-04-20T02:15:01.6971014Z   json_thousands_separator: â
 2026-04-20T02:15:01.6971216Z   json_suite_details: false
 2026-04-20T02:15:01.6971407Z   json_test_case_results: false
 2026-04-20T02:15:01.6971600Z   search_pull_requests: false

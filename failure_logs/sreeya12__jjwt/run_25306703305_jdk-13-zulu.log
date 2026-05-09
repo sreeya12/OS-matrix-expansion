@@ -1,0 +1,181 @@
+ï»¿2026-05-04T07:32:34.1445170Z Current runner version: '2.334.0'
+2026-05-04T07:32:34.1461400Z ##[group]Runner Image Provisioner
+2026-05-04T07:32:34.1461960Z Hosted Compute Agent
+2026-05-04T07:32:34.1471040Z Version: 20260422.526
+2026-05-04T07:32:34.1472270Z Commit: e1a9e573f4d0838b3a7c1b07401aeb29ed3635a9
+2026-05-04T07:32:34.1473450Z Build Date: 2026-04-22T09:31:31Z
+2026-05-04T07:32:34.1474680Z Worker ID: {e494a9e0-7470-4cef-9535-ffdd2202fcc2}
+2026-05-04T07:32:34.1475900Z Azure Region: westus
+2026-05-04T07:32:34.1476860Z ##[endgroup]
+2026-05-04T07:32:34.1488710Z ##[group]Operating System
+2026-05-04T07:32:34.1489210Z macOS
+2026-05-04T07:32:34.1493870Z 15.7.4
+2026-05-04T07:32:34.1494300Z 24G517
+2026-05-04T07:32:34.1499390Z ##[endgroup]
+2026-05-04T07:32:34.1501060Z ##[group]Runner Image
+2026-05-04T07:32:34.1502590Z Image: macos-15-arm64
+2026-05-04T07:32:34.1504210Z Version: 20260427.0018.1
+2026-05-04T07:32:34.1507540Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260427.0018/images/macos/macos-15-arm64-Readme.md
+2026-05-04T07:32:34.1512570Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260427.0018
+2026-05-04T07:32:34.1513460Z ##[endgroup]
+2026-05-04T07:32:34.1518410Z ##[group]GITHUB_TOKEN Permissions
+2026-05-04T07:32:34.1521470Z Contents: read
+2026-05-04T07:32:34.1521910Z Metadata: read
+2026-05-04T07:32:34.1522230Z Packages: read
+2026-05-04T07:32:34.1522550Z ##[endgroup]
+2026-05-04T07:32:34.1524680Z Secret source: Actions
+2026-05-04T07:32:34.1525120Z Prepare workflow directory
+2026-05-04T07:32:34.2411640Z Prepare all required actions
+2026-05-04T07:32:34.2472130Z Getting action download info
+2026-05-04T07:32:34.7109100Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-05-04T07:32:35.1692260Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-05-04T07:32:36.1375960Z Complete job name: jdk-13-zulu
+2026-05-04T07:32:36.2646090Z ##[group]Run actions/checkout@v4
+2026-05-04T07:32:36.2646720Z with:
+2026-05-04T07:32:36.2647050Z   repository: sreeya12/jjwt
+2026-05-04T07:32:36.2647920Z   token: ***
+2026-05-04T07:32:36.2648280Z   ssh-strict: true
+2026-05-04T07:32:36.2648610Z   ssh-user: git
+2026-05-04T07:32:36.2649080Z   persist-credentials: true
+2026-05-04T07:32:36.2649530Z   clean: true
+2026-05-04T07:32:36.2649850Z   sparse-checkout-cone-mode: true
+2026-05-04T07:32:36.2650230Z   fetch-depth: 1
+2026-05-04T07:32:36.2650580Z   fetch-tags: false
+2026-05-04T07:32:36.2651120Z   show-progress: true
+2026-05-04T07:32:36.2651640Z   lfs: false
+2026-05-04T07:32:36.2652070Z   submodules: false
+2026-05-04T07:32:36.2652410Z   set-safe-directory: true
+2026-05-04T07:32:36.2652980Z env:
+2026-05-04T07:32:36.2653320Z   MVN_CMD: ./mvnw --no-transfer-progress -B
+2026-05-04T07:32:36.2653780Z   JDK_MAJOR_VERSION: 13
+2026-05-04T07:32:36.2654110Z ##[endgroup]
+2026-05-04T07:32:37.0150070Z Syncing repository: sreeya12/jjwt
+2026-05-04T07:32:37.0155570Z ##[group]Getting Git version info
+2026-05-04T07:32:37.0157330Z Working directory is '/Users/runner/work/jjwt/jjwt'
+2026-05-04T07:32:37.0159910Z [command]/opt/homebrew/bin/git version
+2026-05-04T07:32:37.2231920Z git version 2.54.0
+2026-05-04T07:32:37.2276440Z ##[endgroup]
+2026-05-04T07:32:37.2284170Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/e45a674d-1b84-4b29-8c77-4c9c6c927422/.gitconfig'
+2026-05-04T07:32:37.2288250Z Temporarily overriding HOME='/Users/runner/work/_temp/e45a674d-1b84-4b29-8c77-4c9c6c927422' before making global git config changes
+2026-05-04T07:32:37.2298390Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-04T07:32:37.2302610Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/jjwt/jjwt
+2026-05-04T07:32:37.2521460Z Deleting the contents of '/Users/runner/work/jjwt/jjwt'
+2026-05-04T07:32:37.2526220Z ##[group]Initializing the repository
+2026-05-04T07:32:37.2531170Z [command]/opt/homebrew/bin/git init /Users/runner/work/jjwt/jjwt
+2026-05-04T07:32:37.2807180Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-04T07:32:37.2809480Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-04T07:32:37.2811410Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-04T07:32:37.2813480Z hint: call:
+2026-05-04T07:32:37.2814630Z hint:
+2026-05-04T07:32:37.2815750Z hint: 	git config --global init.defaultBranch <name>
+2026-05-04T07:32:37.2817020Z hint:
+2026-05-04T07:32:37.2819020Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-04T07:32:37.2820850Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-04T07:32:37.2822260Z hint:
+2026-05-04T07:32:37.2823570Z hint: 	git branch -m <name>
+2026-05-04T07:32:37.2824640Z hint:
+2026-05-04T07:32:37.2826610Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-04T07:32:37.2834950Z Initialized empty Git repository in /Users/runner/work/jjwt/jjwt/.git/
+2026-05-04T07:32:37.2838550Z [command]/opt/homebrew/bin/git remote add origin https://github.com/sreeya12/jjwt
+2026-05-04T07:32:37.3069100Z ##[endgroup]
+2026-05-04T07:32:37.3176310Z ##[group]Disabling automatic garbage collection
+2026-05-04T07:32:37.3278000Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-05-04T07:32:37.3348700Z ##[endgroup]
+2026-05-04T07:32:37.3368610Z ##[group]Setting up auth
+2026-05-04T07:32:37.3372980Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-04T07:32:37.3386720Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-04T07:32:37.5314280Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-04T07:32:37.5453050Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-04T07:32:37.6590760Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-04T07:32:37.6672230Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-04T07:32:37.8192750Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-04T07:32:37.8331290Z ##[endgroup]
+2026-05-04T07:32:37.8333470Z ##[group]Fetching the repository
+2026-05-04T07:32:37.8341930Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f8d61dcb25cb1310f3c30d12af9a1fb020650449:refs/remotes/origin/os-expansion-experiment
+2026-05-04T07:32:38.6544940Z From https://github.com/sreeya12/jjwt
+2026-05-04T07:32:38.6547490Z  * [new ref]         f8d61dcb25cb1310f3c30d12af9a1fb020650449 -> origin/os-expansion-experiment
+2026-05-04T07:32:38.6716260Z ##[endgroup]
+2026-05-04T07:32:38.6716910Z ##[group]Determining the checkout info
+2026-05-04T07:32:38.6717450Z ##[endgroup]
+2026-05-04T07:32:38.6717990Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-05-04T07:32:38.6885710Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-04T07:32:38.6970480Z ##[group]Checking out the ref
+2026-05-04T07:32:38.6973940Z [command]/opt/homebrew/bin/git checkout --progress --force -B os-expansion-experiment refs/remotes/origin/os-expansion-experiment
+2026-05-04T07:32:38.8502550Z Switched to a new branch 'os-expansion-experiment'
+2026-05-04T07:32:38.8506510Z branch 'os-expansion-experiment' set up to track 'origin/os-expansion-experiment'.
+2026-05-04T07:32:38.8590210Z ##[endgroup]
+2026-05-04T07:32:38.8704190Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-05-04T07:32:38.8874700Z f8d61dcb25cb1310f3c30d12af9a1fb020650449
+2026-05-04T07:32:38.9149730Z ##[group]Run actions/setup-java@v4
+2026-05-04T07:32:38.9150010Z with:
+2026-05-04T07:32:38.9150160Z   java-version: 13
+2026-05-04T07:32:38.9150370Z   distribution: zulu
+2026-05-04T07:32:38.9150560Z   cache: maven
+2026-05-04T07:32:38.9150720Z   check-latest: true
+2026-05-04T07:32:38.9150880Z   java-package: jdk
+2026-05-04T07:32:38.9151060Z   server-id: github
+2026-05-04T07:32:38.9151250Z   server-username: GITHUB_ACTOR
+2026-05-04T07:32:38.9151530Z   server-password: GITHUB_TOKEN
+2026-05-04T07:32:38.9151860Z   overwrite-settings: true
+2026-05-04T07:32:38.9152160Z   job-status: success
+2026-05-04T07:32:38.9152490Z   token: ***
+2026-05-04T07:32:38.9152630Z env:
+2026-05-04T07:32:38.9152800Z   MVN_CMD: ./mvnw --no-transfer-progress -B
+2026-05-04T07:32:38.9153050Z   JDK_MAJOR_VERSION: 13
+2026-05-04T07:32:38.9153250Z ##[endgroup]
+2026-05-04T07:32:39.2177550Z ##[group]Installed distributions
+2026-05-04T07:32:39.2215630Z Trying to resolve the latest version from remote
+2026-05-04T07:32:39.3797100Z Resolved latest version as 13.0.14+5
+2026-05-04T07:32:39.3899180Z Trying to download...
+2026-05-04T07:32:39.3899930Z Downloading Java 13.0.14+5 (Zulu) from https://cdn.azul.com/zulu/bin/zulu13.54.17-ca-jdk13.0.14-macosx_aarch64.tar.gz ...
+2026-05-04T07:32:41.7314910Z Extracting Java archive...
+2026-05-04T07:32:41.7517370Z [command]/usr/bin/tar xz -C /Users/runner/work/_temp/e9bd2d3d-1720-4e0c-9478-000f54c3e7e1 -f /Users/runner/work/_temp/f1e9f408-e931-4873-bfcd-a3e0531e94f9
+2026-05-04T07:32:44.5854320Z Java 13.0.14+5 was downloaded
+2026-05-04T07:32:44.5854890Z Setting Java 13.0.14+5 as the default
+2026-05-04T07:32:44.5865140Z Creating toolchains.xml for JDK version 13 from zulu
+2026-05-04T07:32:44.5940580Z Writing to /Users/runner/.m2/toolchains.xml
+2026-05-04T07:32:44.5971390Z 
+2026-05-04T07:32:44.5972340Z Java configuration:
+2026-05-04T07:32:44.5973540Z   Distribution: zulu
+2026-05-04T07:32:44.5974710Z   Version: 13.0.14+5
+2026-05-04T07:32:44.5983280Z   Path: /Users/runner/hostedtoolcache/Java_Zulu_jdk/13.0.14-5/arm64
+2026-05-04T07:32:44.5984720Z 
+2026-05-04T07:32:44.5986770Z ##[endgroup]
+2026-05-04T07:32:44.6054120Z Creating settings.xml with server-id: github
+2026-05-04T07:32:44.6054930Z Writing to /Users/runner/.m2/settings.xml
+2026-05-04T07:32:44.9733410Z Cache hit for: setup-java-macOS-arm64-maven-c04a3f9a59846a2cc40572d973c0ee0010373c2502ff289fe0b70f68bbdc1ef8
+2026-05-04T07:32:46.2828690Z Received 0 of 19116892 (0.0%), 0.0 MBs/sec
+2026-05-04T07:32:46.7541400Z Received 19116892 of 19116892 (100.0%), 12.3 MBs/sec
+2026-05-04T07:32:46.7601760Z Cache Size: ~18 MB (19116892 B)
+2026-05-04T07:32:46.7610420Z [command]/opt/homebrew/bin/gtar -xf /Users/runner/work/_temp/48abc584-587f-4617-8bad-b707f07e4a3d/cache.tzst -P -C /Users/runner/work/jjwt/jjwt --delay-directory-restore --use-compress-program unzstd
+2026-05-04T07:32:47.2645330Z Cache restored successfully
+2026-05-04T07:32:47.2760760Z Cache restored from key: setup-java-macOS-arm64-maven-c04a3f9a59846a2cc40572d973c0ee0010373c2502ff289fe0b70f68bbdc1ef8
+2026-05-04T07:32:47.2995140Z ##[group]Run sudo apt-get install -y softhsm2
+2026-05-04T07:32:47.2995580Z [36;1msudo apt-get install -y softhsm2[0m
+2026-05-04T07:32:47.3100630Z shell: /bin/bash -e {0}
+2026-05-04T07:32:47.3100890Z env:
+2026-05-04T07:32:47.3101250Z   MVN_CMD: ./mvnw --no-transfer-progress -B
+2026-05-04T07:32:47.3101490Z   JDK_MAJOR_VERSION: 13
+2026-05-04T07:32:47.3101750Z   JAVA_HOME: /Users/runner/hostedtoolcache/Java_Zulu_jdk/13.0.14-5/arm64
+2026-05-04T07:32:47.3149580Z   JAVA_HOME_13_ARM64: /Users/runner/hostedtoolcache/Java_Zulu_jdk/13.0.14-5/arm64
+2026-05-04T07:32:47.3150710Z ##[endgroup]
+2026-05-04T07:32:47.4445650Z sudo: apt-get: command not found
+2026-05-04T07:32:47.4466430Z ##[error]Process completed with exit code 1.
+2026-05-04T07:32:47.4656950Z Post job cleanup.
+2026-05-04T07:32:47.7077090Z Post job cleanup.
+2026-05-04T07:32:47.8265690Z [command]/opt/homebrew/bin/git version
+2026-05-04T07:32:47.8374670Z git version 2.54.0
+2026-05-04T07:32:47.8401680Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/29d92326-3857-4ed3-aff4-f13f95c23f8b/.gitconfig'
+2026-05-04T07:32:47.8414030Z Temporarily overriding HOME='/Users/runner/work/_temp/29d92326-3857-4ed3-aff4-f13f95c23f8b' before making global git config changes
+2026-05-04T07:32:47.8415120Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-04T07:32:47.8430710Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/jjwt/jjwt
+2026-05-04T07:32:47.8507960Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-04T07:32:47.8587250Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-04T07:32:47.9612500Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-04T07:32:47.9668030Z http.https://github.com/.extraheader
+2026-05-04T07:32:47.9679770Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-05-04T07:32:47.9745320Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-04T07:32:48.0666600Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-04T07:32:48.0778760Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-04T07:32:48.2251090Z Cleaning up orphan processes
+2026-05-04T07:32:48.2607700Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

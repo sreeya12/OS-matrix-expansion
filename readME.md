@@ -209,13 +209,16 @@ python scripts/run_workflows.py java_patterns_modified.csv --runs 1 --output jav
 ```
 ### Step 5: Collect Failures
 
-Once modified workflows have been executed and some runs have failed. Collect the failure logs
+Once modified workflows have been executed and some runs have failed. Collect the failure logs. If you want to collect for all workflows, manually create a csv file in the same format as input csv and by changing the branch to os-expansion-experiment. This step has not been automated due to the lack of time and is in works for the near future. If you want to collect failures for one workflow, use the command below tagged as one workflow
 
 ```bash
-# Collect failures from the os-expansion-experiment branch
+# Collect failures from the os-expansion-experiment branch (ome workflow)
 python scripts/collect_failures.py java_patterns_modified \
   --branch os-expansion-experiment \
   --output java_patterns_failures.csv
+
+#collect failures for all workflows
+python scripts/collect_failures.py modified_projects.csv
 ```
 
 **Expected output:**
