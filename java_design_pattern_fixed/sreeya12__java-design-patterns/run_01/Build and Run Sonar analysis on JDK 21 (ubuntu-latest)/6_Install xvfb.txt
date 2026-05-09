@@ -1,12 +1,12 @@
-﻿2026-05-06T23:24:04.7995054Z ##[group]Run sudo apt-get install -y xvfb
-2026-05-06T23:24:04.7995441Z [36;1msudo apt-get install -y xvfb[0m
-2026-05-06T23:24:04.8019834Z shell: /usr/bin/bash -e {0}
-2026-05-06T23:24:04.8020090Z env:
-2026-05-06T23:24:04.8020392Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
-2026-05-06T23:24:04.8020899Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
-2026-05-06T23:24:04.8021485Z ##[endgroup]
-2026-05-06T23:24:05.6521445Z Reading package lists...
-2026-05-06T23:24:05.8355306Z Building dependency tree...
-2026-05-06T23:24:05.8367686Z Reading state information...
-2026-05-06T23:24:06.0281095Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
-2026-05-06T23:24:06.0281617Z 0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.
+﻿2026-05-07T00:02:33.4147713Z ##[group]Run sudo apt-get install -y xvfb
+2026-05-07T00:02:33.4148077Z [36;1msudo apt-get install -y xvfb[0m
+2026-05-07T00:02:33.4173347Z shell: /usr/bin/bash -e {0}
+2026-05-07T00:02:33.4173588Z env:
+2026-05-07T00:02:33.4173869Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-05-07T00:02:33.4174354Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7/x64
+2026-05-07T00:02:33.4174903Z ##[endgroup]
+2026-05-07T00:02:35.3164556Z Reading package lists...
+2026-05-07T00:02:35.5119043Z Building dependency tree...
+2026-05-07T00:02:35.5131699Z Reading state information...
+2026-05-07T00:02:35.7030615Z xvfb is already the newest version (2:21.1.12-1ubuntu1.5).
+2026-05-07T00:02:35.7031134Z 0 upgraded, 0 newly installed, 0 to remove and 7 not upgraded.

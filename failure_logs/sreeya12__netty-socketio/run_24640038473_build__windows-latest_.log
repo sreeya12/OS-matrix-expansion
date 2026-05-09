@@ -1,0 +1,165 @@
+ï»¿2026-04-19T21:54:24.2374843Z Current runner version: '2.333.1'
+2026-04-19T21:54:24.2686550Z ##[group]Runner Image Provisioner
+2026-04-19T21:54:24.2687352Z Hosted Compute Agent
+2026-04-19T21:54:24.2687791Z Version: 20260213.493
+2026-04-19T21:54:24.2688284Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-04-19T21:54:24.2688789Z Build Date: 2026-02-13T00:28:41Z
+2026-04-19T21:54:24.2689291Z Worker ID: {4176d7ab-d71b-4875-b173-ca2bdca5bdd1}
+2026-04-19T21:54:24.2689791Z Azure Region: westus
+2026-04-19T21:54:24.2690284Z ##[endgroup]
+2026-04-19T21:54:24.2691389Z ##[group]Operating System
+2026-04-19T21:54:24.2691840Z Microsoft Windows Server 2025
+2026-04-19T21:54:24.2692286Z 10.0.26100
+2026-04-19T21:54:24.2692647Z Datacenter
+2026-04-19T21:54:24.2693016Z ##[endgroup]
+2026-04-19T21:54:24.2693365Z ##[group]Runner Image
+2026-04-19T21:54:24.2693799Z Image: windows-2025
+2026-04-19T21:54:24.2694159Z Version: 20260413.84.1
+2026-04-19T21:54:24.2695395Z Included Software: https://github.com/actions/runner-images/blob/win25/20260413.84/images/windows/Windows2025-Readme.md
+2026-04-19T21:54:24.2696559Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260413.84
+2026-04-19T21:54:24.2697320Z ##[endgroup]
+2026-04-19T21:54:24.2699546Z ##[group]GITHUB_TOKEN Permissions
+2026-04-19T21:54:24.2701375Z Actions: write
+2026-04-19T21:54:24.2701782Z ArtifactMetadata: write
+2026-04-19T21:54:24.2702189Z Attestations: write
+2026-04-19T21:54:24.2702531Z Checks: write
+2026-04-19T21:54:24.2702897Z Contents: write
+2026-04-19T21:54:24.2703259Z Deployments: write
+2026-04-19T21:54:24.2703598Z Discussions: write
+2026-04-19T21:54:24.2703981Z Issues: write
+2026-04-19T21:54:24.2704311Z Metadata: read
+2026-04-19T21:54:24.2704710Z Models: read
+2026-04-19T21:54:24.2705461Z Packages: write
+2026-04-19T21:54:24.2705852Z Pages: write
+2026-04-19T21:54:24.2706264Z PullRequests: write
+2026-04-19T21:54:24.2706704Z RepositoryProjects: write
+2026-04-19T21:54:24.2707208Z SecurityEvents: write
+2026-04-19T21:54:24.2707606Z Statuses: write
+2026-04-19T21:54:24.2707966Z ##[endgroup]
+2026-04-19T21:54:24.2710053Z Secret source: Actions
+2026-04-19T21:54:24.2710582Z Prepare workflow directory
+2026-04-19T21:54:24.3902046Z Prepare all required actions
+2026-04-19T21:54:24.3941259Z Getting action download info
+2026-04-19T21:54:24.7726212Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-04-19T21:54:24.9229288Z Download action repository 'actions/setup-java@v3' (SHA:17f84c3641ba7b8f6deff6309fc4c864478f5d62)
+2026-04-19T21:54:26.0492969Z Complete job name: build (windows-latest)
+2026-04-19T21:54:26.7490860Z ##[group]Run actions/checkout@v4
+2026-04-19T21:54:26.7491765Z with:
+2026-04-19T21:54:26.7492111Z   repository: sreeya12/netty-socketio
+2026-04-19T21:54:26.7493023Z   token: ***
+2026-04-19T21:54:26.7493471Z   ssh-strict: true
+2026-04-19T21:54:26.7493803Z   ssh-user: git
+2026-04-19T21:54:26.7494115Z   persist-credentials: true
+2026-04-19T21:54:26.7494473Z   clean: true
+2026-04-19T21:54:26.7494832Z   sparse-checkout-cone-mode: true
+2026-04-19T21:54:26.7495218Z   fetch-depth: 1
+2026-04-19T21:54:26.7495519Z   fetch-tags: false
+2026-04-19T21:54:26.7495840Z   show-progress: true
+2026-04-19T21:54:26.7496154Z   lfs: false
+2026-04-19T21:54:26.7496460Z   submodules: false
+2026-04-19T21:54:26.7496801Z   set-safe-directory: true
+2026-04-19T21:54:26.7497344Z ##[endgroup]
+2026-04-19T21:54:26.9366722Z Syncing repository: sreeya12/netty-socketio
+2026-04-19T21:54:26.9368313Z ##[group]Getting Git version info
+2026-04-19T21:54:26.9368939Z Working directory is 'D:\a\netty-socketio\netty-socketio'
+2026-04-19T21:54:27.0012006Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-04-19T21:54:27.3680009Z git version 2.53.0.windows.2
+2026-04-19T21:54:27.3725619Z ##[endgroup]
+2026-04-19T21:54:27.3772424Z Temporarily overriding HOME='D:\a\_temp\779565ec-7cd4-4e20-a8c5-95eb9dd9208e' before making global git config changes
+2026-04-19T21:54:27.3773936Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-19T21:54:27.3859737Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\netty-socketio\netty-socketio
+2026-04-19T21:54:27.4316483Z Deleting the contents of 'D:\a\netty-socketio\netty-socketio'
+2026-04-19T21:54:27.4322143Z ##[group]Initializing the repository
+2026-04-19T21:54:27.4330863Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\netty-socketio\netty-socketio
+2026-04-19T21:54:27.5100552Z Initialized empty Git repository in D:/a/netty-socketio/netty-socketio/.git/
+2026-04-19T21:54:27.5145585Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/sreeya12/netty-socketio
+2026-04-19T21:54:27.5629912Z ##[endgroup]
+2026-04-19T21:54:27.5630880Z ##[group]Disabling automatic garbage collection
+2026-04-19T21:54:27.5638821Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-04-19T21:54:27.5885550Z ##[endgroup]
+2026-04-19T21:54:27.5886113Z ##[group]Setting up auth
+2026-04-19T21:54:27.5901908Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-04-19T21:54:27.6156041Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-04-19T21:54:28.9232551Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-19T21:54:28.9495589Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-04-19T21:54:29.4139685Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-19T21:54:29.4417162Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-04-19T21:54:29.9217369Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-04-19T21:54:29.9495313Z ##[endgroup]
+2026-04-19T21:54:29.9495720Z ##[group]Fetching the repository
+2026-04-19T21:54:29.9507190Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +2bedd15bc245c244d8c71d8d08e5a1f507bf642f:refs/remotes/origin/os-expansion-experiment
+2026-04-19T21:54:30.9710159Z From https://github.com/sreeya12/netty-socketio
+2026-04-19T21:54:30.9711664Z  * [new ref]         2bedd15bc245c244d8c71d8d08e5a1f507bf642f -> origin/os-expansion-experiment
+2026-04-19T21:54:30.9961498Z ##[endgroup]
+2026-04-19T21:54:30.9961855Z ##[group]Determining the checkout info
+2026-04-19T21:54:30.9963256Z ##[endgroup]
+2026-04-19T21:54:30.9976680Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-04-19T21:54:31.0377242Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-04-19T21:54:31.0700746Z ##[group]Checking out the ref
+2026-04-19T21:54:31.0711017Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B os-expansion-experiment refs/remotes/origin/os-expansion-experiment
+2026-04-19T21:54:31.1599409Z Switched to a new branch 'os-expansion-experiment'
+2026-04-19T21:54:31.1651575Z branch 'os-expansion-experiment' set up to track 'origin/os-expansion-experiment'.
+2026-04-19T21:54:31.1698312Z ##[endgroup]
+2026-04-19T21:54:31.2067968Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-04-19T21:54:31.2313107Z 2bedd15bc245c244d8c71d8d08e5a1f507bf642f
+2026-04-19T21:54:31.6939454Z ##[group]Run actions/setup-java@v3
+2026-04-19T21:54:31.6939854Z with:
+2026-04-19T21:54:31.6940011Z   java-version: 17
+2026-04-19T21:54:31.6940187Z   distribution: temurin
+2026-04-19T21:54:31.6980952Z   cache: maven
+2026-04-19T21:54:31.6981108Z   java-package: jdk
+2026-04-19T21:54:31.6981255Z   check-latest: false
+2026-04-19T21:54:31.6981430Z   server-id: github
+2026-04-19T21:54:31.6981634Z   server-username: GITHUB_ACTOR
+2026-04-19T21:54:31.6981819Z   server-password: GITHUB_TOKEN
+2026-04-19T21:54:31.6981989Z   overwrite-settings: true
+2026-04-19T21:54:31.6982143Z   job-status: success
+2026-04-19T21:54:31.6982554Z   token: ***
+2026-04-19T21:54:31.6982695Z ##[endgroup]
+2026-04-19T21:54:31.9783317Z ##[group]Installed distributions
+2026-04-19T21:54:32.0002790Z Resolved Java 17.0.18+8 from tool-cache
+2026-04-19T21:54:32.0003198Z Setting Java 17.0.18+8 as the default
+2026-04-19T21:54:32.0037900Z Creating toolchains.xml for JDK version 17 from temurin
+2026-04-19T21:54:32.0122173Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-04-19T21:54:32.0125903Z 
+2026-04-19T21:54:32.0126117Z Java configuration:
+2026-04-19T21:54:32.0127610Z   Distribution: temurin
+2026-04-19T21:54:32.0127909Z   Version: 17.0.18+8
+2026-04-19T21:54:32.0128322Z   Path: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.18-8\x64
+2026-04-19T21:54:32.0128714Z 
+2026-04-19T21:54:32.0129177Z ##[endgroup]
+2026-04-19T21:54:32.0145395Z Creating settings.xml with server-id: github
+2026-04-19T21:54:32.0156708Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-04-19T21:54:32.4062894Z maven cache is not found
+2026-04-19T21:54:32.6905692Z ##[group]Run export MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN"
+2026-04-19T21:54:32.6906606Z [36;1mexport MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN"[0m
+2026-04-19T21:54:32.6907095Z [36;1mmvn --batch-mode --errors --fail-at-end test[0m
+2026-04-19T21:54:32.7986197Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-04-19T21:54:32.7986479Z env:
+2026-04-19T21:54:32.7986707Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.18-8\x64
+2026-04-19T21:54:32.7987120Z   JAVA_HOME_17_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\17.0.18-8\x64
+2026-04-19T21:54:32.7987389Z ##[endgroup]
+2026-04-19T21:54:38.8102100Z [31;1mexport: [0mD:\a\_temp\f2afe0f0-4e79-447d-a462-eab89b4c2208.ps1:2[0m
+2026-04-19T21:54:38.8102661Z [31;1m[0m[36;1mLine |[0m
+2026-04-19T21:54:38.8103452Z [31;1m[0m[36;1m[36;1m   2 | [0m [36;1mexport[0m MAVEN_OPTS="-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli. â?¦[0m
+2026-04-19T21:54:38.8104361Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m ~~~~~~[0m
+2026-04-19T21:54:38.8105338Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mThe term 'export' is not recognized as a name of a cmdlet, function, script file, or executable program. Check[0m
+2026-04-19T21:54:38.8106188Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m[31;1m[36;1m     | [31;1mthe spelling of the name, or if a path was included, verify that the path is correct and try again.[0m
+2026-04-19T21:54:38.8785696Z ##[error]Process completed with exit code 1.
+2026-04-19T21:54:38.9017192Z Post job cleanup.
+2026-04-19T21:54:39.1034619Z Post job cleanup.
+2026-04-19T21:54:39.2612494Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-04-19T21:54:39.2854638Z git version 2.53.0.windows.2
+2026-04-19T21:54:39.2918379Z Temporarily overriding HOME='D:\a\_temp\ca5df1bd-e65d-4a04-abd9-5a6226e3e97a' before making global git config changes
+2026-04-19T21:54:39.2918923Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-19T21:54:39.2927438Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\netty-socketio\netty-socketio
+2026-04-19T21:54:39.3191140Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-04-19T21:54:39.3451968Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-04-19T21:54:39.8767945Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-19T21:54:39.9015876Z http.https://github.com/.extraheader
+2026-04-19T21:54:39.9061552Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-04-19T21:54:39.9336654Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-04-19T21:54:40.4067653Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-19T21:54:40.4337703Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-04-19T21:54:40.9140525Z Cleaning up orphan processes
+2026-04-19T21:54:40.9176267Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v3. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

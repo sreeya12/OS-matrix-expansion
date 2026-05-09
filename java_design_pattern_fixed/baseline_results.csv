@@ -1,0 +1,5 @@
+project,run_number,run_id,job_name,status,conclusion,duration_seconds,timestamp
+sreeya12/java-design-patterns,1,25468033475,Build and Run Sonar analysis on JDK 21 (macos-latest),completed,failure,2220,2026-05-07T00:02:10Z
+sreeya12/java-design-patterns,1,25468033475,Build and Run Sonar analysis on JDK 21 (ubuntu-latest),completed,failure,2220,2026-05-07T00:02:10Z
+sreeya12/java-design-patterns,1,25468033475,Build and Run Sonar analysis on JDK 21 (windows-latest),completed,failure,2220,2026-05-07T00:02:10Z
+sreeya12/java-design-patterns,1,25468033475,Build and Run Sonar analysis on JDK 21 (ubuntu-22.04),completed,failure,2220,2026-05-07T00:02:10Z

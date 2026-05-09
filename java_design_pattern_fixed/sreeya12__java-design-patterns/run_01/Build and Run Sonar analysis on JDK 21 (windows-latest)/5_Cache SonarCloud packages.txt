@@ -1,14 +1,14 @@
-﻿2026-05-06T23:24:08.6325490Z ##[group]Run actions/cache@v4
-2026-05-06T23:24:08.6325780Z with:
-2026-05-06T23:24:08.6325941Z   path: ~/.sonar/cache
-2026-05-06T23:24:08.6326125Z   key: Windows-sonar
-2026-05-06T23:24:08.6326301Z   restore-keys: Windows-sonar
-2026-05-06T23:24:08.6326515Z   enableCrossOsArchive: false
-2026-05-06T23:24:08.6326707Z   fail-on-cache-miss: false
-2026-05-06T23:24:08.6326894Z   lookup-only: false
-2026-05-06T23:24:08.6327054Z   save-always: false
-2026-05-06T23:24:08.6327203Z env:
-2026-05-06T23:24:08.6327468Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
-2026-05-06T23:24:08.6327958Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
-2026-05-06T23:24:08.6328313Z ##[endgroup]
-2026-05-06T23:24:09.0488507Z Cache not found for input keys: Windows-sonar, Windows-sonar
+﻿2026-05-07T00:02:32.0217605Z ##[group]Run actions/cache@v4
+2026-05-07T00:02:32.0217895Z with:
+2026-05-07T00:02:32.0218057Z   path: ~/.sonar/cache
+2026-05-07T00:02:32.0218244Z   key: Windows-sonar
+2026-05-07T00:02:32.0218417Z   restore-keys: Windows-sonar
+2026-05-07T00:02:32.0218640Z   enableCrossOsArchive: false
+2026-05-07T00:02:32.0218835Z   fail-on-cache-miss: false
+2026-05-07T00:02:32.0219024Z   lookup-only: false
+2026-05-07T00:02:32.0219189Z   save-always: false
+2026-05-07T00:02:32.0219341Z env:
+2026-05-07T00:02:32.0219607Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-07T00:02:32.0220126Z   JAVA_HOME_21_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\21.0.10-7.0\x64
+2026-05-07T00:02:32.0220498Z ##[endgroup]
+2026-05-07T00:02:32.4776668Z Cache not found for input keys: Windows-sonar, Windows-sonar

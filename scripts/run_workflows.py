@@ -51,6 +51,101 @@ def github_headers(token):
     }
 
 
+def ensure_workflow_dispatch(owner, repo, workflow_file, branch, token):
+    """Check if the workflow file has workflow_dispatch trigger.
+    If not, add it and commit the change. Returns True if ready to dispatch."""
+    import base64
+
+    # Fetch the workflow file content
+    url = f"https://api.github.com/repos/{owner}/{repo}/contents/.github/workflows/{workflow_file}"
+    headers = github_headers(token)
+    params = {'ref': branch}
+
+    resp = requests.get(url, headers=headers, params=params, timeout=15)
+    if resp.status_code != 200:
+        print(f"  Could not fetch workflow file ({resp.status_code})", file=sys.stderr)
+        return False
+
+    file_data = resp.json()
+    file_sha = file_data['sha']
+    content = base64.b64decode(file_data['content']).decode('utf-8')
+
+    # Check if workflow_dispatch already exists
+    if 'workflow_dispatch' in content:
+        return True
+
+    # Add workflow_dispatch to the on: trigger
+    # Handle both "on: push" (short form) and "on:\n  push:" (long form)
+    modified = None
+
+    # Case 1: "on: [push, pull_request]" or "on: push"
+    import re
+    match = re.match(r'^(.*?\bon:\s*)(\[.+?\]|\w+)(.*?)$', content, re.MULTILINE | re.DOTALL)
+    if match and 'workflow_dispatch' not in content:
+        # Find the 'on:' line and convert to multi-line with workflow_dispatch
+        lines = content.split('\n')
+        new_lines = []
+        on_found = False
+        for line in lines:
+            stripped = line.strip()
+            if not on_found and re.match(r'^on:\s*(\[.+?\]|\w+)', stripped):
+                # Single-line on: trigger, e.g., "on: push" or "on: [push, pull_request]"
+                new_lines.append('on:')
+                new_lines.append('  workflow_dispatch:')
+                # Parse what was after on:
+                after_on = re.match(r'^on:\s*(.+)$', stripped).group(1).strip()
+                if after_on.startswith('[') and after_on.endswith(']'):
+                    # Array form: on: [push, pull_request]
+                    items = [x.strip() for x in after_on[1:-1].split(',')]
+                    for item in items:
+                        new_lines.append(f'  {item}:')
+                else:
+                    # Single trigger: on: push
+                    new_lines.append(f'  {after_on}:')
+                on_found = True
+                continue
+            elif not on_found and stripped == 'on:':
+                # Multi-line on: block, just insert workflow_dispatch after it
+                new_lines.append(line)
+                new_lines.append('  workflow_dispatch:')
+                on_found = True
+                continue
+            new_lines.append(line)
+
+        if on_found:
+            modified = '\n'.join(new_lines)
+
+    if not modified:
+        # Fallback: just insert workflow_dispatch: after the on: line
+        lines = content.split('\n')
+        new_lines = []
+        for line in lines:
+            new_lines.append(line)
+            if line.strip() == 'on:' or re.match(r'^\s*on:\s*$', line):
+                new_lines.append('  workflow_dispatch:')
+        modified = '\n'.join(new_lines)
+
+    if modified and modified != content:
+        # Commit the change
+        put_url = f"https://api.github.com/repos/{owner}/{repo}/contents/.github/workflows/{workflow_file}"
+        put_body = {
+            'message': 'ci: add workflow_dispatch trigger for automated runs',
+            'content': base64.b64encode(modified.encode('utf-8')).decode('utf-8'),
+            'sha': file_sha,
+            'branch': branch,
+        }
+        put_resp = requests.put(put_url, headers=headers, json=put_body, timeout=15)
+        if put_resp.status_code in (200, 201):
+            print(f"  Added workflow_dispatch trigger to {workflow_file}")
+            return True
+        else:
+            print(f"  Failed to add workflow_dispatch ({put_resp.status_code}): {put_resp.text[:200]}",
+                  file=sys.stderr)
+            return False
+
+    return True
+
+
 def trigger_workflow(owner, repo, workflow_file, branch, token):
     """Trigger a workflow_dispatch event.
     Returns True if the dispatch was accepted (HTTP 204)."""
@@ -153,6 +248,14 @@ def run_baseline(slug, workflow_file, branch, num_runs, token, output_base):
     owner, repo = slug.split('/')
     proj_dir = os.path.join(output_base, slug.replace('/', '__'))
     os.makedirs(proj_dir, exist_ok=True)
+
+    # Ensure workflow_dispatch trigger exists before attempting to dispatch
+    if not ensure_workflow_dispatch(owner, repo, workflow_file, branch, token):
+        print(f"  ERROR: Could not ensure workflow_dispatch for {slug}/{workflow_file}")
+        return [{'project': slug, 'run_number': 0, 'run_id': '',
+                 'job_name': '', 'status': 'dispatch_setup_failed',
+                 'conclusion': '', 'duration_seconds': 0,
+                 'timestamp': datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}]
 
     results = []
 

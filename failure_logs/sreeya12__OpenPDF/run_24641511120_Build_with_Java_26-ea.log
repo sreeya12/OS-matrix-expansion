@@ -1,0 +1,162 @@
+﻿2026-04-19T23:14:51.4944389Z Current runner version: '2.333.1'
+2026-04-19T23:14:51.4978774Z ##[group]Runner Image Provisioner
+2026-04-19T23:14:51.4979955Z Hosted Compute Agent
+2026-04-19T23:14:51.4981180Z Version: 20260213.493
+2026-04-19T23:14:51.4982115Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-04-19T23:14:51.4983246Z Build Date: 2026-02-13T00:28:41Z
+2026-04-19T23:14:51.4984309Z Worker ID: {2ae91eb7-6acb-4274-9dad-ced38eab3f3a}
+2026-04-19T23:14:51.4985489Z Azure Region: northcentralus
+2026-04-19T23:14:51.4986424Z ##[endgroup]
+2026-04-19T23:14:51.4988231Z ##[group]Operating System
+2026-04-19T23:14:51.4989284Z Microsoft Windows Server 2025
+2026-04-19T23:14:51.4990082Z 10.0.26100
+2026-04-19T23:14:51.4990762Z Datacenter
+2026-04-19T23:14:51.4991420Z ##[endgroup]
+2026-04-19T23:14:51.4992122Z ##[group]Runner Image
+2026-04-19T23:14:51.4992878Z Image: windows-2025
+2026-04-19T23:14:51.4993629Z Version: 20260413.84.1
+2026-04-19T23:14:51.4995933Z Included Software: https://github.com/actions/runner-images/blob/win25/20260413.84/images/windows/Windows2025-Readme.md
+2026-04-19T23:14:51.4998565Z Image Release: https://github.com/actions/runner-images/releases/tag/win25%2F20260413.84
+2026-04-19T23:14:51.5000018Z ##[endgroup]
+2026-04-19T23:14:51.5002109Z ##[group]GITHUB_TOKEN Permissions
+2026-04-19T23:14:51.5004466Z Contents: read
+2026-04-19T23:14:51.5005230Z Metadata: read
+2026-04-19T23:14:51.5006002Z ##[endgroup]
+2026-04-19T23:14:51.5008774Z Secret source: Actions
+2026-04-19T23:14:51.5009840Z Prepare workflow directory
+2026-04-19T23:14:51.5386131Z Prepare all required actions
+2026-04-19T23:14:51.5435446Z Getting action download info
+2026-04-19T23:14:51.7964010Z Download action repository 'actions/checkout@v5' (SHA:93cb6efe18208431cddfb8368fd83d5badbf9bfd)
+2026-04-19T23:14:51.9284389Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-04-19T23:14:52.6796605Z Complete job name: Build with Java 26-ea
+2026-04-19T23:14:52.8092353Z ##[group]Run actions/checkout@v5
+2026-04-19T23:14:52.8093476Z with:
+2026-04-19T23:14:52.8093989Z   repository: sreeya12/OpenPDF
+2026-04-19T23:14:52.8094867Z   token: ***
+2026-04-19T23:14:52.8095332Z   ssh-strict: true
+2026-04-19T23:14:52.8095803Z   ssh-user: git
+2026-04-19T23:14:52.8096302Z   persist-credentials: true
+2026-04-19T23:14:52.8096861Z   clean: true
+2026-04-19T23:14:52.8097360Z   sparse-checkout-cone-mode: true
+2026-04-19T23:14:52.8097965Z   fetch-depth: 1
+2026-04-19T23:14:52.8098446Z   fetch-tags: false
+2026-04-19T23:14:52.8098937Z   show-progress: true
+2026-04-19T23:14:52.8100005Z   lfs: false
+2026-04-19T23:14:52.8100482Z   submodules: false
+2026-04-19T23:14:52.8100986Z   set-safe-directory: true
+2026-04-19T23:14:52.8101872Z ##[endgroup]
+2026-04-19T23:14:52.9522413Z Syncing repository: sreeya12/OpenPDF
+2026-04-19T23:14:52.9524290Z ##[group]Getting Git version info
+2026-04-19T23:14:52.9524913Z Working directory is 'D:\a\OpenPDF\OpenPDF'
+2026-04-19T23:14:53.0323480Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-04-19T23:14:53.2141074Z git version 2.53.0.windows.2
+2026-04-19T23:14:53.2198815Z ##[endgroup]
+2026-04-19T23:14:53.2221508Z Temporarily overriding HOME='D:\a\_temp\50bd8b2f-f997-4631-83f1-3c2566e9cac4' before making global git config changes
+2026-04-19T23:14:53.2222907Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-19T23:14:53.2232402Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\OpenPDF\OpenPDF
+2026-04-19T23:14:53.2582412Z Deleting the contents of 'D:\a\OpenPDF\OpenPDF'
+2026-04-19T23:14:53.2589072Z ##[group]Initializing the repository
+2026-04-19T23:14:53.2597598Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\OpenPDF\OpenPDF
+2026-04-19T23:14:53.3075158Z Initialized empty Git repository in D:/a/OpenPDF/OpenPDF/.git/
+2026-04-19T23:14:53.3124543Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/sreeya12/OpenPDF
+2026-04-19T23:14:53.3502066Z ##[endgroup]
+2026-04-19T23:14:53.3506300Z ##[group]Disabling automatic garbage collection
+2026-04-19T23:14:53.3507809Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-04-19T23:14:53.3807896Z ##[endgroup]
+2026-04-19T23:14:53.3808708Z ##[group]Setting up auth
+2026-04-19T23:14:53.3819350Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-04-19T23:14:53.4134187Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-04-19T23:14:54.4436197Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-19T23:14:54.4756615Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-04-19T23:14:55.0393547Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-19T23:14:55.0712216Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-04-19T23:14:55.6137791Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-04-19T23:14:55.6453419Z ##[endgroup]
+2026-04-19T23:14:55.6453933Z ##[group]Fetching the repository
+2026-04-19T23:14:55.6466300Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +eee1a711a909c9735988e1856f295a3f7293437d:refs/remotes/origin/os-expansion-experiment
+2026-04-19T23:14:57.0224002Z From https://github.com/sreeya12/OpenPDF
+2026-04-19T23:14:57.0228356Z  * [new ref]         eee1a711a909c9735988e1856f295a3f7293437d -> origin/os-expansion-experiment
+2026-04-19T23:14:57.0508944Z ##[endgroup]
+2026-04-19T23:14:57.0510010Z ##[group]Determining the checkout info
+2026-04-19T23:14:57.0512517Z ##[endgroup]
+2026-04-19T23:14:57.0526882Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-04-19T23:14:57.0948468Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-04-19T23:14:57.1259947Z ##[group]Checking out the ref
+2026-04-19T23:14:57.1274879Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B os-expansion-experiment refs/remotes/origin/os-expansion-experiment
+2026-04-19T23:14:57.8461155Z Switched to a new branch 'os-expansion-experiment'
+2026-04-19T23:14:57.8486312Z branch 'os-expansion-experiment' set up to track 'origin/os-expansion-experiment'.
+2026-04-19T23:14:57.8563486Z ##[endgroup]
+2026-04-19T23:14:57.8913649Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-04-19T23:14:57.9187704Z eee1a711a909c9735988e1856f295a3f7293437d
+2026-04-19T23:14:57.9676987Z ##[group]Run actions/setup-java@v4
+2026-04-19T23:14:57.9677335Z with:
+2026-04-19T23:14:57.9677527Z   distribution: temurin
+2026-04-19T23:14:57.9677721Z   java-version: 26-ea
+2026-04-19T23:14:57.9677893Z   java-package: jdk
+2026-04-19T23:14:57.9678071Z   check-latest: false
+2026-04-19T23:14:57.9678229Z   server-id: github
+2026-04-19T23:14:57.9678401Z   server-username: GITHUB_ACTOR
+2026-04-19T23:14:57.9678610Z   server-password: GITHUB_TOKEN
+2026-04-19T23:14:57.9678851Z   overwrite-settings: true
+2026-04-19T23:14:57.9679073Z   job-status: success
+2026-04-19T23:14:57.9679435Z   token: ***
+2026-04-19T23:14:57.9679607Z ##[endgroup]
+2026-04-19T23:14:58.2580992Z ##[group]Installed distributions
+2026-04-19T23:14:58.2663107Z Trying to resolve the latest version from remote
+2026-04-19T23:15:22.9064474Z Resolved latest version as 26.0.0+35.0.ea
+2026-04-19T23:15:22.9065067Z Trying to download...
+2026-04-19T23:15:22.9077475Z Downloading Java 26.0.0+35.0.ea (Temurin-Hotspot) from https://github.com/adoptium/temurin26-binaries/releases/download/jdk-26%2B35-ea-beta/OpenJDK26U-jdk_x64_windows_hotspot_26_35-ea.zip ...
+2026-04-19T23:15:24.0621521Z Extracting Java archive...
+2026-04-19T23:15:24.1648041Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command "$ErrorActionPreference = 'Stop' ; try { Add-Type -AssemblyName System.IO.Compression.ZipFile } catch { } ; try { [System.IO.Compression.ZipFile]::ExtractToDirectory('D:\a\_temp\21164a08-fe90-4340-923c-a8095267a7e6.zip', 'D:\a\_temp\e6e3b040-5f36-46b8-98e4-2be6ca5e0b2a', $true) } catch { if (($_.Exception.GetType().FullName -eq 'System.Management.Automation.MethodException') -or ($_.Exception.GetType().FullName -eq 'System.Management.Automation.RuntimeException') ){ Expand-Archive -LiteralPath 'D:\a\_temp\21164a08-fe90-4340-923c-a8095267a7e6.zip' -DestinationPath 'D:\a\_temp\e6e3b040-5f36-46b8-98e4-2be6ca5e0b2a' -Force } else { throw $_ } } ;"
+2026-04-19T23:15:31.8561271Z Java 26.0.0+35.0.ea was downloaded
+2026-04-19T23:15:31.8561735Z Setting Java 26.0.0+35.0.ea as the default
+2026-04-19T23:15:31.8588795Z Creating toolchains.xml for JDK version 26-ea from temurin
+2026-04-19T23:15:31.8683752Z Writing to C:\Users\runneradmin\.m2\toolchains.xml
+2026-04-19T23:15:31.8687747Z 
+2026-04-19T23:15:31.8687986Z Java configuration:
+2026-04-19T23:15:31.8688460Z   Distribution: temurin
+2026-04-19T23:15:31.8688761Z   Version: 26.0.0+35.0.ea
+2026-04-19T23:15:31.8691176Z   Path: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\26.0.0-ea.35.0.ea\x64
+2026-04-19T23:15:31.8691692Z 
+2026-04-19T23:15:31.8692600Z ##[endgroup]
+2026-04-19T23:15:31.8704925Z Creating settings.xml with server-id: github
+2026-04-19T23:15:31.8713837Z Writing to C:\Users\runneradmin\.m2\settings.xml
+2026-04-19T23:15:31.9028233Z ##[group]Run mvn -v
+2026-04-19T23:15:31.9028527Z [36;1mmvn -v[0m
+2026-04-19T23:15:31.9028700Z [36;1mecho "** ls **"[0m
+2026-04-19T23:15:31.9028913Z [36;1mpwd && ls -l[0m
+2026-04-19T23:15:31.9096649Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-04-19T23:15:31.9096994Z env:
+2026-04-19T23:15:31.9097300Z   JAVA_HOME: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\26.0.0-ea.35.0.ea\x64
+2026-04-19T23:15:31.9097861Z   JAVA_HOME_26_X64: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\26.0.0-ea.35.0.ea\x64
+2026-04-19T23:15:31.9098249Z ##[endgroup]
+2026-04-19T23:15:33.3089383Z Apache Maven 3.9.14 (996c630dbc656c76214ce58821dcc58be960875b)
+2026-04-19T23:15:33.3090837Z Maven home: C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.14
+2026-04-19T23:15:33.3092248Z Java version: 26-beta, vendor: Eclipse Adoptium, runtime: C:\hostedtoolcache\windows\Java_Temurin-Hotspot_jdk\26.0.0-ea.35.0.ea\x64
+2026-04-19T23:15:33.3102354Z Default locale: en_US, platform encoding: UTF-8
+2026-04-19T23:15:33.3103337Z OS name: "windows server 2025", version: "10.0", arch: "amd64", family: "windows"
+2026-04-19T23:15:33.4223331Z ** ls **
+2026-04-19T23:15:33.5444168Z 
+2026-04-19T23:15:34.0025200Z [31;1mGet-ChildItem: [0mD:\a\_temp\13a4815c-f57b-4d6a-9986-b8f2367f5119.ps1:4[0m
+2026-04-19T23:15:34.0026058Z [31;1m[0m[36;1mLine |[0m
+2026-04-19T23:15:34.0026843Z [31;1m[0m[36;1m[36;1m   4 | [0m pwd && ls [36;1m-l[0m
+2026-04-19T23:15:34.0027473Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m           ~~[0m
+2026-04-19T23:15:34.0028569Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mMissing an argument for parameter 'LiteralPath'. Specify a parameter of type 'System.String[]' and try again.[0m
+2026-04-19T23:15:34.0561687Z ##[error]Process completed with exit code 1.
+2026-04-19T23:15:34.0788532Z Post job cleanup.
+2026-04-19T23:15:34.3360971Z Post job cleanup.
+2026-04-19T23:15:34.5230978Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-04-19T23:15:34.5503931Z git version 2.53.0.windows.2
+2026-04-19T23:15:34.5593154Z Temporarily overriding HOME='D:\a\_temp\75402b12-6ee2-4867-8d8b-1fad2e16f66e' before making global git config changes
+2026-04-19T23:15:34.5594790Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-19T23:15:34.5607747Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\OpenPDF\OpenPDF
+2026-04-19T23:15:34.5987895Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-04-19T23:15:34.6393129Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-04-19T23:15:35.1786876Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-19T23:15:35.2055269Z http.https://github.com/.extraheader
+2026-04-19T23:15:35.2100309Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-04-19T23:15:35.2410191Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-04-19T23:15:35.8090511Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-19T23:15:35.8417296Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-04-19T23:15:36.3851950Z Cleaning up orphan processes
+2026-04-19T23:15:36.3882027Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/setup-java@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

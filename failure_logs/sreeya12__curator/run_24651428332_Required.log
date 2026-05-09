@@ -1,0 +1,58 @@
+﻿2026-04-20T11:09:58.7593699Z Current runner version: '2.333.1'
+2026-04-20T11:09:58.7617604Z ##[group]Runner Image Provisioner
+2026-04-20T11:09:58.7618588Z Hosted Compute Agent
+2026-04-20T11:09:58.7619081Z Version: 20260213.493
+2026-04-20T11:09:58.7619753Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-04-20T11:09:58.7620406Z Build Date: 2026-02-13T00:28:41Z
+2026-04-20T11:09:58.7621078Z Worker ID: {51a78969-f4d1-46fe-8e45-1640497b0f44}
+2026-04-20T11:09:58.7621779Z Azure Region: northcentralus
+2026-04-20T11:09:58.7622366Z ##[endgroup]
+2026-04-20T11:09:58.7624120Z ##[group]Operating System
+2026-04-20T11:09:58.7624770Z Ubuntu
+2026-04-20T11:09:58.7625249Z 24.04.4
+2026-04-20T11:09:58.7625668Z LTS
+2026-04-20T11:09:58.7626176Z ##[endgroup]
+2026-04-20T11:09:58.7626646Z ##[group]Runner Image
+2026-04-20T11:09:58.7627184Z Image: ubuntu-24.04
+2026-04-20T11:09:58.7627635Z Version: 20260413.86.1
+2026-04-20T11:09:58.7629222Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+2026-04-20T11:09:58.7630881Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+2026-04-20T11:09:58.7631755Z ##[endgroup]
+2026-04-20T11:09:58.7634401Z ##[group]GITHUB_TOKEN Permissions
+2026-04-20T11:09:58.7636569Z Actions: write
+2026-04-20T11:09:58.7637092Z ArtifactMetadata: write
+2026-04-20T11:09:58.7637782Z Attestations: write
+2026-04-20T11:09:58.7638651Z Checks: write
+2026-04-20T11:09:58.7639179Z Contents: write
+2026-04-20T11:09:58.7639713Z Deployments: write
+2026-04-20T11:09:58.7640239Z Discussions: write
+2026-04-20T11:09:58.7640775Z Issues: write
+2026-04-20T11:09:58.7641245Z Metadata: read
+2026-04-20T11:09:58.7641735Z Models: read
+2026-04-20T11:09:58.7642180Z Packages: write
+2026-04-20T11:09:58.7642682Z Pages: write
+2026-04-20T11:09:58.7643245Z PullRequests: write
+2026-04-20T11:09:58.7643773Z RepositoryProjects: write
+2026-04-20T11:09:58.7644401Z SecurityEvents: write
+2026-04-20T11:09:58.7644902Z Statuses: write
+2026-04-20T11:09:58.7645402Z ##[endgroup]
+2026-04-20T11:09:58.7647297Z Secret source: Actions
+2026-04-20T11:09:58.7648421Z Prepare workflow directory
+2026-04-20T11:09:58.8037674Z Prepare all required actions
+2026-04-20T11:09:58.8090177Z Complete job name: Required
+2026-04-20T11:09:58.8802174Z ##[group]Run if [[ ! ( \
+2026-04-20T11:09:58.8803273Z [36;1mif [[ ! ( \[0m
+2026-04-20T11:09:58.8803785Z [36;1m       "failure" == "success" \[0m
+2026-04-20T11:09:58.8804383Z [36;1m    && "failure" == "success" \[0m
+2026-04-20T11:09:58.8805015Z [36;1m    && "success" == "success" \[0m
+2026-04-20T11:09:58.8805604Z [36;1m    ) ]]; then[0m
+2026-04-20T11:09:58.8806240Z [36;1m  echo "Required jobs haven't been completed successfully."[0m
+2026-04-20T11:09:58.8807049Z [36;1m  exit -1[0m
+2026-04-20T11:09:58.8807535Z [36;1mfi[0m
+2026-04-20T11:09:58.9315634Z shell: /usr/bin/bash -e {0}
+2026-04-20T11:09:58.9317127Z env:
+2026-04-20T11:09:58.9319465Z   MAVEN_OPTS: -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3
+2026-04-20T11:09:58.9321694Z ##[endgroup]
+2026-04-20T11:09:58.9559331Z Required jobs haven't been completed successfully.
+2026-04-20T11:09:58.9576830Z ##[error]Process completed with exit code 255.
+2026-04-20T11:09:58.9694477Z Cleaning up orphan processes

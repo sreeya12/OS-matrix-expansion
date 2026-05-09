@@ -1,0 +1,187 @@
+ï»¿2026-04-20T03:13:27.5473720Z Current runner version: '2.333.1'
+2026-04-20T03:13:27.5489560Z ##[group]Runner Image Provisioner
+2026-04-20T03:13:27.5490100Z Hosted Compute Agent
+2026-04-20T03:13:27.5490460Z Version: 20260415.520
+2026-04-20T03:13:27.5490840Z Commit: af089020f5f67b61ccc91db6c07980876c02bf7b
+2026-04-20T03:13:27.5491300Z Build Date: 2026-04-15T18:07:08Z
+2026-04-20T03:13:27.5491720Z Worker ID: {ab1ac544-4992-4f58-9708-b081dd35981c}
+2026-04-20T03:13:27.5492170Z Azure Region: westus
+2026-04-20T03:13:27.5492520Z ##[endgroup]
+2026-04-20T03:13:27.5493430Z ##[group]Operating System
+2026-04-20T03:13:27.5493800Z macOS
+2026-04-20T03:13:27.5494100Z 15.7.4
+2026-04-20T03:13:27.5494390Z 24G517
+2026-04-20T03:13:27.5494710Z ##[endgroup]
+2026-04-20T03:13:27.5495040Z ##[group]Runner Image
+2026-04-20T03:13:27.5495400Z Image: macos-15-arm64
+2026-04-20T03:13:27.5495760Z Version: 20260414.0270.1
+2026-04-20T03:13:27.5496590Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260414.0270/images/macos/macos-15-arm64-Readme.md
+2026-04-20T03:13:27.5497600Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260414.0270
+2026-04-20T03:13:27.5498210Z ##[endgroup]
+2026-04-20T03:13:27.5500040Z ##[group]GITHUB_TOKEN Permissions
+2026-04-20T03:13:27.5501270Z Actions: write
+2026-04-20T03:13:27.5501600Z ArtifactMetadata: write
+2026-04-20T03:13:27.5501950Z Attestations: write
+2026-04-20T03:13:27.5502270Z Checks: write
+2026-04-20T03:13:27.5502590Z Contents: write
+2026-04-20T03:13:27.5502900Z Deployments: write
+2026-04-20T03:13:27.5503220Z Discussions: write
+2026-04-20T03:13:27.5503530Z Issues: write
+2026-04-20T03:13:27.5503820Z Metadata: read
+2026-04-20T03:13:27.5504120Z Models: read
+2026-04-20T03:13:27.5504420Z Packages: write
+2026-04-20T03:13:27.5504720Z Pages: write
+2026-04-20T03:13:27.5505060Z PullRequests: write
+2026-04-20T03:13:27.5505380Z RepositoryProjects: write
+2026-04-20T03:13:27.5505730Z SecurityEvents: write
+2026-04-20T03:13:27.5506060Z Statuses: write
+2026-04-20T03:13:27.5506380Z ##[endgroup]
+2026-04-20T03:13:27.5508010Z Secret source: Actions
+2026-04-20T03:13:27.5508440Z Prepare workflow directory
+2026-04-20T03:13:27.5809140Z Prepare all required actions
+2026-04-20T03:13:27.5855380Z Getting action download info
+2026-04-20T03:13:27.9949370Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-04-20T03:13:28.2724620Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2026-04-20T03:13:29.5088310Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-04-20T03:13:29.5867180Z Download action repository 'EnricoMi/publish-unit-test-result-action@v2' (SHA:c950f6fb443cb5af20a377fd0dfaa78838901040)
+2026-04-20T03:13:30.7320640Z Download action repository 'codecov/codecov-action@v5' (SHA:75cd11691c0faa626561e295848008c8a7dddffe)
+2026-04-20T03:13:31.6065100Z Getting action download info
+2026-04-20T03:13:31.7493340Z Download action repository 'actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea' (SHA:60a0d83039c74a4aee543508d2ffcb1c3799cdea)
+2026-04-20T03:13:32.7808610Z Container action is only supported on Linux, skip pull and build docker images.
+2026-04-20T03:13:32.7861680Z Complete job name: Unit Tests (macos-latest)
+2026-04-20T03:13:32.8358310Z ##[group]Run actions/checkout@v4
+2026-04-20T03:13:32.8358720Z with:
+2026-04-20T03:13:32.8358890Z   repository: sreeya12/jedis
+2026-04-20T03:13:32.8359320Z   token: ***
+2026-04-20T03:13:32.8359460Z   ssh-strict: true
+2026-04-20T03:13:32.8359590Z   ssh-user: git
+2026-04-20T03:13:32.8359760Z   persist-credentials: true
+2026-04-20T03:13:32.8359930Z   clean: true
+2026-04-20T03:13:32.8360100Z   sparse-checkout-cone-mode: true
+2026-04-20T03:13:32.8360280Z   fetch-depth: 1
+2026-04-20T03:13:32.8360420Z   fetch-tags: false
+2026-04-20T03:13:32.8360550Z   show-progress: true
+2026-04-20T03:13:32.8360690Z   lfs: false
+2026-04-20T03:13:32.8360800Z   submodules: false
+2026-04-20T03:13:32.8360950Z   set-safe-directory: true
+2026-04-20T03:13:32.8361660Z ##[endgroup]
+2026-04-20T03:13:33.2076640Z Syncing repository: sreeya12/jedis
+2026-04-20T03:13:33.2077870Z ##[group]Getting Git version info
+2026-04-20T03:13:33.2078170Z Working directory is '/Users/runner/work/jedis/jedis'
+2026-04-20T03:13:33.2079380Z [command]/opt/homebrew/bin/git version
+2026-04-20T03:13:33.2646570Z git version 2.53.0
+2026-04-20T03:13:33.2674270Z ##[endgroup]
+2026-04-20T03:13:33.2682670Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/a0147ec9-a6c6-4e4d-a3f4-b1c5611f6db2/.gitconfig'
+2026-04-20T03:13:33.2694910Z Temporarily overriding HOME='/Users/runner/work/_temp/a0147ec9-a6c6-4e4d-a3f4-b1c5611f6db2' before making global git config changes
+2026-04-20T03:13:33.2695680Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-20T03:13:33.2720210Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/jedis/jedis
+2026-04-20T03:13:33.2869360Z Deleting the contents of '/Users/runner/work/jedis/jedis'
+2026-04-20T03:13:33.2873110Z ##[group]Initializing the repository
+2026-04-20T03:13:33.2877630Z [command]/opt/homebrew/bin/git init /Users/runner/work/jedis/jedis
+2026-04-20T03:13:33.3190190Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-04-20T03:13:33.3191770Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-04-20T03:13:33.3193070Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-04-20T03:13:33.3194330Z hint: call:
+2026-04-20T03:13:33.3194760Z hint:
+2026-04-20T03:13:33.3195640Z hint: 	git config --global init.defaultBranch <name>
+2026-04-20T03:13:33.3196510Z hint:
+2026-04-20T03:13:33.3197190Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-04-20T03:13:33.3198290Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-04-20T03:13:33.3201500Z hint:
+2026-04-20T03:13:33.3202490Z hint: 	git branch -m <name>
+2026-04-20T03:13:33.3203110Z hint:
+2026-04-20T03:13:33.3203870Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-04-20T03:13:33.3205000Z Initialized empty Git repository in /Users/runner/work/jedis/jedis/.git/
+2026-04-20T03:13:33.3214630Z [command]/opt/homebrew/bin/git remote add origin https://github.com/sreeya12/jedis
+2026-04-20T03:13:33.3373450Z ##[endgroup]
+2026-04-20T03:13:33.3374310Z ##[group]Disabling automatic garbage collection
+2026-04-20T03:13:33.3381810Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-04-20T03:13:33.3505970Z ##[endgroup]
+2026-04-20T03:13:33.3507040Z ##[group]Setting up auth
+2026-04-20T03:13:33.3511910Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-04-20T03:13:33.3623670Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-04-20T03:13:33.4931740Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-20T03:13:33.5009930Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-04-20T03:13:33.6021600Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-20T03:13:33.6147650Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-04-20T03:13:33.7404200Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-04-20T03:13:33.7570660Z ##[endgroup]
+2026-04-20T03:13:33.7576110Z ##[group]Fetching the repository
+2026-04-20T03:13:33.7611170Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +d4b511b4453878282b4fd4c306490fd39d8da163:refs/remotes/origin/os-expansion-experiment
+2026-04-20T03:13:34.8872260Z From https://github.com/sreeya12/jedis
+2026-04-20T03:13:34.8874280Z  * [new ref]         d4b511b4453878282b4fd4c306490fd39d8da163 -> origin/os-expansion-experiment
+2026-04-20T03:13:34.8992390Z ##[endgroup]
+2026-04-20T03:13:34.8993170Z ##[group]Determining the checkout info
+2026-04-20T03:13:34.8994480Z ##[endgroup]
+2026-04-20T03:13:34.8996940Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-04-20T03:13:34.9108950Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-04-20T03:13:34.9231230Z ##[group]Checking out the ref
+2026-04-20T03:13:34.9240100Z [command]/opt/homebrew/bin/git checkout --progress --force -B os-expansion-experiment refs/remotes/origin/os-expansion-experiment
+2026-04-20T03:13:35.2237070Z Switched to a new branch 'os-expansion-experiment'
+2026-04-20T03:13:35.2280580Z branch 'os-expansion-experiment' set up to track 'origin/os-expansion-experiment'.
+2026-04-20T03:13:35.2283620Z ##[endgroup]
+2026-04-20T03:13:35.2410430Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-04-20T03:13:35.2515770Z d4b511b4453878282b4fd4c306490fd39d8da163
+2026-04-20T03:13:35.2812150Z ##[group]Run actions/setup-java@v4
+2026-04-20T03:13:35.2812400Z with:
+2026-04-20T03:13:35.2812550Z   java-version: 8
+2026-04-20T03:13:35.2812700Z   distribution: temurin
+2026-04-20T03:13:35.2812880Z   java-package: jdk
+2026-04-20T03:13:35.2813020Z   check-latest: false
+2026-04-20T03:13:35.2813250Z   server-id: github
+2026-04-20T03:13:35.2813410Z   server-username: GITHUB_ACTOR
+2026-04-20T03:13:35.2813610Z   server-password: GITHUB_TOKEN
+2026-04-20T03:13:35.2813790Z   overwrite-settings: true
+2026-04-20T03:13:35.2813950Z   job-status: success
+2026-04-20T03:13:35.2814250Z   token: ***
+2026-04-20T03:13:35.2814390Z ##[endgroup]
+2026-04-20T03:13:35.5309610Z ##[group]Installed distributions
+2026-04-20T03:13:35.5437370Z Trying to resolve the latest version from remote
+2026-04-20T03:13:35.9367070Z ##[error]Could not find satisfied version for SemVer '8'. 
+Available versions: 26.0.0+35, 25.0.2+10.0.LTS, 25.0.1+8.0.LTS, 25.0.0+36.0.LTS, 24.0.2+12, 24.0.1+9, 24.0.0+36, 23.0.2+7, 23.0.1+11, 23.0.0+37, 22.0.2+9, 22.0.1+8, 22.0.0+36, 21.0.10+7.0.LTS, 21.0.9+10.0.LTS, 21.0.8+9.0.LTS, 21.0.7+6.0.LTS, 21.0.6+7.0.LTS, 21.0.5+11.0.LTS, 21.0.4+7.0.LTS, 21.0.3+9.0.LTS, 21.0.2+13.0.LTS, 21.0.1+12.0.LTS, 21.0.0+35.0.LTS, 20.0.2+9, 20.0.1+9, 20.0.0+36, 19.0.2+7, 19.0.1+10, 19.0.0+36, 18.0.2+101, 18.0.2+9, 18.0.1+10, 18.0.0+36, 17.0.18+8, 17.0.17+10, 17.0.16+8, 17.0.15+6, 17.0.14+7, 17.0.13+11, 17.0.12+7, 17.0.11+9, 17.0.10+7, 17.0.9+9, 17.0.8+101, 17.0.8+7, 17.0.7+7, 17.0.6+10, 17.0.5+8, 17.0.4+101, 17.0.4+8, 17.0.3+7, 17.0.2+8, 17.0.1+12, 17.0.0+35, 11.0.30+7, 11.0.29+7, 11.0.28+6, 11.0.27+6, 11.0.26+4, 11.0.25+9, 11.0.24+8, 11.0.23+9, 11.0.22+7.1, 11.0.22+7, 11.0.21+9, 11.0.20+101, 11.0.20+8, 11.0.19+7, 11.0.18+10, 11.0.17+8, 11.0.16+101, 11.0.16+8, 11.0.15+10
+2026-04-20T03:13:35.9584500Z ##[group]Run EnricoMi/publish-unit-test-result-action@v2
+2026-04-20T03:13:35.9584850Z with:
+2026-04-20T03:13:35.9585020Z   files: target/surefire-reports/**/*.xml
+
+2026-04-20T03:13:35.9585390Z   github_token: ***
+2026-04-20T03:13:35.9585550Z   github_retries: 10
+2026-04-20T03:13:35.9585710Z   ssl_verify: true
+2026-04-20T03:13:35.9585860Z   check_name: Test Results
+2026-04-20T03:13:35.9586030Z   comment_mode: always
+2026-04-20T03:13:35.9586230Z   fail_on: test failures
+2026-04-20T03:13:35.9586390Z   action_fail: false
+2026-04-20T03:13:35.9586550Z   action_fail_on_inconclusive: false
+2026-04-20T03:13:35.9586750Z   time_unit: seconds
+2026-04-20T03:13:35.9586950Z   report_suite_logs: none
+2026-04-20T03:13:35.9587130Z   ignore_runs: false
+2026-04-20T03:13:35.9587270Z   check_run: true
+2026-04-20T03:13:35.9587430Z   job_summary: true
+2026-04-20T03:13:35.9587580Z   compare_to_earlier_commit: true
+2026-04-20T03:13:35.9587770Z   pull_request_build: merge
+2026-04-20T03:13:35.9588050Z   check_run_annotations: all tests, skipped tests
+2026-04-20T03:13:35.9588650Z   seconds_between_github_reads: 0.25
+2026-04-20T03:13:35.9588840Z   seconds_between_github_writes: 2.0
+2026-04-20T03:13:35.9589060Z   json_thousands_separator: â??
+2026-04-20T03:13:35.9589240Z   json_suite_details: false
+2026-04-20T03:13:35.9589400Z   json_test_case_results: false
+2026-04-20T03:13:35.9589590Z   search_pull_requests: false
+2026-04-20T03:13:35.9589800Z ##[endgroup]
+2026-04-20T03:13:35.9869360Z ##[error]Container action is only supported on Linux
+2026-04-20T03:13:35.9923070Z Post job cleanup.
+2026-04-20T03:13:36.2524680Z Post job cleanup.
+2026-04-20T03:13:36.3726150Z [command]/opt/homebrew/bin/git version
+2026-04-20T03:13:36.3808760Z git version 2.53.0
+2026-04-20T03:13:36.3833800Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/abd13a32-50eb-4e6f-aa32-4ac7101dd829/.gitconfig'
+2026-04-20T03:13:36.3843200Z Temporarily overriding HOME='/Users/runner/work/_temp/abd13a32-50eb-4e6f-aa32-4ac7101dd829' before making global git config changes
+2026-04-20T03:13:36.3844980Z Adding repository directory to the temporary git global config as a safe directory
+2026-04-20T03:13:36.3858200Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/jedis/jedis
+2026-04-20T03:13:36.3944040Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-04-20T03:13:36.4012430Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-04-20T03:13:36.4938610Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-04-20T03:13:36.5008170Z http.https://github.com/.extraheader
+2026-04-20T03:13:36.5013030Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-04-20T03:13:36.5107010Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-04-20T03:13:36.6122800Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-04-20T03:13:36.6193120Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-04-20T03:13:36.7255540Z Cleaning up orphan processes
+2026-04-20T03:13:36.8073190Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, actions/setup-java@v4. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

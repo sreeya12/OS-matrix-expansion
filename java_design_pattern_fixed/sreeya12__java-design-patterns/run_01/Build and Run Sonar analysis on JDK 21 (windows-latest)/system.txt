@@ -1,8 +1,8 @@
-2026-05-06T23:23:49.1470000Z Evaluating build-and-analyze.if
-2026-05-06T23:23:49.1470000Z Evaluating: success()
-2026-05-06T23:23:49.1470000Z Result: true
-2026-05-06T23:23:49.1480000Z Requested labels: windows-latest
-2026-05-06T23:23:49.1480000Z Job defined at: sreeya12/java-design-patterns/.github/workflows/maven-ci.yml@refs/heads/fix-workflows
-2026-05-06T23:23:49.1480000Z Waiting for a runner to pick up this job...
-2026-05-06T23:23:49.5710000Z Job is about to start running on the hosted runner: GitHub Actions 1000003950
-2026-05-06T23:23:49.5690000Z Job is waiting for a hosted runner to come online.
+2026-05-07T00:02:15.0780000Z Evaluating build-and-analyze.if
+2026-05-07T00:02:15.0780000Z Evaluating: success()
+2026-05-07T00:02:15.0780000Z Result: true
+2026-05-07T00:02:15.0760000Z Requested labels: windows-latest
+2026-05-07T00:02:15.0760000Z Job defined at: sreeya12/java-design-patterns/.github/workflows/maven-ci.yml@refs/heads/fix-workflows
+2026-05-07T00:02:15.0760000Z Waiting for a runner to pick up this job...
+2026-05-07T00:02:16.0640000Z Job is waiting for a hosted runner to come online.
+2026-05-07T00:02:16.0650000Z Job is about to start running on the hosted runner: GitHub Actions 1000003960

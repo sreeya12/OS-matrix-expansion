@@ -1,14 +1,14 @@
-﻿2026-05-06T23:24:02.4376680Z ##[group]Run actions/cache@v4
-2026-05-06T23:24:02.4376880Z with:
-2026-05-06T23:24:02.4377010Z   path: ~/.sonar/cache
-2026-05-06T23:24:02.4377160Z   key: macOS-sonar
-2026-05-06T23:24:02.4377310Z   restore-keys: macOS-sonar
-2026-05-06T23:24:02.4377500Z   enableCrossOsArchive: false
-2026-05-06T23:24:02.4377690Z   fail-on-cache-miss: false
-2026-05-06T23:24:02.4377870Z   lookup-only: false
-2026-05-06T23:24:02.4378020Z   save-always: false
-2026-05-06T23:24:02.4378160Z env:
-2026-05-06T23:24:02.4378450Z   JAVA_HOME: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7.0/arm64/Contents/Home
-2026-05-06T23:24:02.4379010Z   JAVA_HOME_21_ARM64: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7.0/arm64/Contents/Home
-2026-05-06T23:24:02.4379370Z ##[endgroup]
-2026-05-06T23:24:02.8621190Z Cache not found for input keys: macOS-sonar, macOS-sonar
+﻿2026-05-07T00:02:27.8788440Z ##[group]Run actions/cache@v4
+2026-05-07T00:02:27.8788660Z with:
+2026-05-07T00:02:27.8788780Z   path: ~/.sonar/cache
+2026-05-07T00:02:27.8788940Z   key: macOS-sonar
+2026-05-07T00:02:27.8789090Z   restore-keys: macOS-sonar
+2026-05-07T00:02:27.8789260Z   enableCrossOsArchive: false
+2026-05-07T00:02:27.8789440Z   fail-on-cache-miss: false
+2026-05-07T00:02:27.8789610Z   lookup-only: false
+2026-05-07T00:02:27.8789770Z   save-always: false
+2026-05-07T00:02:27.8789920Z env:
+2026-05-07T00:02:27.8790230Z   JAVA_HOME: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7.0/arm64/Contents/Home
+2026-05-07T00:02:27.8790740Z   JAVA_HOME_21_ARM64: /Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.10-7.0/arm64/Contents/Home
+2026-05-07T00:02:27.8791100Z ##[endgroup]
+2026-05-07T00:02:28.0532660Z Cache not found for input keys: macOS-sonar, macOS-sonar

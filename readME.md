@@ -47,7 +47,7 @@ A `.env` file is already provided in the artifact for simplified access.
 | `scripts/ci_workflows.py` | Phase 1 script. Reads a CSV of repository slugs(for multiple open source projects), fetches workflow YAML files via the GitHub API, identifies Maven jobs, and extracts OS configurations (runs-on, matrix.os). Outputs a summary CSV with OS counts and conditional usage for each workflow. |
 | `scripts/select_projects.py` | Filters the Phase 1 output to identify candidate projects for OS expansion experiments. Applies selection criteria: single-OS, Maven, recently active, sufficient test count. Outputs a ranked candidate list. |
 | `scripts/yaml_os_expander.py` | Phase 2 script. Reads a workflow YAML file and adds missing operating systems (ubuntu-latest, windows-latest, macos-latest) to the build matrix. Handles edge cases: skips self-hosted runners, preserves OS conditionals, skips include/exclude directives. Outputs a modified YAML file and a diff. |
-| `scripts/run_workflows.py` | Dispatches GitHub Actions workflow runs via the workflow_dispatch API. Supports both baseline (unmodified) and modified (OS-expanded) execution modes. Records run IDs, statuses, and durations. |
+| `scripts/run_workflows.py` | Dispatches GitHub Actions workflow runs via the workflow_dispatch API(adds workflow_dispatch if does not exist). Supports both baseline (unmodified) and modified (OS-expanded) execution modes. Records run IDs, statuses, and durations. |
 | `scripts/collect_failures.py` | Phase 3a script. Fetches failed workflow runs from GitHub Actions, downloads job logs, and parses them for 16 error patterns (shell errors, Maven failures, Java stack traces, Docker issues, setup-java failures, font errors). Outputs a draft failures CSV with failure type (Q1-Q7), target OS, and error message for each failure. |
 | `scripts/llm_os_patcher.py` | Phase 3b script. Reads the failures CSV, fetches the relevant source or YAML file via the GitHub API, builds a structured prompt, and calls an LLM (Groq/Gemini/Anthropic) to generate a git diff. Supports merged patches when multiple OS failures target the same file. Outputs .diff, .prompt, and .response files for each patch attempt. |
 
@@ -146,15 +146,16 @@ Create an env file for GITHUB_TOKEN. If preferred any other way, use --token GIT
 ### Step 1: Generate Input CSV
 
 ```bash
-python scripts/gen_workflow_csv.py https://github.com/iluwatar/java-design-patterns -o java_design_pattern.csv
+#replace the username with your username where you forked the repository
+python scripts/gen_workflow_csv.py https://github.com/{username}/java-patterns -o java_design_pattern.csv
 ```
 
-**Expected output:** A CSV file in the `example_output/` directory containing the repository slug `iluwatar/java-design-patterns`.
+**Expected output:** A CSV file in the `example_output/` directory containing the repository slug `{username}/java-patterns`.
 
 ### Step 2: Analyze OS Configuration (if analysis required)
 
 ```bash
-python scripts/ci_workflows.py java-design-pattern.csv
+python scripts/ci_workflows.py java-patterns.csv
 ```
 
 **Expected output:**
@@ -162,7 +163,7 @@ python scripts/ci_workflows.py java-design-pattern.csv
 Using provided GitHub token
 Analyzing 1 repositories...
 
-[1/1] iluwatar/java-design-patterns... X Maven job(s)
+[1/1] username/java-design-patterns... X Maven job(s)
 
 Results written to workflow_os_analysis.csv
 
@@ -181,10 +182,10 @@ The YAML expander runs on the java_design_patterns.csv created from step 1.
 ```bash
 # Run the YAML expander
 #for csv input
-python scripts/yaml_os_expander.py --batch java_design_pattern.csv 
+python scripts/yaml_os_expander.py --batch java_patterns.csv 
 
 #for yaml file input
-python yaml_os_expander.py input.yml -o output.yml //for yaml file input
+python yaml_os_expander.py input.yml -o output.yml
 ```
 
 **Expected output:** A modified YAML file (`maven-ci_modified.yml`) with `os: [ubuntu-latest, windows-latest, macos-latest]` added to the matrix strategy, added to expanded_workflows folder
@@ -204,9 +205,9 @@ These steps produce the baseline and modified results CSV files found in `data/o
 The baseline and modified workflows can be run with the command:
 ```bash
 #for baseline
-python scripts/run_workflows.py java_design_patterns.csv --runs 1 --output java_design_pattern_baseline 
+python scripts/run_workflows.py java_patterns.csv --runs 1 --output java_patterns_baseline 
 #for modified
-python scripts/run_workflows.py java_design_patterns_modified.csv --runs 1 --output java_design_pattern_modified 
+python scripts/run_workflows.py java_patterns_modified.csv --runs 1 --output java_patterns_modified 
 ```
 ### Step 5: Collect Failures
 
@@ -214,9 +215,9 @@ Once modified workflows have been executed and some runs have failed. Collect th
 
 ```bash
 # Collect failures from the os-expansion-experiment branch
-python scripts/collect_failures.py java_design_patterns_modified \
+python scripts/collect_failures.py java_patterns_modified \
   --branch os-expansion-experiment \
-  --output java_design_pattern_failures.csv
+  --output java_patterns_failures.csv
 ```
 
 **Expected output:**
@@ -224,7 +225,7 @@ python scripts/collect_failures.py java_design_patterns_modified \
 Collecting failures for 1 project(s)...
 Branch: os-expansion-experiment
 
-[1/1] your-username/java-design-patterns (maven-ci.yml)
+[1/1] username/java-design-patterns (maven-ci.yml)
   Found N failed run(s).
   Processing run ...
 
@@ -236,22 +237,22 @@ Breakdown by category:
   Q5: Z
 ```
 
-**Expected file:** `java_design_pattern_failures.csv` containing one row per distinct failure, with columns for failure type (Q3/Q4/Q5/Q6/Q7), target OS, and error message.
+**Expected file:** `failures_draft.csv` containing one row per distinct failure, with columns for failure type (Q3/Q4/Q5/Q6/Q7), target OS, and error message.
 
 ### Step 6: Generate LLM Patch
 Groq has been used in this project. Anthropic API can also be used by --api-key flag
 The llm_patch_generation is not efficient in the current output due to groq. 
 ```bash
 # Generate patches using Groq (free tier, default provider)
-python scripts/llm_os_patcher.py example_failures.csv \
+python scripts/llm_os_patcher.py failures_draft.csv \
   --output example_patches
 
 #if you have anthropic key
-python scripts/llm_os_patcher.py example_failures.csv \
+python scripts/llm_os_patcher.py failures_draft.csv \
   --output example_patches --api-key ANTHROPIC_API_KEY
 
 # Or use --dry-run to preview prompts without calling the API
-python scripts/llm_os_patcher.py example_failures.csv \
+python scripts/llm_os_patcher.py failures_draft.csv \
   --output example_patches \
   --dry-run
 ```
