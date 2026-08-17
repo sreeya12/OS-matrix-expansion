@@ -1,9 +1,5 @@
 # Automated OS Matrix Expansion in CI Workflows
 
-## Authors
-- Batta Sreeya (sbatta2@gmu.edu)
-- Pawan Sai Chigurupati (pchigur2@gmu.edu)
-
 ## Overview
 
 This artifact accompanies the paper "Automated OS Matrix Expansion in CI Workflows." It contains the complete tooling pipeline for analyzing OS configurations in GitHub Actions workflows, automatically expanding OS coverage, collecting and categorizing failures, and generating LLM-assisted patches.
